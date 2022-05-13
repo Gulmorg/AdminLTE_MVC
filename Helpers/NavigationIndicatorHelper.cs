@@ -11,20 +11,21 @@ namespace AdminLTE_MVC.Helpers
                 string controllerName = urlHelper.ActionContext.RouteData.Values["controller"].ToString();
                 string methodName = urlHelper.ActionContext.RouteData.Values["action"].ToString();
 
-                if (string.IsNullOrEmpty(controllerName)) return null;
+                if (string.IsNullOrEmpty(controllerName)) return string.Empty;
 
                 if (controllerName.Equals(controller, StringComparison.OrdinalIgnoreCase))
                 {
+                    if (methodName == null) return string.Empty;
                     if (methodName.Equals(action, StringComparison.OrdinalIgnoreCase))
                     {
                         return "active";
                     }
                 }
-                return null;
+                return string.Empty;
             }
             catch (Exception)
             {
-                return null;
+                return string.Empty;
             }
         }
     }
