@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-
+      <ling
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -44,7 +44,6 @@
                 Home
               </p>
             </a>
-          <ul class="nav nav-treeview">
             <li class="nav-item">
               <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
                 <i class="nav-icon fas fa-lock"></i>
@@ -59,14 +58,13 @@
                 <p>Page One</p>
               </a>
             </li>
-          </ul>
           </li>
           <li class="nav-item">
             <a asp-controller="Home" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("home","pagetwo")"> 
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Page Two
-                <span class="right badge badge-danger">New</span>
+                <span class="right badge badge-danger">New</span>   @*hardcoded new badge for preview reasons*@
               </p>
             </a>
           </li>
