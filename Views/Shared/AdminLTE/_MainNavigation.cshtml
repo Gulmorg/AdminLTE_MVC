@@ -35,8 +35,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          <!-- Home -->
           <li class="nav-item">
             <a asp-controller="Home" asp-action="Index" class="nav-link @Url.MakeActiveClass("home","index")">
               <i class="nav-icon fas fa-home"></i>
@@ -44,26 +43,28 @@
                 Home
               </p>
             </a>
-            <li class="nav-item">
-              <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
-                <i class="nav-icon fas fa-lock"></i>
-                <p>
-                  Privacy
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a asp-controller="Home" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("home","pageone")">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Page One</p>
-              </a>
-            </li>
           </li>
+          <!-- Privacy -->
+          <li class="nav-item">
+            <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
+              <i class="nav-icon fas fa-lock"></i>
+              <p>
+                Privacy
+              </p>
+            </a>
+          </li>
+          <!-- Page One -->
+          <li class="nav-item">
+            <a asp-controller="Home" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("home","pageone")">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Page One</p>
+            </a>
+          </li>
+          <!-- Page Two -->
           <li class="nav-item">
             <a asp-controller="Home" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("home","pagetwo")"> 
               <i class="nav-icon fas fa-th"></i>
-              <p>
-                Page Two
+              <p>Page Two
                 <span class="right badge badge-danger">New</span>   @*hardcoded new badge for preview reasons*@
               </p>
             </a>
