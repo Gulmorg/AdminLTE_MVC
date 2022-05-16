@@ -2,7 +2,7 @@
 {
     public class MainNavigationViewModel
     {
-        public string? ArrowDirection { get; set; }
-        public string? TreeviewHeight { get; set; }
+        public string ArrowDirection { get; set; } = "left";
+        public string TreeviewHeight { get; set; } = "150";
     }
 }
