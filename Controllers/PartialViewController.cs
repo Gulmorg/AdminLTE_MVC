@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdminLTE_MVC.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminLTE_MVC.Controllers
 {
@@ -6,27 +7,30 @@ namespace AdminLTE_MVC.Controllers
     {
         const string COLLAPSED = "left";
         const string EXPANDED = "down";
+
+        private readonly MainNavigationViewModel model = new();
+
         public IActionResult MainNavigation()
         {
-            if ((string?)ViewData["ArrowDirection"] == null)
+            if (model.ArrowDirection == null)
             {
                 Console.WriteLine("was null, now collapsed");
-                ViewData["ArrowDirection"] = COLLAPSED;
+                model.ArrowDirection = COLLAPSED;
             }
             else
             {
-                if ((string?)ViewData["ArrowDirection"] == EXPANDED)
+                if ((string?)model.ArrowDirection == EXPANDED)
                 {
                     Console.WriteLine("was exp, now col");
-                    ViewData["ArrowDirection"] = COLLAPSED;
+                    model.ArrowDirection = COLLAPSED;
                 }
                 else
                 {
                     Console.WriteLine("was col, now exp");
-                    ViewData["ArrowDirection"] = EXPANDED;
+                    model.ArrowDirection = EXPANDED;
                 }
             }
-            return PartialView("AdminLTE/_MainNavigation");
+            return PartialView("AdminLTE/_MainNavigation", model);
         }
     }
 }
