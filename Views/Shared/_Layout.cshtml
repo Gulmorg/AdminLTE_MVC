@@ -13,22 +13,28 @@
 
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-      <!-- Top Navigation -->
-      <partial name="AdminLTE/_TopNavigation" />
-      
-      <!-- Side Navigation -->
-      <partial name="AdminLTE/_MainNavigation" />
+        <!-- Top Navigation -->
+        <div class="top-navigation">
+            <partial name="AdminLTE/_TopNavigation" />
+        </div>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Main content -->
-        <div class="content">
-          @RenderBody()
-        </div> <!-- /.content -->
-      </div> <!-- /.content-wrapper -->
+        <!-- Main Navigation -->
+        <div class="main-navigation">
+            <partial name="AdminLTE/_MainNavigation" />
+        </div>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <div class="content">
+                @RenderBody()
+            </div>
+        </div>
       
-      <!-- Footer -->
-      <partial name="AdminLTE/_Footer" />
+        <!-- Footer -->
+        <div class="footer">
+            <partial name="AdminLTE/_Footer" />
+        </div>
     </div>
   </body>
 </html>

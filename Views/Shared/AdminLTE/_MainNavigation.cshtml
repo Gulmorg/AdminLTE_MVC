@@ -35,6 +35,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
           <!-- Home -->
           <li class="nav-item">
             <a asp-controller="Home" asp-action="Index" class="nav-link @Url.MakeActiveClass("home","index")">
@@ -44,6 +45,7 @@
               </p>
             </a>
           </li>
+
           <!-- Privacy -->
           <li class="nav-item">
             <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
@@ -53,22 +55,36 @@
               </p>
             </a>
           </li>
-          <!-- Page One -->
+
+          <!-- Category -->
           <li class="nav-item">
-            <a asp-controller="Home" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("home","pageone")">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Page One</p>
-            </a>
+              <a asp-controller="_MainNavigation" asp-action="Index" asp-route-currentview="Home/Privacy" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>Demo Category
+                      <i class="fas fa-angle-down right"></i>   @*!!!HARDCODED!!! fa-angle-left / fa-angle-down to be controlled via cs*@
+                  </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: block; height: 93.5px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">  @*!!!HARDCODED!!! style="" to be controlled via cs*@
+                 
+                  <!-- Page One -->
+                  <li class="nav-item">
+                    <a asp-controller="Home" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("home","pageone")">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Page One</p>
+                    </a>
+                  </li>
+                  
+                  <!-- Page Two -->
+                  <li class="nav-item">
+                    <a asp-controller="Home" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("home","pagetwo")"> 
+                      <i class="nav-icon fas fa-th"></i>
+                      <p>Page Two</p>
+                    </a>
+                  </li>
+              </ul>
           </li>
-          <!-- Page Two -->
-          <li class="nav-item">
-            <a asp-controller="Home" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("home","pagetwo")"> 
-              <i class="nav-icon fas fa-th"></i>
-              <p>Page Two
-                <span class="right badge badge-danger">New</span>   @*hardcoded new badge for preview reasons*@
-              </p>
-            </a>
-          </li>
+
+         
         </ul>
       </nav> <!-- /.sidebar-menu -->
     </div> <!-- /.sidebar -->
