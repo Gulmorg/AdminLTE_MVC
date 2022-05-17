@@ -57,18 +57,30 @@ namespace AdminLTE_MVC.Helpers
             try
             {
                 if (urlHelper.ActionContext.RouteData.Values["area"] == null)
+                {
+                    Console.WriteLine("area null");
                     return string.Empty;
+                }
 
                 string result = "menu-is-opening menu-open";
                 string controllerName = urlHelper.ActionContext.RouteData.Values["area"].ToString();
-                if (string.IsNullOrEmpty(controllerName)) return string.Empty;
-                if (controllerName.Equals(area, StringComparison.OrdinalIgnoreCase))
-                    return result;
+                if (string.IsNullOrEmpty(controllerName))
+                {
+                    Console.WriteLine("controller name null or empty");
+                    return string.Empty;
+                }
 
+                if (controllerName.Equals(area, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("working");
+                    return result;
+                }
+                Console.WriteLine("different area");
                 return string.Empty;
             }
             catch (Exception)
             {
+                Console.WriteLine("exception");
                 return string.Empty;
             }
         }
