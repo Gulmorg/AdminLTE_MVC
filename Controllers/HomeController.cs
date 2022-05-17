@@ -23,16 +23,6 @@ namespace AdminLTE_MVC.Controllers
             return View();
         }
 
-        public IActionResult PageOne()
-        {
-            return View();
-        }
-
-        public IActionResult PageTwo()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
