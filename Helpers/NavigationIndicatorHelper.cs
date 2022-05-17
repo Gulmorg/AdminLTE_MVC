@@ -4,6 +4,7 @@ namespace AdminLTE_MVC.Helpers
 {
     public static class NavigationIndicatorHelper
     {
+        private const string BYPASS = "_any_";
         public static string MakeActiveClass(this IUrlHelper urlHelper, string controller, string action)
         {
             try
@@ -16,7 +17,7 @@ namespace AdminLTE_MVC.Helpers
                 if (controllerName.Equals(controller, StringComparison.OrdinalIgnoreCase))
                 {
                     if (methodName == null) return string.Empty;
-                    if (methodName.Equals(action, StringComparison.OrdinalIgnoreCase))
+                    if (methodName.Equals(action, StringComparison.OrdinalIgnoreCase) || action.Equals(BYPASS, StringComparison.OrdinalIgnoreCase))
                     {
                         return "active";
                     }
