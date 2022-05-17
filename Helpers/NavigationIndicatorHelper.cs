@@ -29,6 +29,34 @@ namespace AdminLTE_MVC.Helpers
             }
         }
 
+        public static string MakeMenuOpenClass(this IUrlHelper urlHelper, string controller)
+        {
+            try
+            {
+                if (urlHelper.ActionContext.RouteData.Values["controller"] == null)
+                {
+                    return string.Empty;
+                }
+
+                string result = "menu-is-opening menu-open";
+                string controllerName = urlHelper.ActionContext.RouteData.Values["controller"].ToString();
+                if (string.IsNullOrEmpty(controllerName))
+                {
+                    return string.Empty;
+                }
+
+                if (controllerName.Equals(controller, StringComparison.OrdinalIgnoreCase))
+                {
+                    return result;
+                }
+                return string.Empty;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
         public static string MakeAreaActiveClass(this IUrlHelper urlHelper, string area, string page)
         {
             try
@@ -58,7 +86,6 @@ namespace AdminLTE_MVC.Helpers
             {
                 if (urlHelper.ActionContext.RouteData.Values["area"] == null)
                 {
-                    Console.WriteLine("area null");
                     return string.Empty;
                 }
 
@@ -66,21 +93,17 @@ namespace AdminLTE_MVC.Helpers
                 string controllerName = urlHelper.ActionContext.RouteData.Values["area"].ToString();
                 if (string.IsNullOrEmpty(controllerName))
                 {
-                    Console.WriteLine("controller name null or empty");
                     return string.Empty;
                 }
 
                 if (controllerName.Equals(area, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine("working");
                     return result;
                 }
-                Console.WriteLine("different area");
                 return string.Empty;
             }
             catch (Exception)
             {
-                Console.WriteLine("exception");
                 return string.Empty;
             }
         }
