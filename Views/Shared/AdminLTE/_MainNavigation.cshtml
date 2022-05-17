@@ -59,10 +59,9 @@
 
           <!-- Category -->
           <li class="nav-item">
-              <a asp-controller="PartialView" asp-action="MainNavigation" class="nav-link">
+              <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Demo Category
-                      @{Console.WriteLine("is model null? " + Model == null);}
                       <i class="fas fa-angle-@Model?.ArrowDirection; right"></i>
                   </p>
               </a>

@@ -5,11 +5,11 @@ namespace AdminLTE_MVC.Controllers
 {
     public class PartialViewController : Controller
     {
-        private readonly MainNavigationViewModel model;
+        private readonly MainNavigationViewModel mainNavigationViewModel;
 
         public PartialViewController(MainNavigationViewModel model)
         {
-            this.model = model;
+            this.mainNavigationViewModel = model;
         }
 
         const string COLLAPSED = "left";
@@ -17,18 +17,14 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult MainNavigation()
         {
-            if (model.ArrowDirection == EXPANDED)
-            {
-                Console.WriteLine("was exp, now col");
-                model.ArrowDirection = COLLAPSED;
-            }
-            else
-            {
-                Console.WriteLine("was col, now exp");
-                model.ArrowDirection = EXPANDED;
-            }
-            
-            return PartialView("AdminLTE/_MainNavigation", model);
+            FlipArrow();
+
+            return PartialView("AdminLTE/_MainNavigation", mainNavigationViewModel);
+        }
+
+        private void FlipArrow()
+        {
+            mainNavigationViewModel.ArrowDirection = mainNavigationViewModel.ArrowDirection == EXPANDED ? COLLAPSED : EXPANDED;
         }
     }
 }
