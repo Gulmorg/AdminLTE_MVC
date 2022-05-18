@@ -4,7 +4,6 @@ namespace AdminLTE_MVC.Controllers
 {
     public class CategoryController : Controller
     {
-        [HttpPost]
         public void Index()
         {
             
