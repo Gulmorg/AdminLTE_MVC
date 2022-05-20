@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Default\Data\" />
-    <Folder Include="Areas\Default\Models\" />
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 
