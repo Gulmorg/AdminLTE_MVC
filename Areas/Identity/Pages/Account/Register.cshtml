@@ -1,68 +1,82 @@
 ﻿@page
 @model RegisterModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Register";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Registration</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Scripts -->
-    <partial name="AdminLTE/_Scripts" />
-    <!--- Styles --->
-    <partial name="AdminLTE/_Styles" />
-</head>
-<body class="hold-transition register-page">
-    <div class="register-box">
-        <div class="register-logo">
-            <a href="~/Home"><b>Admin</b>LTE</a>
-        </div>
-
-        <div class="card">
-            <div class="card-body register-card-body">
-                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    <h4>Create a new account.</h4>
-                    <hr />
-                    <div class="form-group">
-                        <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="form-control" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.ConfirmPassword"></label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i>
-                        Sign up using Facebook
-                    </a>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i>
-                        Sign up using Google+
-                    </a>
-                </div>
-                <a href="login.html" class="text-center">I already have a membership</a>
-            </div>
-        </div>
+<div class="register-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
     </div>
-</body>
-</html>
+    <div class="card-body">
+      <p class="login-box-msg">Register a new membership</p>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+      <form action="../../index.html" method="post">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Full name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Retype password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+               I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <a href="#" class="btn btn-block btn-primary">
+          <i class="fab fa-facebook mr-2"></i>
+          Sign up using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-danger">
+          <i class="fab fa-google-plus mr-2"></i>
+          Sign up using Google+
+        </a>
+      </div>
+
+      <a asp-area="Identity" asp-controller="Account" asp-action="Login" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
