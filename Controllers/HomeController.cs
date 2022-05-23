@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace AdminLTE_MVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,6 +21,7 @@ namespace AdminLTE_MVC.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

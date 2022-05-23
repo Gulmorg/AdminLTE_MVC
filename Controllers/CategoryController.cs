@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminLTE_MVC.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         public void Index() { }

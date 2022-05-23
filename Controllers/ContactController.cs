@@ -2,6 +2,7 @@
 
 namespace AdminLTE_MVC.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
         public IActionResult Index()
