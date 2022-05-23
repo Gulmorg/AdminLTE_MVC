@@ -70,37 +70,9 @@ namespace AdminLTE_MVC.Helpers
                 string pageName = urlHelper.ActionContext.RouteData.Values["page"]?.ToString();
                 if (string.IsNullOrEmpty(areaName)) return string.Empty;
                 if (areaName.Equals(area, StringComparison.OrdinalIgnoreCase))
-                    if (pageName.Equals(page, StringComparison.OrdinalIgnoreCase))
+                    if (pageName.Equals(page, StringComparison.OrdinalIgnoreCase) || pageName.Equals("_any_", StringComparison.OrdinalIgnoreCase))
                         return result;
 
-                return string.Empty;
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        }
-
-        public static string MakeAreaMenuOpenClass(this IUrlHelper urlHelper, string area)
-        {
-            try
-            {
-                if (urlHelper.ActionContext.RouteData.Values["area"] == null)
-                {
-                    return string.Empty;
-                }
-
-                string result = "menu-is-opening menu-open";
-                string controllerName = urlHelper.ActionContext.RouteData.Values["area"].ToString();
-                if (string.IsNullOrEmpty(controllerName))
-                {
-                    return string.Empty;
-                }
-
-                if (controllerName.Equals(area, StringComparison.OrdinalIgnoreCase))
-                {
-                    return result;
-                }
                 return string.Empty;
             }
             catch (Exception)
