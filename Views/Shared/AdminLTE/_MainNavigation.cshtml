@@ -10,17 +10,31 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
-      <div class="info">
-        <a asp-area="Identity" asp-controller="Account" asp-action="Login" class="d-block">Alexander Pierce</a>
-      </div>
-    </div>
 
-    <!-- SidebarSearch Form -->
+    <!-- User panel -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a asp-area="Identity" asp-controller="Account" asp-action="Login" class="d-block">Alexander Pierce</a>
+          </div>
+        </div>
+    }
+    else
+    {
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a asp-area="Identity" asp-controller="Account" asp-action="Login" class="d-block">Click here to login</a>
+          </div>
+        </div>
+    }
+    <!-- Search Form -->
     <div class="form-inline">
       <div class="input-group" data-widget="sidebar-search">
         <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
@@ -56,31 +70,34 @@
           </a>
         </li>
 
-        <!-- Category -->
-        <li class="nav-item @Url.MakeMenuOpenClass("Category")">
-          <a id="manage" class="nav-link has-treeview @Url.MakeActiveClass("category","_any_")" title="Category" href="#">
-            <i class="nav-icon fas fa-th"></i>
-            <p>Demo Category</p>
-            <i class="fas fa-angle-left right"></i>
-          </a>
-          <ul class="nav nav-treeview">
-            <!-- Page One -->
-            <li class="nav-item">
-              <a asp-area="" asp-controller="Category" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("category","pageone")">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Page One</p>
-              </a>
-            </li>
-            
-            <!-- Page Two -->
-            <li class="nav-item">
-              <a asp-area="" asp-controller="Category" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("category","pagetwo")"> 
+        @if (User.Identity.IsAuthenticated)
+        {
+            <!-- Category -->
+            <li class="nav-item @Url.MakeMenuOpenClass("Category")">
+              <a id="manage" class="nav-link has-treeview @Url.MakeActiveClass("category","_any_")" title="Category" href="#">
                 <i class="nav-icon fas fa-th"></i>
-                <p>Page Two</p>
+                <p>Demo Category</p>
+                <i class="fas fa-angle-left right"></i>
               </a>
+              <ul class="nav nav-treeview">
+                <!-- Page One -->
+                <li class="nav-item">
+                  <a asp-area="" asp-controller="Category" asp-action="PageOne" class="nav-link @Url.MakeActiveClass("category","pageone")">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Page One</p>
+                  </a>
+                </li>
+                
+                <!-- Page Two -->
+                <li class="nav-item">
+                  <a asp-area="" asp-controller="Category" asp-action="PageTwo" class="nav-link @Url.MakeActiveClass("category","pagetwo")"> 
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Page Two</p>
+                  </a>
+                </li>
+              </ul>
             </li>
-          </ul>
-        </li>
+        }
 
         <!-- Forms -->
         <li class="nav-item">

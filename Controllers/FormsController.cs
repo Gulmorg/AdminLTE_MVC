@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminLTE_MVC.Controllers
 {
+    [Authorize]
     public class FormsController : Controller
     {
         [AllowAnonymous]
