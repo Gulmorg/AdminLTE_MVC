@@ -70,7 +70,7 @@ namespace AdminLTE_MVC.Helpers
                 string pageName = urlHelper.ActionContext.RouteData.Values["page"]?.ToString();
                 if (string.IsNullOrEmpty(areaName)) return string.Empty;
                 if (areaName.Equals(area, StringComparison.OrdinalIgnoreCase))
-                    if (pageName.Equals(page, StringComparison.OrdinalIgnoreCase) || pageName.Equals("_any_", StringComparison.OrdinalIgnoreCase))
+                    if (pageName.Equals(page, StringComparison.OrdinalIgnoreCase) || pageName.Equals(BYPASS, StringComparison.OrdinalIgnoreCase))
                         return result;
 
                 return string.Empty;

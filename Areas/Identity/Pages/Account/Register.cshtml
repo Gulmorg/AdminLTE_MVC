@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/fonts/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="~/css/adminlte.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box register-box-relative">
@@ -23,7 +22,6 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
-      @{Model.ReturnUrl ??= "Home";}
       <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <!-- Name -->
