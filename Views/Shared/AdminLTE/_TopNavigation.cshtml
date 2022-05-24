@@ -137,7 +137,7 @@
           
       }
 
-      <!-- Login/Logout -->
+      <!-- Logout -->
       @if (User.Identity.IsAuthenticated)
       {
           <li class="nav-item d-none d-sm-inline-block">
@@ -146,15 +146,7 @@
             </form>
           </li>
       }
-      else
-      {
-          <li class="nav-item d-none d-sm-inline-block">
-            <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.RouteUrl(Url.ActionContext)" class="nav-link">Login</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.RouteUrl(Url.ActionContext)" class="nav-link">Register</a>
-          </li>
-      }
+      
       <!-- Fullscreen -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">

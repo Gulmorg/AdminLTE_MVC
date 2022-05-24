@@ -6,7 +6,6 @@ namespace AdminLTE_MVC.Controllers
     [Authorize]
     public class ContactController : Controller
     {
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
