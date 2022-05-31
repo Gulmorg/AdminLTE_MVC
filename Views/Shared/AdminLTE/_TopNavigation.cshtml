@@ -115,21 +115,18 @@
           <!-- Dropdown Link -->
           <li class="nav-item dropdown">
             <a class="nav-link btn btn-link text-dark" data-toggle="dropdown" href="#">
-              <i class="fas fa-user"></i> @User.Identity.Name
+              <i class="far fa-user"></i>
             </a>
 
             <!-- Dropdown Items -->
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               
-              <span class="dropdown-header">
-                  <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">Manage Profile</a>
-              </span>
+              <span class="dropdown-header">@User.Identity.Name</span>
               <div class="dropdown-divider"></div>
 
               <!-- Profile -->
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-envelope ml-2"></i> 4 new messages
-
+              <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="fas fa-wrench mr-2"></i>Manage Your Account
               </a>
               <div class="dropdown-divider"></div>
 
