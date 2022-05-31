@@ -17,28 +17,6 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-
       <!-- Message Dropdown Menu -->
       @if(User.Identity.IsAuthenticated)
       {
@@ -134,18 +112,40 @@
       <!-- Profile -->
       @if (User.Identity.IsAuthenticated)
       {
-          <li class="nav-item d-none d-sm-inline-block">
-            <div class="user-panel pb-3 d-flex">
-              <div class="image">
-                <img src="~/img/user3-128x128.jpg" class="img-circle elevation-2" alt="User Image">
-              </div>
-              <div class="info">
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-block">@User.Identity.Name</a>
-              </div>
-            </div>
+          <!-- Dropdown Link -->
+          <li class="nav-item dropdown">
+            <a class="nav-link btn btn-link text-dark" data-toggle="dropdown" href="#">
+              <i class="fas fa-user"></i> @User.Identity.Name
+            </a>
+
+            <!-- Dropdown Items -->
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              
+              <span class="dropdown-header">
+                  <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">Manage Profile</a>
+              </span>
+              <div class="dropdown-divider"></div>
+
+              <!-- Profile -->
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-envelope ml-2"></i> 4 new messages
+
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <!-- Logout -->
+              <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+              </form>
+            </div>            
           </li>
       }
-
+@*      <li><div class="user-panel d-flex">
+               <div class="nav-link btn btn-link text-dark">
+                <i class="fas fa-user"></i>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">@User.Identity.Name</a>
+              </div>
+            </div></li>
       <!-- Logout -->
       @if (User.Identity.IsAuthenticated)
       {
@@ -155,7 +155,7 @@
             </form>
           </li>
       }
-      
+      *@
       <!-- Fullscreen -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
