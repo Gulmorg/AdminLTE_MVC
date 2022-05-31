@@ -134,7 +134,16 @@
       <!-- Profile -->
       @if (User.Identity.IsAuthenticated)
       {
-          
+          <li class="nav-item d-none d-sm-inline-block">
+            <div class="user-panel pb-3 d-flex">
+              <div class="image">
+                <img src="~/img/user3-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+              </div>
+              <div class="info">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-block">@User.Identity.Name</a>
+              </div>
+            </div>
+          </li>
       }
 
       <!-- Logout -->
