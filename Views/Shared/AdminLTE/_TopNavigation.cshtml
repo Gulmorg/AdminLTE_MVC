@@ -137,12 +137,15 @@
             </div>            
           </li>
       }
-@*      <li><div class="user-panel d-flex">
-               <div class="nav-link btn btn-link text-dark">
-                <i class="fas fa-user"></i>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">@User.Identity.Name</a>
-              </div>
-            </div></li>
+      @*      
+      <li>
+        <div class="user-panel d-flex">
+          <div class="nav-link btn btn-link text-dark">
+            <i class="fas fa-user"></i>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">@User.Identity.Name</a>
+          </div>
+        </div>
+      </li>
       <!-- Logout -->
       @if (User.Identity.IsAuthenticated)
       {
