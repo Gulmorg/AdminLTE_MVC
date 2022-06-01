@@ -38,8 +38,9 @@
               <thead>
                 <tr>
                   <th style="width: 10px;">#</th>
-                  <th>Task</th>
-                  <th>Progress</th>
+                  <th>Object</th>
+                  <th>Oid</th>
+                  <th>Value</th>
                   <th style="width: 40px;">Label</th>
                 </tr>
               </thead>
@@ -52,7 +53,19 @@
                       <div class="progress-bar progress-bar-danger" style="width: 55%;"></div>
                     </div>
                   </td>
-                  <td><span class="badge bg-danger">55%</span></td>
+                  <td>
+                    @{
+                        new SnmpManager().GetValue(new Target(
+                            ip: "192.168.2.11",
+                            community: "public",
+                            oid: "1.3.6.1.4.1.39052.1.3.1.9",
+                            devId: "201003"
+                        )).ToString();
+                    }
+                  </td>
+                  <td>
+                    <span class="badge bg-danger">55%</span>
+                  </td>
                 </tr>
                 <tr>
                   <td>2.</td>
