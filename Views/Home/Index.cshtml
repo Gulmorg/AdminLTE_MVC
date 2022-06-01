@@ -22,7 +22,7 @@
           <div class="card-header">
             <h3 class="card-title">Simple Full Width Table</h3>
           </div>
-          <!-- Body -->
+          <!-- Body --><!-- TODO: generate the table via c# -->
           <div class="card-body p-0">
             <table class="table">
               <thead>
@@ -39,11 +39,11 @@
                   <td>Test Sensörü</td>
                   <td>
                     <div class="text">
-                      @Model.Oid.@Model.DeviceId
+                      @Model[0].Oid.@Model[0].DeviceId
                     </div>
                   </td>
                   <td>
-                    <span class="badge bg-success">@SnmpManager.GetValue(Model)</span>
+                    <span class="badge bg-success">@SnmpManager.GetValue(Model[0])</span>
                   </td>
                 </tr>
                 <tr>

@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace AdminLTE_MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,7 +17,16 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003"));
+            var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003");
+
+            var targetList = new List<Target>()
+            {
+                targetTemplate.ChangeDeviceId("201001"),
+                targetTemplate.ChangeDeviceId("201002"),
+                targetTemplate.ChangeDeviceId("201003"),
+                targetTemplate.ChangeDeviceId("201004")
+            };
+            return View(targetList);
         }
 
         public IActionResult Privacy()
