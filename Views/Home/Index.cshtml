@@ -21,16 +21,6 @@
           <!-- Header -->
           <div class="card-header">
             <h3 class="card-title">Simple Full Width Table</h3>
-
-            <div class="card-tools">
-              <ul class="pagination pagination-sm float-right">
-                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-              </ul>
-            </div>
           </div>
           <!-- Body -->
           <div class="card-body p-0">
@@ -39,9 +29,8 @@
                 <tr>
                   <th style="width: 10px;">#</th>
                   <th>Object</th>
-                  <th>Oid</th>
-                  <th>Value</th>
-                  <th style="width: 40px;">Label</th>
+                  <th>Object ID</th>
+                  <th style="width: 40px;">Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,14 +39,11 @@
                   <td>Test Sensörü</td>
                   <td>
                     <div class="text">
-                      "1.3.6.1.4.1.39052.1.3.1.9.201003"
+                      1.3.6.1.4.1.39052.1.3.1.9.201003
                     </div>
                   </td>
                   <td>
-                    @SnmpManager.GetValue(Model);
-                  </td>
-                  <td>
-                    <span class="badge bg-danger">55%</span>
+                    <span class="badge bg-success">@SnmpManager.GetValue(Model)</span>
                   </td>
                 </tr>
                 <tr>
