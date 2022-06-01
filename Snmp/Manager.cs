@@ -8,7 +8,7 @@ namespace AdminLTE_MVC.Snmp
     {
         public IList<Variable> GetRequest(Target target)
         {
-            return Messenger.Get(version: VersionCode.V1,
+            return Messenger.Get(version: target.VersionCode,
                                  endpoint: new IPEndPoint(IPAddress.Parse(target.Ip), 161),
                                  community: new OctetString(target.CommunityName),
                                  variables: new List<Variable> { new Variable(new ObjectIdentifier(target.Oid)) },
@@ -18,7 +18,7 @@ namespace AdminLTE_MVC.Snmp
         public IList<Variable> WalkRequest(Target target)
         {
             var result = new List<Variable>();
-            Messenger.Walk(version: VersionCode.V1,
+            Messenger.Walk(version: target.VersionCode,
                            endpoint: new IPEndPoint(IPAddress.Parse(target.Ip), 161),
                            community: new OctetString(target.CommunityName),
                            table: new ObjectIdentifier(target.Oid),
@@ -40,7 +40,7 @@ namespace AdminLTE_MVC.Snmp
             {
                 throw ErrorException.Create(
                     "error in response",
-                    IPAddress.Parse("192.168.1.2"),
+                    IPAddress.Parse(target.Ip),
                     response);
             }
 
