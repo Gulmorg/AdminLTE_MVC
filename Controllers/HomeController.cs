@@ -17,7 +17,7 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003"));
         }
 
         public IActionResult Privacy()

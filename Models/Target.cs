@@ -1,6 +1,6 @@
 ﻿using Lextm.SharpSnmpLib;
 
-namespace AdminLTE_MVC.Snmp
+namespace AdminLTE_MVC.Models
 {
     internal struct Target
     {
@@ -12,17 +12,17 @@ namespace AdminLTE_MVC.Snmp
             Oid = oid;
         }
 
-        // Ones
+        // One optional parameters
         public Target(string ip, ushort port, string community, string oid) : this(ip: ip, community: community, oid: oid) => Port = port;
         public Target(string ip, string community, string oid, string devId) : this(ip: ip, community: community, oid: oid) => DeviceId = devId;
         public Target(string ip, string community, string oid, VersionCode version) : this(ip: ip, community: community, oid: oid) => VersionCode = version;
 
-        // Twos
+        // Two optional parameters
         public Target(string ip, ushort port, string community, string oid, VersionCode version) : this(ip: ip, port: port, community: community, oid: oid) => VersionCode = version;
         public Target(string ip, ushort port, string community, string oid, string devId) : this(ip: ip, port: port, community: community, oid: oid) => DeviceId = devId;
         public Target(string ip, string community, string oid, string devId, VersionCode version) : this(ip: ip, community: community, oid: oid, devId: devId) => VersionCode = version;
 
-        // Three
+        // Three optional parameters
         public Target(string ip, ushort port, string community, string oid, string devId, VersionCode version) : this(ip: ip, port: port, community: community, oid: oid, devId: devId) => VersionCode = version;
         #endregion
 

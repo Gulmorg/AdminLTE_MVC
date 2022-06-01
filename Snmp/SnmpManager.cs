@@ -2,6 +2,7 @@
 using Lextm.SharpSnmpLib.Messaging;
 using AdminLTE_MVC.Extensions;
 using System.Net;
+using AdminLTE_MVC.Models;
 
 namespace AdminLTE_MVC.Snmp
 {
