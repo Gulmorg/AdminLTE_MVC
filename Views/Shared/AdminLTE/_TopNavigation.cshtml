@@ -132,30 +132,12 @@
 
               <!-- Logout -->
               <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="nav-link btn btn-link btn-block text-dark">Logout</button>
               </form>
             </div>            
           </li>
       }
-      @*      
-      <li>
-        <div class="user-panel d-flex">
-          <div class="nav-link btn btn-link text-dark">
-            <i class="fas fa-user"></i>
-            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="d-inline-block">@User.Identity.Name</a>
-          </div>
-        </div>
-      </li>
-      <!-- Logout -->
-      @if (User.Identity.IsAuthenticated)
-      {
-          <li class="nav-item d-none d-sm-inline-block">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-              <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-          </li>
-      }
-      *@
+
       <!-- Fullscreen -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
