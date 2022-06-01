@@ -7,11 +7,11 @@ namespace AdminLTE_MVC.Snmp
 {
     internal class SnmpManager
     {
-        public ISnmpData GetValue(Target target) => GetRequest(target).Data;
+        public static ISnmpData GetValue(Target target) => GetRequest(target).Data;
 
-        private Variable GetRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
+        private static Variable GetRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
 
-        private IList<Variable> WalkRequest(Target target)
+        private static IList<Variable> WalkRequest(Target target)
         {
             var result = new List<Variable>();
             Messenger.Walk(version: target.VersionCode,
