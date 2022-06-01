@@ -13,6 +13,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
+// !!! HARDCODED VALUES !!!
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
