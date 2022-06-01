@@ -33,7 +33,6 @@ namespace AdminLTE_MVC.Snmp
         public string DeviceId { get; } = string.Empty;
         public VersionCode VersionCode { get; } = VersionCode.V1;
 
-
         public Target ChangeOid(string newId) => new Target(ip: Ip, port: Port, community: CommunityName, oid: newId, version: VersionCode);
         public Target ChangeDeviceId(string newDeviceId) => new Target(ip: Ip, port: Port, community: CommunityName, oid: Oid, devId: newDeviceId, version: VersionCode);
     }
