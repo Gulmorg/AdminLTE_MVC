@@ -5,36 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE MVC - @ViewData["Title"]</title>
   
-    <!-- Scripts -->
-    <partial name="AdminLTE/_Scripts" />
     <!--- Styles --->
     <partial name="AdminLTE/_Styles" />
   </head>
 
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <!-- Top Navigation -->
-        <div class="top-navigation">
-            <partial name="AdminLTE/_TopNavigation" />
-        </div>
+      <!-- Top Navigation -->
+      <div class="top-navigation">
+        <partial name="AdminLTE/_TopNavigation" />
+      </div>
 
-        <!-- Main Navigation -->
-        <div class="main-navigation">
-           <partial name="AdminLTE/_MainNavigation" />
-        </div>
+      <!-- Main Navigation -->
+      <div class="main-navigation">
+        <partial name="AdminLTE/_MainNavigation" />
+      </div>
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Main content -->
-            <div class="content">
-                @RenderBody()
-            </div>
-        </div>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        @RenderBody()
+      </div>
       
-        <!-- Footer -->
-        <div class="footer">
-            <partial name="AdminLTE/_Footer" />
-        </div>
+      <!-- Footer -->
+      <div class="footer">
+        <partial name="AdminLTE/_Footer" />
+      </div>
     </div>
+
+    <!-- Scripts -->
+    <partial name="AdminLTE/_Scripts" />
   </body>
 </html>

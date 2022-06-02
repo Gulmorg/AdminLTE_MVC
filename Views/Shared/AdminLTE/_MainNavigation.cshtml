@@ -37,6 +37,16 @@
           </a>
         </li>
 
+        <!-- Home -->
+        <li class="nav-item">
+          <a asp-area="" asp-controller="Home" asp-action="DemoPage" class="nav-link @Url.MakeActiveClass("home","demopage")">
+            <i class="nav-icon fas fa-wrench"></i>
+            <p>
+              Demo Page
+            </p>
+          </a>
+        </li>
+
         <!-- Privacy -->
         <li class="nav-item">
           <a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
