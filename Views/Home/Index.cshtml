@@ -30,7 +30,7 @@
                   <th style="width: 10px;">#</th>
                   <th>Object</th>
                   <th>Object ID</th>
-                  <th style="width: 40px;">Value</th>
+                  <th>Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -38,9 +38,7 @@
                   <td>1.</td>
                   <td>Test Sensörü</td>
                   <td>
-                    <div class="text">
-                      @Model[0].Oid.@Model[0].DeviceId
-                    </div>
+                    @Model[0].Oid.@Model[0].DeviceId <!-- !!!THIS DOESN'T WORD-WRAP!!! -->
                   </td>
                   <td>
                     <span class="badge bg-success">@SnmpManager.GetValue(Model[0])</span>
