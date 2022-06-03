@@ -26,14 +26,14 @@ namespace AdminLTE_MVC.Models
         public Target(string ip, ushort port, string community, string oid, string devId, VersionCode version) : this(ip: ip, port: port, community: community, oid: oid, devId: devId) => VersionCode = version;
         #endregion
 
-        public string Ip { get; }
-        public ushort Port { get; } = 161;
-        public string CommunityName { get; }
-        public string Oid { get; }
-        public string DeviceId { get; } = string.Empty;
-        public VersionCode VersionCode { get; } = VersionCode.V1;
+        public readonly string Ip { get; }
+        public readonly ushort Port { get; } = 161;
+        public readonly string CommunityName { get; }
+        public readonly string Oid { get; }
+        public readonly string DeviceId { get; } = string.Empty;
+        public readonly VersionCode VersionCode { get; } = VersionCode.V1;
 
-        public Target ChangeOid(string newId) => new Target(ip: Ip, port: Port, community: CommunityName, oid: newId, version: VersionCode);
-        public Target ChangeDeviceId(string newDeviceId) => new Target(ip: Ip, port: Port, community: CommunityName, oid: Oid, devId: newDeviceId, version: VersionCode);
+        public Target ChangeOid(string newId) => new(ip: Ip, port: Port, community: CommunityName, oid: newId, version: VersionCode);
+        public Target ChangeDeviceId(string newDeviceId) => new(ip: Ip, port: Port, community: CommunityName, oid: Oid, devId: newDeviceId, version: VersionCode);
     }
 }

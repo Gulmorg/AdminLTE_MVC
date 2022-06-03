@@ -1,4 +1,6 @@
 ﻿using AdminLTE_MVC.Models;
+using AdminLTE_MVC.Snmp;
+using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -17,7 +19,7 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Index()    // TODO: Snmp walk instead of creating a list
         {
-            var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003");
+            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003");
 
             var targetList = new List<Target>()
             {
@@ -29,9 +31,9 @@ namespace AdminLTE_MVC.Controllers
             return View(targetList);
         }
 
-        public IActionResult DemoPage()    // TODO: Snmp walk instead of creating a list
+        public IActionResult Privacy()    // TODO: Snmp walk instead of creating a list
         {
-            var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003");
+            var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9");
 
             var targetList = new List<Target>()
             {
@@ -41,11 +43,6 @@ namespace AdminLTE_MVC.Controllers
                 targetTemplate.ChangeDeviceId("202001")
             };
             return View(targetList);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

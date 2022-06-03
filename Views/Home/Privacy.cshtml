@@ -19,13 +19,48 @@
         <!-- Card 1 -->
         <div class="card card-info">
           <div class="card-header">
-            <h3 class="card-title">Default Card Example</h3>
+            <h3 class="card-title">Kabin Sıcaklık</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
             </div>
           </div>
           <div class="card-body">
-            Here be a temperature display!
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+              <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+            </div>
+            <canvas id="gaugeOne" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 552px;" width="552" height="250" class="chartjs-render-monitor"></canvas>
+          </div>
+
+          <div class="card-footer text-center">
+            More info <i class="fas fa-arrow-circle-right"></i>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        
+        <!-- Card 3 -->
+
+      </section>
+
+      <!-- Column B -->
+      <section class="col-lg-3 connectedSortable ui-sortable">
+        <!-- Card 1 -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Kabin Nem</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="preview-textfield"></div>
+            <canvas id="gaugeTwo" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
           </div>
           <div class="card-footer text-center">
             More info <i class="fas fa-arrow-circle-right"></i>
@@ -34,28 +69,6 @@
         <!-- Card 2 -->
 
         <!-- Card 3 -->
-
-        <!-- Card 4 -->
-
-        <!-- Card 5 -->
-
-        <!-- Card 6 -->
-
-      </section>
-
-      <!-- Column B -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
-        <!-- Card 1 -->
-
-        <!-- Card 2 -->
-
-        <!-- Card 3 -->
-
-        <!-- Card 4 -->
-
-        <!-- Card 5 -->
-
-        <!-- Card 6 -->
 
       </section>
 
@@ -67,12 +80,6 @@
 
         <!-- Card 3 -->
 
-        <!-- Card 4 -->
-
-        <!-- Card 5 -->
-
-        <!-- Card 6 -->
-
       </section>
 
       <!-- Column D -->
@@ -83,14 +90,74 @@
 
         <!-- Card 3 -->
 
-        <!-- Card 4 -->
-
-        <!-- Card 5 -->
-
-        <!-- Card 6 -->
-
       </section>
     </div>
   </div>
 </div>
-<script src="~/js/pages/dashboard.js"></script>
+<script>
+var opts = {
+    // color configs
+    colorStart: "#6fadcf",
+    colorStop: void 0,
+    gradientType: 0,
+    strokeColor: "#e0e0e0",
+    generateGradient: true,
+    percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
+    // customize pointer
+    pointer: {
+      length: 0.8,
+      strokeWidth: 0.035,
+      iconScale: 1.0
+    },
+    // static labels
+    staticLabels: {
+      font: "10px sans-serif",
+      labels: [200, 500, 2100, 2800],
+      fractionDigits: 0
+    },
+    // static zones
+    staticZones: [
+      {strokeStyle: "#F03E3E", min: 0, max: 200},
+      {strokeStyle: "#FFDD00", min: 200, max: 500},
+      {strokeStyle: "#30B32D", min: 500, max: 2100},
+      {strokeStyle: "#FFDD00", min: 2100, max: 2800},
+      {strokeStyle: "#F03E3E", min: 2800, max: 3000}
+    ],
+    // render ticks
+    renderTicks: {
+      divisions: 5,
+      divWidth: 1.1,
+      divLength: 0.7,
+      divColor: "#333333",
+      subDivisions: 3,
+      subLength: 0.5,
+      subWidth: 0.6,
+      subColor: "#666666"
+    },
+    // the span of the gauge arc
+    angle: 0.15,
+    // line thickness
+    lineWidth: 0.44,
+    // radius scale
+    radiusScale: 1.0,
+    // font size
+    fontSize: 40,
+    // if false, max value increases automatically if value > maxValue
+    limitMax: false,
+    // if true, the min value of the gauge will be fixed
+    limitMin: false,
+    // High resolution support
+    highDpiSupport: true
+};
+var target = document.getElementById('gaugeOne');
+var gauge = new Gauge(target).setOptions(opts);
+
+document.getElementById("preview-textfield").className = "preview-textfield";
+gauge.setTextField(document.getElementById("preview-textfield"));
+
+gauge.maxValue = 3000;
+gauge.setMinValue(0);
+gauge.set(1250);
+
+gauge.animationSpeed = 32
+</script>
