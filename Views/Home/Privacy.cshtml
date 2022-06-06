@@ -19,20 +19,16 @@
         <!-- Card 1 -->
         <div class="card card-info">
           <div class="card-header">
-            <h3 class="card-title">Kabin Sıcaklık</h3>
+            <h3 class="card-title"><i class="fas fa-thermometer"></i> Kabin Sıcaklık</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
             </div>
           </div>
           <div class="card-body">
-            <div class="chartjs-size-monitor">
-              <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-              <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+            <div id="gauge-one-textfield" class="text-center">
+                @SnmpManager.GetValue(Model[1]) °C
             </div>
-            <div id="preview-textfield" class="text-center">
-                @SnmpManager.GetValue(Model[0])) <i class="fas fa-thermometer"></i>
-            </div>
-            <canvas id="gaugeOne"></canvas>
+            <canvas id="gaugeOne" style="min-height: 200px; height: 200px; max-height: 200px; max-width: 100%;"></canvas>
           </div>
 
           <div class="card-footer text-center">
@@ -42,19 +38,19 @@
         <!-- Card 2 -->
         <div class="card card-primary">
           <div class="card-header ui-sortable-handle" style="cursor: move;">
-            <h3 class="card-title">Kabin Nem</h3>
+            <h3 class="card-title"><i class="fas fa-droplet"></i> Kabin Nem</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
               </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
             </div>
           </div>
           <div class="card-body">
-            <canvas id="gaugeTwo" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            <div id="gauge-one-textfield" class="text-center">
+              @SnmpManager.GetValue(Model[3])%
+            </div>
+            <canvas id="gaugeTwo" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
           </div>
           <div class="card-footer text-center">
             More info <i class="fas fa-arrow-circle-right"></i>
@@ -150,17 +146,26 @@ var opts = {
     // High resolution support
     highDpiSupport: true
 };
-var target = document.getElementById('gaugeOne');
-var gauge = new Gauge(target).setOptions(opts);
+var targetOne = document.getElementById('gaugeOne');
+var gaugeOne = new Gauge(targetOne).setOptions(opts);
 
-document.getElementById("preview-textfield").className = "preview-textfield";
-gauge.setTextField(document.getElementById("preview-textfield"), 2);
+var targetTwo = document.getElementById('gaugeTwo');
+var gaugeTwo = new Gauge(targetTwo).setOptions(opts);
 
-gauge.maxValue = 50;
-gauge.setMinValue(0);
-gauge.set(@SnmpManager.GetValue(Model[0]));
+//document.getElementById("gauge-one-textfield").className = "preview-textfield";
+//gaugeOne.setTextField(document.getElementById("gauge-one-textfield"), 2);
 
-gauge.animationSpeed = 32
+gaugeOne.maxValue = 50;
+gaugeOne.setMinValue(0);
+gaugeOne.set(@SnmpManager.GetValue(Model[1]));
+
+gaugeOne.animationSpeed = 32
+
+gaugeTwo.maxValue = 50;
+gaugeTwo.setMinValue(0);
+gaugeTwo.set(@SnmpManager.GetValue(Model[3]));
+
+gaugeTwo.animationSpeed = 32
 </script>
 
 <script src="~/js/pages/sorting.js"></script>
