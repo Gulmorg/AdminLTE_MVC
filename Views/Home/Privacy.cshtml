@@ -92,7 +92,7 @@
   </div>
 </div>
 <script>
-var opts = {
+var optsOne = {
     // color configs
     colorStart: "#6fadcf",
     colorStop: void 0,
@@ -146,11 +146,65 @@ var opts = {
     // High resolution support
     highDpiSupport: true
 };
+var optsTwo = {
+    // color configs
+    colorStart: "#6fadcf",
+    colorStop: void 0,
+    gradientType: 0,
+    strokeColor: "#e0e0e0",
+    generateGradient: true,
+    percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
+    // customize pointer
+    pointer: {
+      length: 0.8,
+      strokeWidth: 0.035,
+      iconScale: 1.0
+    },
+    // static labels
+    staticLabels: {
+      font: "10px sans-serif",
+      labels: [0, 30, 40, 55, 65, 100],
+      fractionDigits: 0
+    },
+    // static zones
+    staticZones: [
+      {strokeStyle: "#F03E3E", min: 0, max: 30},
+      {strokeStyle: "#FFDD00", min: 30, max: 40},
+      {strokeStyle: "#30B32D", min: 40, max: 55},
+      {strokeStyle: "#FFDD00", min: 55, max: 65},
+      {strokeStyle: "#F03E3E", min: 65, max: 100}
+    ],
+    // render ticks
+    renderTicks: {
+      divisions: 5,
+      divWidth: 1.1,
+      divLength: 0.7,
+      divColor: "#333333",
+      subDivisions: 3,
+      subLength: 0.5,
+      subWidth: 0.6,
+      subColor: "#666666"
+    },
+    // the span of the gauge arc
+    angle: 0.1,
+    // line thickness
+    lineWidth: 0.44,
+    // radius scale
+    radiusScale: 1.0,
+    // font size
+    fontSize: 40,
+    // if false, max value increases automatically if value > maxValue
+    limitMax: false,
+    // if true, the min value of the gauge will be fixed
+    limitMin: false,
+    // High resolution support
+    highDpiSupport: true
+};
 var targetOne = document.getElementById('gaugeOne');
-var gaugeOne = new Gauge(targetOne).setOptions(opts);
+var gaugeOne = new Gauge(targetOne).setOptions(optsOne);
 
 var targetTwo = document.getElementById('gaugeTwo');
-var gaugeTwo = new Gauge(targetTwo).setOptions(opts);
+var gaugeTwo = new Gauge(targetTwo).setOptions(optsTwo);
 
 //document.getElementById("gauge-one-textfield").className = "preview-textfield";
 //gaugeOne.setTextField(document.getElementById("gauge-one-textfield"), 2);
@@ -161,7 +215,7 @@ gaugeOne.set(@SnmpManager.GetValue(Model[1]));
 
 gaugeOne.animationSpeed = 32
 
-gaugeTwo.maxValue = 50;
+gaugeTwo.maxValue = 100;
 gaugeTwo.setMinValue(0);
 gaugeTwo.set(@SnmpManager.GetValue(Model[3]));
 
