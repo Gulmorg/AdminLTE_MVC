@@ -20,15 +20,18 @@
         <div class="card card-info">
           <div class="card-header">
             <h3 class="card-title"><i class="fas fa-thermometer"></i> Kabin Sıcaklık</h3>
+
             <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
             </div>
           </div>
-          <div class="card-body">
-            <div id="gauge-one-textfield" class="text-center">
+          <div class="card-body gauge-parent">
+            <div class="text-center">
                 @SnmpManager.GetValue(Model[1]) °C
             </div>
-            <canvas id="gaugeOne" style="min-height: 200px; height: 200px; max-height: 200px; max-width: 100%;"></canvas>
+            <canvas id="gaugeOne" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
           </div>
 
           <div class="card-footer text-center">
@@ -46,8 +49,8 @@
               </button>
             </div>
           </div>
-          <div class="card-body">
-            <div id="gauge-one-textfield" class="text-center">
+          <div class="card-body gauge-parent">
+            <div class="text-center">
               @SnmpManager.GetValue(Model[3])%
             </div>
             <canvas id="gaugeTwo" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
@@ -200,26 +203,16 @@ var optsTwo = {
     // High resolution support
     highDpiSupport: true
 };
-var targetOne = document.getElementById('gaugeOne');
-var gaugeOne = new Gauge(targetOne).setOptions(optsOne);
 
-var targetTwo = document.getElementById('gaugeTwo');
-var gaugeTwo = new Gauge(targetTwo).setOptions(optsTwo);
+var gaugeOne = new Gauge(document.getElementById('gaugeOne')).setOptions(optsOne);
 
-//document.getElementById("gauge-one-textfield").className = "preview-textfield";
-//gaugeOne.setTextField(document.getElementById("gauge-one-textfield"), 2);
+var gaugeTwo = new Gauge(document.getElementById('gaugeTwo')).setOptions(optsTwo);
 
 gaugeOne.maxValue = 50;
-gaugeOne.setMinValue(0);
 gaugeOne.set(@SnmpManager.GetValue(Model[1]));
 
-gaugeOne.animationSpeed = 32
-
 gaugeTwo.maxValue = 100;
-gaugeTwo.setMinValue(0);
 gaugeTwo.set(@SnmpManager.GetValue(Model[3]));
-
-gaugeTwo.animationSpeed = 32
 </script>
 
 <script src="~/js/pages/sorting.js"></script>
