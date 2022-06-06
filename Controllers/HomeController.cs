@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace AdminLTE_MVC.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
