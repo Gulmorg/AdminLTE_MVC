@@ -19,7 +19,7 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Index()    // TODO: Snmp walk instead of creating a list
         {
-            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003");
+            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201003"); // 5.2.1 == Analogs
 
             var targetList = new List<Target>()
             {

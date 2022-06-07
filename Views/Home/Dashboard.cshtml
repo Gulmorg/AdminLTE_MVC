@@ -7,9 +7,13 @@
         <h1 class="m-0">Widgets
         </h1>
       </div>
-      <button class="btn btn-primary">
+      <button type="button" id="btn" class="btn btn-primary" data-bind="modal">
         Create New <i class="fas fa-plus"></i>
       </button>
+
+
+
+
     </div>
   </div>
 </div>
@@ -64,7 +68,22 @@
           </div>
         </div>
         <!-- Card 3 -->
-
+        <div class="modal fade" id="modelWindow" role="dialog">
+            <div class="modal-dialog modal-sm vertical-align-center">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Heading</h4>
+                </div>
+                <div class="modal-body">
+                    Body text here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
       </section>
 
       <!-- Column B -->
@@ -98,6 +117,10 @@
     </div>
   </div>
 </div>
+
+<script>('#btn').click(function() {
+   $('#modelWindow').modal('show');
+});</script>
 <script>
 var optsOne = {
     // color configs
@@ -218,5 +241,5 @@ gaugeOne.set(@SnmpManager.GetValue(Model[1]));
 gaugeTwo.maxValue = 100;
 gaugeTwo.set(@SnmpManager.GetValue(Model[3]));
 </script>
-
+<script src="~/js/pages/popup.js"></script>
 <script src="~/js/pages/sorting.js"></script>
