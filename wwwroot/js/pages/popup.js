@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#dialog').dialog({
-        autoOpen: true
+        autoOpen: false
     })
     $('#btn').click(function () {
         $("#dialog").dialog({
