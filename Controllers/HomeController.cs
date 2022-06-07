@@ -31,7 +31,7 @@ namespace AdminLTE_MVC.Controllers
             return View(targetList);
         }
 
-        public IActionResult Privacy()    // TODO: Snmp walk instead of creating a list
+        public IActionResult Dashboard()    // TODO: Snmp walk instead of creating a list
         {
             var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9");
 
