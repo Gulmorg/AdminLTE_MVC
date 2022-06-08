@@ -50,7 +50,7 @@
 
         public string Generate()
         {
-            var output = $"<!-- Card 1 -->\n" +
+            var output = $"<!-- Card 1 -->" +
                          $"<div class=\"card card-info\">" +
                          $"  <div class=\"card-header\">" +
                          $"    <h3 class=\"card-title\"><i class=\"fas fa-thermometer\"></i> Kabin Sıcaklık</h3>" +
