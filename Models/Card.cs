@@ -38,28 +38,25 @@ namespace AdminLTE_MVC.Models
             Id = CardCount++;
             Position = Id;
 
-            // Type of the card (header colour)
+            // Type of the card (header background colour)
             CardType = type;
 
             CardTitle = title;
         }
 
-        ~Card()
-        {
-            CardCount--;
-        }
+        ~Card() => CardCount--;
 
         public byte Id { get; }
         public byte Position { get; set; }
         public string CardType { get; set; }
         public string CardTitle { get; set; }
 
-        public IHtmlContent Generate()    // temp
+        public IHtmlContent Generate(Target target)    // temp
         {
-            var input = $"<!-- Card 1 -->" +
-                         $"<div class=\"card card-info\" runat=\"server\">" +
+            var output = $"<!-- Card 1 -->" +
+                         $"<div class=\"card card-{CardType}\" runat=\"server\">" +
                          $"  <div class=\"card-header\">" +
-                         $"    <h3 class=\"card-title\"><i class=\"fas fa-thermometer\"></i> Kabin Sıcaklık</h3>" +
+                         $"    <h3 class=\"card-title\"><i class=\"fas fa-thermometer\"></i>  {CardTitle}</h3>" +
                          $"    <div class=\"card-tools\">" +
                          $"      <button type = \"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">" +
                          $"        <i class=\"fas fa-minus\"></i>" +
@@ -68,7 +65,7 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <div class=\"text-center\">" +
-                         $"        {SnmpManager.GetValue(new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201002"))} °C" +
+                         $"        {SnmpManager.GetValue(target)} °C" +
                          $"    </div>" +
                          $"    <canvas id = \"gaugeThree\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
@@ -78,10 +75,7 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"</div>";
 
-            //var output = TagBuilderHelper.StartTag(tagType: "div", @class: $"card card-{CardType}");
-
-            var output = TagBuilderHelper.EndTag("div");
-            return new HtmlString(input);
+            return new HtmlString(output);
         }
     }
 }

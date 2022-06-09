@@ -2,7 +2,7 @@
 
 namespace AdminLTE_MVC.Models
 {
-    internal struct Target
+    public struct Target
     {
         #region Contructors
         public Target(string ip, string community, string oid)
