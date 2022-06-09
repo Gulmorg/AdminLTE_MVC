@@ -1,4 +1,5 @@
 ﻿using AdminLTE_MVC.Helpers;
+using AdminLTE_MVC.Snmp;
 using Microsoft.AspNetCore.Html;
 
 namespace AdminLTE_MVC.Models
@@ -67,9 +68,9 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <div class=\"text-center\">" +
-                         $"        @SnmpManager.GetValue(Model[1]) °C" +
+                         $"        {SnmpManager.GetValue(new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9", devId: "201002"))} °C" +
                          $"    </div>" +
-                         $"    <canvas id = \"gaugeOne\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
+                         $"    <canvas id = \"gaugeThree\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
 
                          $"  <div class=\"card-footer text-center\">" +

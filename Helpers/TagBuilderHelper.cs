@@ -42,18 +42,5 @@ namespace AdminLTE_MVC.Helpers
             builder.TagRenderMode = TagRenderMode.EndTag;
             return builder.RenderEndTag();
         }
-
-        //public static IHtmlContent StringBuilderMethod()
-        //{
-        //    var sb = new StringBuilder();
-        //    sb.AppendLine("<div class='control-group'>");
-        //    sb.AppendFormat(" <label class='control-label' for='{0}_{1}'>{2}</label>", propObj.ModelType, propObj.ModelProperty, propObj.LabelCaption);
-        //    sb.AppendLine("  <div class='controls'>");
-        //    sb.AppendFormat("    <input id='{0}_{1}' name='{0}[{1}]' value='{2}' />", propObj.ModelType, propObj.ModelProperty, propObj.PropertyValue);
-        //    sb.AppendLine("  </div>");
-        //    sb.AppendLine("</div>");
-
-        //    return new HtmlString(sb.ToString());
-        //}
     }
 }
