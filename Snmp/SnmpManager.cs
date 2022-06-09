@@ -1,12 +1,12 @@
 ﻿using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
-using AdminLTE_MVC.Extensions;
+using AdminLTE_MVC.Helpers;
 using System.Net;
 using AdminLTE_MVC.Models;
 
 namespace AdminLTE_MVC.Snmp
 {
-    internal class SnmpManager
+    internal static class SnmpManager
     {
         public static ISnmpData GetValue(Target target) => GetRequest(target).Data;
 

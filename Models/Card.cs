@@ -48,7 +48,7 @@
         public string CardType { get; set; }
         public string CardTitle { get; set; }
 
-        public string Generate()
+        public string Generate()    // temp
         {
             var output = $"<!-- Card 1 -->" +
                          $"<div class=\"card card-info\">" +
@@ -71,6 +71,8 @@
                          $"    More info<i class=\"fas fa-arrow-circle-right\"></i>" +
                          $"  </div>" +
                          $"</div>";
+
+       //     MyPlaceholder.Controls.Add(new Literal() { Text = "<div>some markup</div>" });
 
             return output;
         }

@@ -1,6 +1,6 @@
 ﻿using Lextm.SharpSnmpLib;
 
-namespace AdminLTE_MVC.Extensions
+namespace AdminLTE_MVC.Helpers
 {
     public static class IListExtensions
     {

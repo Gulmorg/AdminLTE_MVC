@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AdminLTE_MVC.Extensions
+namespace AdminLTE_MVC.Helpers
 {
     public static class NavigationIndicatorHelper
     {
