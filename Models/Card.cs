@@ -56,7 +56,7 @@ namespace AdminLTE_MVC.Models
         public IHtmlContent Generate()    // temp
         {
             var input = $"<!-- Card 1 -->" +
-                         $"<div class=\"card card-info\">" +
+                         $"<div class=\"card card-info\" runat=\"server\">" +
                          $"  <div class=\"card-header\">" +
                          $"    <h3 class=\"card-title\"><i class=\"fas fa-thermometer\"></i> Kabin Sıcaklık</h3>" +
                          $"    <div class=\"card-tools\">" +
@@ -67,7 +67,7 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <div class=\"text-center\">" +
-                         $"        @SnmpManager.GetValue(Model[1]) °C" +
+                         $"        @(SnmpManager.GetValue(Model[1]) °C)" +
                          $"    </div>" +
                          $"    <canvas id = \"gaugeOne\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
@@ -77,9 +77,10 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"</div>";
 
-            var output = TagBuilderHelper.CreateTag(tagType: "div", @class: "card card-info");
+            //var output = TagBuilderHelper.StartTag(tagType: "div", @class: $"card card-{CardType}");
 
-            return output;
+            var output = TagBuilderHelper.EndTag("div");
+            return new HtmlString(input);
         }
     }
 }
