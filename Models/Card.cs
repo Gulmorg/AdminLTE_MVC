@@ -1,4 +1,7 @@
-﻿namespace AdminLTE_MVC.Models
+﻿using AdminLTE_MVC.Helpers;
+using Microsoft.AspNetCore.Html;
+
+namespace AdminLTE_MVC.Models
 {
     public class Card
     {
@@ -34,7 +37,9 @@
             Id = CardCount++;
             Position = Id;
 
+            // Type of the card (header colour)
             CardType = type;
+
             CardTitle = title;
         }
 
@@ -48,9 +53,9 @@
         public string CardType { get; set; }
         public string CardTitle { get; set; }
 
-        public string Generate()    // temp
+        public IHtmlContent Generate()    // temp
         {
-            var output = $"<!-- Card 1 -->" +
+            var input = $"<!-- Card 1 -->" +
                          $"<div class=\"card card-info\">" +
                          $"  <div class=\"card-header\">" +
                          $"    <h3 class=\"card-title\"><i class=\"fas fa-thermometer\"></i> Kabin Sıcaklık</h3>" +
@@ -72,7 +77,7 @@
                          $"  </div>" +
                          $"</div>";
 
-       //     MyPlaceholder.Controls.Add(new Literal() { Text = "<div>some markup</div>" });
+            var output = TagBuilderHelper.CreateTag(tagType: "div", @class: "card card-info");
 
             return output;
         }
