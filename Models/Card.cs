@@ -67,7 +67,7 @@ namespace AdminLTE_MVC.Models
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <div class=\"text-center\">" +
-                         $"        @(SnmpManager.GetValue(Model[1]) °C)" +
+                         $"        @SnmpManager.GetValue(Model[1]) °C" +
                          $"    </div>" +
                          $"    <canvas id = \"gaugeOne\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
