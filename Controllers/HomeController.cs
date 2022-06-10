@@ -4,6 +4,7 @@ using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Dynamic;
 
 namespace AdminLTE_MVC.Controllers
 {
@@ -33,18 +34,23 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Dashboard()    // TODO: Snmp walk instead of creating a list
         {
-            //var item = this.
+            var target = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9");
 
-            var targetTemplate = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9");
-
-            var targetList = new List<Target>()
+            var deviceList = new List<Target>()
             {
-                targetTemplate.ChangeDeviceId("201001"),
-                targetTemplate.ChangeDeviceId("201002"),
-                targetTemplate.ChangeDeviceId("201003"),
-                targetTemplate.ChangeDeviceId("202001")
+                target.ChangeDeviceId("201001"),
+                target.ChangeDeviceId("201002"),
+                target.ChangeDeviceId("201003"),
+                target.ChangeDeviceId("202001")
             };
-            return View(targetList);
+
+            var viewModel = new DashboardViewModel
+            {
+                Target = deviceList,
+                CardCreationModel = new CardCreationModel(target)
+            };
+
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

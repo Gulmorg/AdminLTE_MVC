@@ -12,7 +12,7 @@ namespace AdminLTE_MVC.Snmp
 
         private static Variable GetRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
 
-        private static IList<Variable> WalkRequest(Target target)
+        public static IList<Variable> WalkRequest(Target target)
         {
             var result = new List<Variable>();
             Messenger.Walk(version: target.VersionCode,

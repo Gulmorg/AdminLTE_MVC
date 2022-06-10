@@ -1,50 +1,64 @@
 ﻿@using AdminLTE_MVC.Snmp;
 
+@{
+    Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine(Model); Console.WriteLine(SnmpManager.GetValue(Model.Target[1])); }
+
 <!-- Modal Popup -->
 <div class="modal fade" id="dialog" runat="server">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Header</h4>
+        <h4 class="modal-title">Create New Card</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form>
+         @* @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+          {
+              <table cellpadding="0" cellspacing="0">
+              <tr>
+              <th colspan="2" align="center">Person Details</th>
+              </tr>
+              <tr>
+              <td>Card Title: </td>
+              <td>
+                  @Html.TextBoxFor(m => m.CardCreationModel.Title)
+              </td>
+              </tr>
+              <tr>
+              <td>Element: </td>
+              <td>
+                  @Html.DropDownListFor(m => m.CardCreationModel.ElementName, new List<SelectListItem>
+                  { 
+                      new SelectListItem{Text="Male", Value="M"},
+                      new SelectListItem{Text="Female", Value="F"}
+                  }, "Please select")
+                  
+              </td>
+              </tr>
+              <tr>
+              <td></td>
+              <td><input type="submit" value="Submit"/></td>
+              </tr>
+              </table>
+          }*@
+       @* <form>
           <div class="card-body">
+            <!-- Title Field -->
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+              <label for="Title">Card Title</label>
+              <input type="text" class="form-control" id="cardTitle" placeholder="Enter title" />
             </div>
+
+            <!-- Element Field -->
             <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
-            </div>
-            <div class="form-group">
-              <label for="exampleInputFile">File input</label>
-              <div class="input-group">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="exampleInputFile" />
-                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                </div>
-                <div class="input-group-append">
-                  <span class="input-group-text">Upload</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <label for="Name">Element</label>
+              <input type="radio" class="form-control" id="cardTitle" placeholder="Enter title" />
             </div>
           </div>
-
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-bind="modal" data-dismiss="modal">Submit</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>*@
       </div>
     </div>
   </div>
@@ -85,7 +99,7 @@
           </div>
           <div class="card-body gauge-parent">
             <div class="text-center">
-                @SnmpManager.GetValue(Model[1]) °C
+                @SnmpManager.GetValue(Model.Target[1]) °C
             </div>
             <canvas id="gaugeOne" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
           </div>
@@ -114,7 +128,7 @@
           </div>
           <div class="card-body gauge-parent">
             <div class="text-center">
-              @SnmpManager.GetValue(Model[3])%
+              @SnmpManager.GetValue(Model.Target[3])%
             </div>
             <canvas id="gaugeTwo" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
           </div>
@@ -129,7 +143,7 @@
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
         <!-- Card 3 -->
-        @(new Card("primary", "TestCard").Generate(Model[1]))
+        @(new Card("primary", "TestCard").Generate(Model.Target[1]))
 
         <!-- Card 2 -->
 
@@ -319,13 +333,13 @@ var gaugeTwo = new Gauge(document.getElementById('gaugeTwo')).setOptions(optsTwo
 var gaugeThree = new Gauge(document.getElementById('gaugeThree')).setOptions(optsThree);
 
 gaugeOne.maxValue = 50;
-gaugeOne.set(@SnmpManager.GetValue(Model[1]));
+gaugeOne.set(@SnmpManager.GetValue(Model.Target[1]));
 
 gaugeTwo.maxValue = 100;
-gaugeTwo.set(@SnmpManager.GetValue(Model[3]));
+gaugeTwo.set(@SnmpManager.GetValue(Model.Target[3]));
 
 gaugeThree.maxValue = 50;
-gaugeThree.set(@SnmpManager.GetValue(Model[1]));
+gaugeThree.set(@SnmpManager.GetValue(Model.Target[1]));
 </script>
 <script src="~/js/pages/popup.js"></script>
 <script src="~/js/pages/sorting.js"></script>
