@@ -1,7 +1,7 @@
 ﻿@using AdminLTE_MVC.Snmp;
 
 <!-- Modal Popup -->
-<div class="modal fade" id="dialog">
+<div class="modal fade" id="dialog" runat="server">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -62,6 +62,13 @@
             More info <i class="fas fa-arrow-circle-right"></i>
           </div>
         </div>
+       
+      </section>
+
+      <!-- Column B -->
+      <section class="col-lg-3 connectedSortable ui-sortable">
+       
+
         <!-- Card 2 -->
         <div class="card card-primary">
           <div class="card-header ui-sortable-handle" style="cursor: move;">
@@ -84,21 +91,13 @@
           </div>
         </div>
         <!-- Card 3 -->
-        @(new Card("primary", "TestCard").Generate(Model[1]))
-      </section>
-
-      <!-- Column B -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
-       
-        <!-- Card 2 -->
-
-        <!-- Card 3 -->
 
       </section>
 
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        <!-- Card 1 -->
+        <!-- Card 3 -->
+        @(new Card("primary", "TestCard").Generate(Model[1]))
 
         <!-- Card 2 -->
 

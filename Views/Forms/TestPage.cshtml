@@ -1,0 +1,41 @@
+﻿@*@using (Html.BeginForm("TestPage", "Home", FormMethod.Post))
+{
+    <table cellpadding="0" cellspacing="0">
+      <tr>
+        <th colspan="2" align="center">Person Details</th>
+      </tr>
+      <tr>
+        <td>Card Title: </td>
+        <td>
+          @Html.TextBoxFor(m => m.OID)
+        </td>
+      </tr>
+      <tr>
+        <td>Name: </td>
+        <td>
+          @(
+              string value = new AgentModel().Name;
+              Html.TextBoxFor(m => m.Person_Name))
+        </td>
+      </tr>
+      <tr>
+        <td>Gender: </td>
+        <td>
+          @Html.DropDownListFor(m => m.Name, new List<SelectListItem> {
+              new SelectListItem{Text="Male", Value="M"},
+              new SelectListItem{Text="Female", Value="F"}
+          }, "Please select")
+        </td>
+      </tr>
+      <tr>
+        <td>City: </td>
+        <td>
+          @Html.TextBoxFor(m => m.Person_City)
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="submit" value="Submit"/></td>
+      </tr>
+    </table>
+}*@

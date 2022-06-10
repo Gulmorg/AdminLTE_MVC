@@ -10,5 +10,10 @@ namespace AdminLTE_MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult TestPage()
+        {
+            return View();
+        }
     }
 }
