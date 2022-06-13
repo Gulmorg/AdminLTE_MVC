@@ -2,7 +2,7 @@
 {
     public class DashboardViewModel
     {
-        public CardCreationModel CardCreationModel { get; set; }
+        public CardGauge CardGauge { get; set; }
         public IEnumerable<Target> Target { get; set; }
     }
 }

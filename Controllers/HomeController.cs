@@ -36,7 +36,7 @@ namespace AdminLTE_MVC.Controllers
         {
             var target = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.1.3.1.9");
 
-            var deviceList = new List<Target>()
+            var targetList = new List<Target>()
             {
                 target.ChangeDeviceId("201001"),
                 target.ChangeDeviceId("201002"),
@@ -46,8 +46,8 @@ namespace AdminLTE_MVC.Controllers
 
             var viewModel = new DashboardViewModel
             {
-                Target = deviceList,
-                CardCreationModel = new CardCreationModel(target)
+                Target = targetList,
+                CardGauge = new CardGauge(target)
             };
 
             return View(viewModel);
