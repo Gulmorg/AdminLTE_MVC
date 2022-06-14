@@ -11,7 +11,7 @@ namespace AdminLTE_MVC.Helpers
                 if (item.Id.ToString().EndsWith(id)) return item;
             }
 
-            return list.First();
+            throw new Exception("Device id is null!");
         }
     }
 }

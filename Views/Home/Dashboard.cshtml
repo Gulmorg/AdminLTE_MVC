@@ -106,7 +106,29 @@
 </div>
 
 <script>
-let options = {
+                        // Serialize gauge values into json and save the values inside variables
+let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
+let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
+let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
+let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
+let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
+let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
+let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
+let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
+
+let gauge = [];
+
+// Looping through cards
+for (let i = 0; i < @Model.CardGauge.GetCardCount(); i++) {
+    const value             = parseFloat(valueList[i]);
+    const minValue          = parseFloat(minList[i]);
+    const lowAlarmValue     = parseFloat(lowAlarmList[i]);
+    const lowWarningValue   = parseFloat(lowWarningList[i]);
+    const highWarningValue  = parseFloat(highWarningList[i]);
+    const highAlarmValue    = parseFloat(highAlarmList[i]);
+    const maxValue          = parseFloat(maxList[i]);
+
+    const options = {
     // color configs
     colorStart: "#6fadcf",
     colorStop: void 0,
@@ -131,6 +153,20 @@ let options = {
       subWidth: 0.6,
       subColor: "#666666"
     },
+    // static zones
+    staticZones: [
+        { strokeStyle: "#F03E3E", min: minValue,          max: lowAlarmValue },
+        { strokeStyle: "#FFDD00", min: lowAlarmValue,     max: lowWarningValue },
+        { strokeStyle: "#30B32D", min: lowWarningValue,   max: highWarningValue },
+        { strokeStyle: "#FFDD00", min: highWarningValue,  max: highAlarmValue },
+        { strokeStyle: "#F03E3E", min: highAlarmValue,    max: maxValue },
+    ],
+    // static labels
+    staticLabels: {
+        font: "10px sans-serif",
+        labels: [minValue, lowAlarmValue, lowWarningValue, highWarningValue, highAlarmValue, maxValue],
+        fractionDigits: 0,
+    },
     // the span of the gauge arc
     angle: 0.1,
     // line thickness
@@ -146,65 +182,30 @@ let options = {
     // High resolution support
     highDpiSupport: true
 };
-let gauge = [];
 
-let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
-let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
-let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
-let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
-let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
-let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
-let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
-let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
-
-// Looping through cards
-for (let i = 0; i < @Model.CardGauge.GetCardCount(); i++) {
-    let value = parseFloat(valueList[i]);
-    let minValue = parseFloat(minList[i]);
-    let lowAlarmValue = parseFloat(lowAlarmList[i]);
-    let lowWarningValue = parseFloat(lowWarningList[i]);
-    let highWarningValue = parseFloat(highWarningList[i]);
-    let highAlarmValue = parseFloat(highAlarmList[i]);
-    let maxValue = parseFloat(maxList[i]);
-
-    currentElementId = "gauge" + i;
+    const currentElementId = "gauge" + i;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
-
-    gauge[i].staticZones = [
-        { strokeStyle: "#F03E3E", min: minValue,          max: lowAlarmValue },
-        { strokeStyle: "#FFDD00", min: lowAlarmValue,     max: lowWarningValue },
-        { strokeStyle: "#30B32D", min: lowWarningValue,   max: highWarningValue },
-        { strokeStyle: "#FFDD00", min: highWarningValue,  max: highAlarmValue },
-        { strokeStyle: "#F03E3E", min: highAlarmValue,    max: maxValue },
-    ];
-
-    // console log region
-    {
-        console.log(nameList[i]);
-        console.log(typeof (minValue));
-        console.log(minValue);
-        console.log(typeof (lowAlarmValue));
-        console.log(lowAlarmValue);
-        console.log(typeof (lowWarningValue));
-        console.log(lowWarningValue);
-        console.log(typeof (highWarningValue));
-        console.log(highWarningValue);
-        console.log(typeof (highAlarmValue));
-        console.log(highAlarmValue);
-        console.log(typeof (maxValue));
-        console.log(maxValue);
-        console.log();
-    }
-
-    gauge[i].staticLabels = {
-        font: "10px sans-serif",
-        labels: [minValue, lowAlarmValue, lowWarningValue, highWarningValue, highAlarmValue, maxValue],
-        fractionDigits: 0,
-    };
-
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
     gauge[i].set(value)
+
+    // console log region
+    //{
+    //    console.log(nameList[i]);
+    //    console.log(typeof (minValue));
+    //    console.log(minValue);
+    //    console.log(typeof (lowAlarmValue));
+    //    console.log(lowAlarmValue);
+    //    console.log(typeof (lowWarningValue));
+    //    console.log(lowWarningValue);
+    //    console.log(typeof (highWarningValue));
+    //    console.log(highWarningValue);
+    //    console.log(typeof (highAlarmValue));
+    //    console.log(highAlarmValue);
+    //    console.log(typeof (maxValue));
+    //    console.log(maxValue);
+    //    console.log();
+    //}
 }
 </script>
 <script src="~/js/pages/popup.js"></script>
