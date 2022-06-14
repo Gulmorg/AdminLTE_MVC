@@ -14,9 +14,8 @@ namespace AdminLTE_MVC.Models
 
             cardType = type;    // css class string (header background colour)
             cardTitle = SnmpManager.GetValue(new Target("192.168.2.11", "public", "").ChangeOid(SnmpManager.SetOid("Name"))).ToString();    // HARDCODED VALUES
-
-            SetFasIcon();
             SetValueSuffix();
+            SetFasIcon();
         }
 
         ~Card() => CardCount--;                                 // probably doesn't work on page reload

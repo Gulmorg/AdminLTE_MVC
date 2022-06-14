@@ -85,8 +85,9 @@
     <div class="row row-auto">
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card("warning", "TestCard").Generate(Model.Target[0]))
-        @(new Card("primary", "TestCard").Generate(Model.Target[4]))
+        @(new Card("warning", "TestCard").Generate(Model.Target[0]))        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes, currently the min/max values etc. -->
+        @(new Card("primary", "TestCard").Generate(Model.Target[4]))        <!--       are being displayed in order of which card is higher up in the hierarchy -->    
+                                                                        
       </section>
 
       <!-- Column B -->
