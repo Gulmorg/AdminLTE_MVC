@@ -162,7 +162,7 @@
 </div>
 
 <script>
-var options = {
+let options = {
     // color configs
     colorStart: "#6fadcf",
     colorStop: void 0,
@@ -202,29 +202,38 @@ var options = {
     // High resolution support
     highDpiSupport: true
 };
-var gauge = [];
-for (var i = 0; i < @Model.CardGauge.GetLength(); i++) {
+let gauge = [];
+for (let i = 0; i < @Model.CardGauge.GetLength(); i++) {
     currentElementId = 'gauge' + i;
-    console.log(currentElementId);
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
+
+    let nameList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
+    let valueList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
+    let minList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
+    let lowAlarmList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
+    let lowWarningList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
+    let highWarningList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
+    let highAlarmList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
+    let maxList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
+
     gauge[i].staticZones = [
-        { strokeStyle: "#F03E3E", min: @Model.CardGauge.GetMin(), max: @Model.CardGauge.GetLowAlarm() },
-        { strokeStyle: "#FFDD00", min: @Model.CardGauge.GetLowAlarm(), max: @Model.CardGauge.GetLowWarning() },
-        { strokeStyle: "#30B32D", min: @Model.CardGauge.GetLowWarning(), max: @Model.CardGauge.GetHighWarning() },
-        { strokeStyle: "#FFDD00", min: @Model.CardGauge.GetHighWarning(), max: @Model.CardGauge.GetHighAlarm() },
-        { strokeStyle: "#F03E3E", min: @Model.CardGauge.GetHighAlarm(), max: @Model.CardGauge.GetMax() }
+        { strokeStyle: "#F03E3E", min: minList[i], max: lowAlarmList[i] },
+        { strokeStyle: "#FFDD00", min: lowAlarmList[i], max: lowWarningList[i] },
+        { strokeStyle: "#30B32D", min: lowWarningList[i], max: highWarningList[i] },
+        { strokeStyle: "#FFDD00", min: highWarningList[i], max: highAlarmList[i] },
+        { strokeStyle: "#F03E3E", min: highAlarmList[i], max: maxList[i] },
     ];
 
     gauge[i].staticLabels = {
         font: "10px sans-serif",
-        labels: [@Model.CardGauge.GetMin(), @Model.CardGauge.GetLowAlarm(), @Model.CardGauge.GetLowWarning(), @Model.CardGauge.GetHighWarning(), @Model.CardGauge.GetHighAlarm(), @Model.CardGauge.GetMax()],
-        fractionDigits: 0
+        labels: [minList[i], lowAlarmList[i], lowWarningList[i], highWarningList[i], highAlarmList[i], maxList[i],
+        fractionDigits: 0,
     };
 
-    gauge[i].maxValue = @Model.CardGauge.GetMax();
-    gauge[i].set(@Model.CardGauge.GetValue())
+    gauge[i].minValue = minList[i];
+    gauge[i].maxValue = maxList[i];
+    gauge[i].set(valueList[i])
 }
-
 </script>
 <script src="~/js/pages/popup.js"></script>
 <script src="~/js/pages/sorting.js"></script>
