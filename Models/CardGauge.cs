@@ -17,13 +17,13 @@
             // Loop for each element in dictionary
             foreach (var dataPair in targetData)
             {
-                var oid = SetOid(dataPair.Key);
+                var oid = SetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
                 var dataList = Snmp.SnmpManager.WalkRequest(target.ChangeOid(oid));
 
                 // Loop and add values to the list for each device
                 foreach (var data in dataList)
                 {
-                    Console.WriteLine(data.Data.ToString());
+                    Console.WriteLine($"{data.Id}: {dataPair.Key} = {data.Data.ToString()}");
                     targetData[dataPair.Key].Add(data.Data.ToString());
                 }
             }
@@ -32,17 +32,17 @@
         public string Title { get; set; } = string.Empty;
 
         #region Public Dictionary Access
-        public List<string> Name => targetData["Name"];
-        public List<string> Value => targetData["Value"];
-        public List<string> Min => targetData["Min"];
-        public List<string> Max => targetData["Max"];
-        public List<string> LowAlarm => targetData["LowAlarm"];
-        public List<string> LowWarning => targetData["LowWarning"];
-        public List<string> HighWarning => targetData["HighWarning"];
-        public List<string> HighAlarm => targetData["HighAlarm"];
+        public List<string> GetName() => targetData["Name"];
+        public List<string> GetValue() => targetData["Value"];
+        public List<string> GetMin() => targetData["Min"];
+        public List<string> GetMax() => targetData["Max"];
+        public List<string> GetLowAlarm() => targetData["LowAlarm"];
+        public List<string> GetLowWarning() => targetData["LowWarning"];
+        public List<string> GetHighWarning() => targetData["HighWarning"];
+        public List<string> GetHighAlarm() => targetData["HighAlarm"];
         #endregion
 
-        private readonly Dictionary<string, List<string>> targetData = new Dictionary<string, List<string>>()
+        private readonly Dictionary<string, List<string>> targetData = new()
         {
             { "Name", new List<string>() },
             { "Value", new List<string>() },
@@ -54,6 +54,7 @@
             { "HighAlarm", new List<string>() }
         };
 
+        // Sets the oid according to the name of the agent passed in
         private static string SetOid(string dataKey) => dataKey switch
         {
             "Name" => NAME_OID,

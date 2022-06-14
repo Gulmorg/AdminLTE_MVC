@@ -1,9 +1,4 @@
 ﻿@using AdminLTE_MVC.Snmp;
-@{
-    Console.ForegroundColor = ConsoleColor.Red; 
-    Console.WriteLine(Model); 
-    Console.WriteLine(SnmpManager.GetValue(Model.Target[1])); 
-}
 
 <!-- Modal Popup -->
 <div class="modal fade" id="dialog" runat="server">
@@ -207,29 +202,27 @@ var options = {
     // High resolution support
     highDpiSupport: true
 };
-var gaugeModel = @Model.CardGauge;
-
 var gauge = [];
-for (var i = 0; i < gaugeModel.length; i++) {
+for (var i = 0; i < @Model.CardGauge.length; i++) {
     currentElementId = 'gauge' + i;
     console.log(currentElementId);
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
     gauge[i].staticZones = [
-        { strokeStyle: "#F03E3E", min: gaugeModel.Min, max: gaugeModel.LowAlarm },
-        { strokeStyle: "#FFDD00", min: gaugeModel.LowAlarm, max: gaugeModel.LowWarning },
-        { strokeStyle: "#30B32D", min: gaugeModel.LowWarning, max: gaugeModel.HighWarning },
-        { strokeStyle: "#FFDD00", min: gaugeModel.HighWarning, max: gaugeModel.HighAlarm },
-        { strokeStyle: "#F03E3E", min: gaugeModel.HighAlarm, max: gaugeModel.Max }
+        { strokeStyle: "#F03E3E", min: @Model.CardGauge.GetMin(), max: @Model.CardGauge.GetLowAlarm() },
+        { strokeStyle: "#FFDD00", min: @Model.CardGauge.GetLowAlarm(), max: @Model.CardGauge.GetLowWarning() },
+        { strokeStyle: "#30B32D", min: @Model.CardGauge.GetLowWarning(), max: @Model.CardGauge.GetHighWarning() },
+        { strokeStyle: "#FFDD00", min: @Model.CardGauge.GetHighWarning(), max: @Model.CardGauge.GetHighAlarm() },
+        { strokeStyle: "#F03E3E", min: @Model.CardGauge.GetHighAlarm(), max: @Model.CardGauge.GetMax() }
     ];
 
     gauge[i].staticLabels = {
         font: "10px sans-serif",
-        labels: [gaugeModel.Min, gaugeModel.LowAlarm, gaugeModel.LowWarning, gaugeModel.HighWarning, gaugeModel.HighAlarm, gaugeModel.Max],
+        labels: [@Model.CardGauge.GetMin(), @Model.CardGauge.GetLowAlarm(), @Model.CardGauge.GetLowWarning(), @Model.CardGauge.GetHighWarning(), @Model.CardGauge.GetHighAlarm(), @Model.CardGauge.GetMax()],
         fractionDigits: 0
     };
 
-    gauge[i].maxValue = gaugeModel.Max;
-    gauge[i].set(gaugeModel.Value)
+    gauge[i].maxValue = @Model.CardGauge.GetMax();
+    gauge[i].set(@Model.CardGauge.GetValue())
 }
 
 </script>

@@ -41,7 +41,8 @@ namespace AdminLTE_MVC.Controllers
                 target.ChangeDeviceId("201001"),
                 target.ChangeDeviceId("201002"),
                 target.ChangeDeviceId("201003"),
-                target.ChangeDeviceId("202001")
+                target.ChangeDeviceId("202001"),
+                target.ChangeDeviceId("203001"),
             };
 
             var viewModel = new DashboardViewModel
