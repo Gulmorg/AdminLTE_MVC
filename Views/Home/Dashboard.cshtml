@@ -83,79 +83,23 @@
     <div class="row row-auto">
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        <!-- Card 1 -->
-        <div class="card card-info">
-          <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-thermometer"></i> Kabin Sıcaklık</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body gauge-parent">
-            <div class="text-center">
-                @SnmpManager.GetValue(Model.Target[1]) °C
-            </div>
-            <canvas id="gaugeOne" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
-          </div>
-
-          <div class="card-footer text-center">
-            More info <i class="fas fa-arrow-circle-right"></i>
-          </div>
-        </div>
-       
+        @(new Card("warning", "TestCard").Generate(Model.Target[0]))
+        @(new Card("primary", "TestCard").Generate(Model.Target[4]))
       </section>
 
       <!-- Column B -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-       
-
-        <!-- Card 2 -->
-        <div class="card card-primary">
-          <div class="card-header ui-sortable-handle" style="cursor: move;">
-            <h3 class="card-title"><i class="fas fa-droplet"></i> Kabin Nem</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body gauge-parent">
-            <div class="text-center">
-              @SnmpManager.GetValue(Model.Target[3])%
-            </div>
-            <canvas id="gaugeTwo" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
-          </div>
-          <div class="card-footer text-center">
-            More info <i class="fas fa-arrow-circle-right"></i>
-          </div>
-        </div>
-        <!-- Card 3 -->
-
+        @(new Card("info", "TestCard").Generate(Model.Target[1]))
       </section>
 
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        <!-- Card 3 -->
-        @(new Card("primary", "TestCard").Generate(Model.Target[1]))
-
-        <!-- Card 2 -->
-
-        <!-- Card 3 -->
-
+        @(new Card("primary", "TestCard").Generate(Model.Target[2]))
       </section>
 
       <!-- Column D -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        <!-- Card 1 -->
-
-        <!-- Card 2 -->
-
-        <!-- Card 3 -->
-
+        @(new Card("primary", "TestCard").Generate(Model.Target[3]))
       </section>
     </div>
   </div>
@@ -203,36 +147,64 @@ let options = {
     highDpiSupport: true
 };
 let gauge = [];
-for (let i = 0; i < @Model.CardGauge.GetLength(); i++) {
-    currentElementId = 'gauge' + i;
+
+let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
+let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
+let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
+let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
+let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
+let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
+let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
+let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
+
+// Looping through cards
+for (let i = 0; i < @Model.CardGauge.GetCardCount(); i++) {
+    let value = parseFloat(valueList[i]);
+    let minValue = parseFloat(minList[i]);
+    let lowAlarmValue = parseFloat(lowAlarmList[i]);
+    let lowWarningValue = parseFloat(lowWarningList[i]);
+    let highWarningValue = parseFloat(highWarningList[i]);
+    let highAlarmValue = parseFloat(highAlarmList[i]);
+    let maxValue = parseFloat(maxList[i]);
+
+    currentElementId = "gauge" + i;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
 
-    let nameList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
-    let valueList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
-    let minList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
-    let lowAlarmList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
-    let lowWarningList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
-    let highWarningList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
-    let highAlarmList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
-    let maxList = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
-
     gauge[i].staticZones = [
-        { strokeStyle: "#F03E3E", min: minList[i], max: lowAlarmList[i] },
-        { strokeStyle: "#FFDD00", min: lowAlarmList[i], max: lowWarningList[i] },
-        { strokeStyle: "#30B32D", min: lowWarningList[i], max: highWarningList[i] },
-        { strokeStyle: "#FFDD00", min: highWarningList[i], max: highAlarmList[i] },
-        { strokeStyle: "#F03E3E", min: highAlarmList[i], max: maxList[i] },
+        { strokeStyle: "#F03E3E", min: minValue,          max: lowAlarmValue },
+        { strokeStyle: "#FFDD00", min: lowAlarmValue,     max: lowWarningValue },
+        { strokeStyle: "#30B32D", min: lowWarningValue,   max: highWarningValue },
+        { strokeStyle: "#FFDD00", min: highWarningValue,  max: highAlarmValue },
+        { strokeStyle: "#F03E3E", min: highAlarmValue,    max: maxValue },
     ];
+
+    // console log region
+    {
+        console.log(nameList[i]);
+        console.log(typeof (minValue));
+        console.log(minValue);
+        console.log(typeof (lowAlarmValue));
+        console.log(lowAlarmValue);
+        console.log(typeof (lowWarningValue));
+        console.log(lowWarningValue);
+        console.log(typeof (highWarningValue));
+        console.log(highWarningValue);
+        console.log(typeof (highAlarmValue));
+        console.log(highAlarmValue);
+        console.log(typeof (maxValue));
+        console.log(maxValue);
+        console.log();
+    }
 
     gauge[i].staticLabels = {
         font: "10px sans-serif",
-        labels: [minList[i], lowAlarmList[i], lowWarningList[i], highWarningList[i], highAlarmList[i], maxList[i],
+        labels: [minValue, lowAlarmValue, lowWarningValue, highWarningValue, highAlarmValue, maxValue],
         fractionDigits: 0,
     };
 
-    gauge[i].minValue = minList[i];
-    gauge[i].maxValue = maxList[i];
-    gauge[i].set(valueList[i])
+    gauge[i].minValue = minValue;
+    gauge[i].maxValue = maxValue;
+    gauge[i].set(value)
 }
 </script>
 <script src="~/js/pages/popup.js"></script>

@@ -6,12 +6,11 @@ namespace AdminLTE_MVC.Models
 {
     public class Card
     {
-        private static byte CardCount;
+        public static byte CardCount { get; private set; }
 
         public Card(string type, string title)
         {
             Id = CardCount++;
-            Position = Id;
 
             // Type of the card (header background colour)
             CardType = type;
@@ -22,7 +21,6 @@ namespace AdminLTE_MVC.Models
         ~Card() => CardCount--;
 
         public byte Id { get; }
-        public byte Position { get; set; }
         public string CardType { get; set; }
         public string CardTitle { get; set; }
 
@@ -42,7 +40,7 @@ namespace AdminLTE_MVC.Models
                          $"    <div class=\"text-center\">" +
                          $"        {SnmpManager.GetValue(target)} °C" +
                          $"    </div>" +
-                         $"    <canvas id = \"gaugeThree\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
+                         $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
 
                          $"  <div class=\"card-footer text-center\">" +

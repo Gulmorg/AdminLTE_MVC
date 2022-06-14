@@ -23,7 +23,6 @@
                 // Loop and add values to the list for each device
                 foreach (var data in dataList)
                 {
-                    Console.WriteLine($"{data.Id}: {dataPair.Key} = {data.Data.ToString()}");
                     targetData[dataPair.Key].Add(data.Data.ToString());
                 }
                 Console.WriteLine("------------------------------------------------------------------------------");
@@ -41,7 +40,7 @@
         public List<string> GetLowWarning() => targetData["LowWarning"];
         public List<string> GetHighWarning() => targetData["HighWarning"];
         public List<string> GetHighAlarm() => targetData["HighAlarm"];
-        public int GetLength() => targetData.Count;
+        public int GetCardCount() => Card.CardCount;
         #endregion
 
         private readonly Dictionary<string, List<string>> targetData = new()
