@@ -26,6 +26,7 @@
                     Console.WriteLine($"{data.Id}: {dataPair.Key} = {data.Data.ToString()}");
                     targetData[dataPair.Key].Add(data.Data.ToString());
                 }
+                Console.WriteLine("------------------------------------------------------------------------------");
             }
         }
 
@@ -40,6 +41,7 @@
         public List<string> GetLowWarning() => targetData["LowWarning"];
         public List<string> GetHighWarning() => targetData["HighWarning"];
         public List<string> GetHighAlarm() => targetData["HighAlarm"];
+        public int GetLength() => targetData.Count;
         #endregion
 
         private readonly Dictionary<string, List<string>> targetData = new()
@@ -54,7 +56,7 @@
             { "HighAlarm", new List<string>() }
         };
 
-        // Sets the oid according to the name of the agent passed in
+        // Sets the OID according to the name of the agent passed in
         private static string SetOid(string dataKey) => dataKey switch
         {
             "Name" => NAME_OID,

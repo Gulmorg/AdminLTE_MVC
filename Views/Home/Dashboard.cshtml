@@ -203,7 +203,7 @@ var options = {
     highDpiSupport: true
 };
 var gauge = [];
-for (var i = 0; i < @Model.CardGauge.length; i++) {
+for (var i = 0; i < @Model.CardGauge.GetLength(); i++) {
     currentElementId = 'gauge' + i;
     console.log(currentElementId);
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
