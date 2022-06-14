@@ -1,7 +1,9 @@
 ﻿@using AdminLTE_MVC.Snmp;
-
 @{
-    Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine(Model); Console.WriteLine(SnmpManager.GetValue(Model.Target[1])); }
+    Console.ForegroundColor = ConsoleColor.Red; 
+    Console.WriteLine(Model); 
+    Console.WriteLine(SnmpManager.GetValue(Model.Target[1])); 
+}
 
 <!-- Modal Popup -->
 <div class="modal fade" id="dialog" runat="server">
@@ -165,7 +167,6 @@
 </div>
 
 <script>
-    // TODO: Set the settings in a foreach loop from the dictionary
 var options = {
     // color configs
     colorStart: "#6fadcf",
@@ -179,12 +180,6 @@ var options = {
       length: 0.8,
       strokeWidth: 0.035,
       iconScale: 1.0
-    },
-    // static labels
-    staticLabels: {
-      font: "10px sans-serif",
-      labels: [0, 20, 25, 35, 40, 50],
-      fractionDigits: 0
     },
     // render ticks
     renderTicks: {
@@ -212,27 +207,31 @@ var options = {
     // High resolution support
     highDpiSupport: true
 };
-// TODO: Create gauges and set options in a loop using the CardGauge.cs dictionary
-    // static zones
-    //staticZones: [
-    //  {strokeStyle: "#F03E3E", min: 0, max: 20},
-    //  {strokeStyle: "#FFDD00", min: 20, max: 25},
-    //  {strokeStyle: "#30B32D", min: 25, max: 35},
-    //  {strokeStyle: "#FFDD00", min: 35, max: 40},
-    //  {strokeStyle: "#F03E3E", min: 40, max: 50}
-    //],
-var gaugeOne = new Gauge(document.getElementById('gaugeOne')).setOptions(options);
-var gaugeTwo = new Gauge(document.getElementById('gaugeTwo')).setOptions(options);
-var gaugeThree = new Gauge(document.getElementById('gaugeThree')).setOptions(options);
+var gaugeModel = @Model.CardGauge;
 
-gaugeOne.maxValue = 50;
-gaugeOne.set(@SnmpManager.GetValue(Model.Target[1]));
+var gauge = [];
+for (var i = 0; i < gaugeModel.length; i++) {
+    currentElementId = 'gauge' + i;
+    console.log(currentElementId);
+    gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
+    gauge[i].staticZones = [
+        { strokeStyle: "#F03E3E", min: gaugeModel.Min, max: gaugeModel.LowAlarm },
+        { strokeStyle: "#FFDD00", min: gaugeModel.LowAlarm, max: gaugeModel.LowWarning },
+        { strokeStyle: "#30B32D", min: gaugeModel.LowWarning, max: gaugeModel.HighWarning },
+        { strokeStyle: "#FFDD00", min: gaugeModel.HighWarning, max: gaugeModel.HighAlarm },
+        { strokeStyle: "#F03E3E", min: gaugeModel.HighAlarm, max: gaugeModel.Max }
+    ];
 
-gaugeTwo.maxValue = 100;
-gaugeTwo.set(@SnmpManager.GetValue(Model.Target[3]));
+    gauge[i].staticLabels = {
+        font: "10px sans-serif",
+        labels: [gaugeModel.Min, gaugeModel.LowAlarm, gaugeModel.LowWarning, gaugeModel.HighWarning, gaugeModel.HighAlarm, gaugeModel.Max],
+        fractionDigits: 0
+    };
 
-gaugeThree.maxValue = 50;
-gaugeThree.set(@SnmpManager.GetValue(Model.Target[1]));
+    gauge[i].maxValue = gaugeModel.Max;
+    gauge[i].set(gaugeModel.Value)
+}
+
 </script>
 <script src="~/js/pages/popup.js"></script>
 <script src="~/js/pages/sorting.js"></script>
