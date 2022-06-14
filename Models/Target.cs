@@ -1,7 +1,8 @@
 ﻿using Lextm.SharpSnmpLib;
 
 namespace AdminLTE_MVC.Models
-{
+{        
+    // TODO: split into 2 parts; one part would have ip/community/security info, other would have oid/devId info
     public struct Target
     {
         #region Contructors

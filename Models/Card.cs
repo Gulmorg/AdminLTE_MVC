@@ -19,7 +19,8 @@ namespace AdminLTE_MVC.Models
             SetValueSuffix();
         }
 
-        ~Card() => CardCount--; // probably doesn't work on page reload
+        ~Card() => CardCount--;                                 // probably doesn't work on page reload
+        public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
 
         private readonly byte id;
         private readonly string cardType;
