@@ -11,28 +11,31 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public CardGenerator(Target target, string? title = null)
         {
-            id = CardCount++;
+            var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
+            id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
 
             this.target = target;
 
             // Set title
-            if (string.IsNullOrEmpty(title)) cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString();
+            if (string.IsNullOrEmpty(title)) cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString(); // This looks horrible TODO: Extensions?
             else cardTitle = title;
 
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
             valueSuffix = GetValueSuffix(dataType);
             faIcon = GetFaIcon(dataType);
             headerColor = GetHeaderColor(dataType); // css class string (header background colour)
+
+            CardCount++;
         }
 
-        ~CardGenerator() => CardCount--;                                 // probably doesn't work on page reload
+        ~CardGenerator() => CardCount--;                        // probably doesn't work on page reload
         public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
                                                                 // this sometimes doesn't get called on page reloads with the modal submit, 
                                                                 // likely won't be an issue since the page won't be reloaded 
                                                                 // but rather the card will be added via ajax but just keep in mind
 
         private readonly Target target;
-        private readonly byte id;
+        private readonly uint id;
         private readonly string cardTitle;
         private readonly string headerColor;
         private readonly string valueSuffix;
@@ -40,7 +43,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public IHtmlContent Generate() // TODO: fix value/breakpoints mismatch
         {
-            var output = $"<!-- Card {id + 1} -->" +
+            var output = $"<!-- Card {id} -->" +
                          $"<div class=\"card card-{headerColor}\" runat=\"server\">" +
                          $"  <div class=\"card-header\">" +
                          $"    <h3 class=\"card-title\"><i class=\"fas fa-{faIcon} mr-2\"></i>{cardTitle}</h3>" +

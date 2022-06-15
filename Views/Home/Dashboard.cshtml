@@ -26,7 +26,7 @@
               <label for="Name">Element</label>
               <select class="custom-select" id="cardTitle">
                 @(new ListGenerator(Model.Target).Generate())
-            </select>
+              </select>
             </div>
           </div>
           <div class="card-footer">
@@ -159,6 +159,7 @@ for (let i = 0; i < @Model.DataCollector.GetCardCount(); i++) {
     // High resolution support
     highDpiSupport: true
 };
+    let cardId              = JSON.parse('@Html.Raw(Json.Serialize(new TModel()))');    // !!!URGENT!!! Pass in the CardGenerator.id (private field for now)
 
     const currentElementId = "gauge" + i;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
