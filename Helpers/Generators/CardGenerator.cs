@@ -27,6 +27,9 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         ~CardGenerator() => CardCount--;                                 // probably doesn't work on page reload
         public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
+                                                                // this sometimes doesn't get called on page reloads with the modal submit, 
+                                                                // likely won't be an issue since the page won't be reloaded 
+                                                                // but rather the card will be added via ajax but just keep in mind
 
         private readonly Target target;
         private readonly byte id;
