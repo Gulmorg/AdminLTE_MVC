@@ -16,7 +16,6 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         private List<string> titles = new();
 
-
         public IHtmlContent Generate()
         {
             var output = string.Empty;
