@@ -25,7 +25,7 @@
             <div class="form-group">
               <label for="Name">Element</label>
               <select class="custom-select" id="cardTitle">
-                @(new ListGenerator().Generate())
+                @(new ListGenerator(Model.Target).Generate())
             </select>
             </div>
           </div>
