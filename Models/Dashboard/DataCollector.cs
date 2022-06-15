@@ -1,8 +1,9 @@
-﻿using AdminLTE_MVC.Snmp;
+﻿using AdminLTE_MVC.Helpers.Generators;
+using AdminLTE_MVC.Snmp;
 
-namespace AdminLTE_MVC.Models
+namespace AdminLTE_MVC.Models.Dashboard
 {
-    public class DataCollector  // bad name
+    public class DataCollector
     {
         public DataCollector(Target target)
         {
@@ -31,7 +32,7 @@ namespace AdminLTE_MVC.Models
         public List<string> GetHighWarnings() => targetData["HighWarning"];
         public List<string> GetHighAlarms() => targetData["HighAlarm"];
 
-        public int GetCardCount() => Card.CardCount;
+        public int GetCardCount() => CardGenerator.CardCount;
         #endregion
 
         private readonly Dictionary<string, List<string>> targetData = new()

@@ -1,4 +1,4 @@
-﻿namespace AdminLTE_MVC.Models
+﻿namespace AdminLTE_MVC.Models.Dashboard
 {
     public class DashboardViewModel
     {

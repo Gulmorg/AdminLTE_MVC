@@ -1,14 +1,15 @@
 ﻿using AdminLTE_MVC.Helpers;
+using AdminLTE_MVC.Models.Dashboard;
 using AdminLTE_MVC.Snmp;
 using Microsoft.AspNetCore.Html;
 
-namespace AdminLTE_MVC.Models
+namespace AdminLTE_MVC.Helpers.Generators
 {
-    public class Card
+    public class CardGenerator
     {
-        public static byte CardCount { get; private set; }
+        public static byte CardCount { get; private set; }  // This should be in a dashboard model or database and manipulated by the CardGenerator.cs constructor
 
-        public Card(Target target, string? title = null)
+        public CardGenerator(Target target, string? title = null)
         {
             id = CardCount++;
 
@@ -24,7 +25,7 @@ namespace AdminLTE_MVC.Models
             headerColor = GetHeaderColor(dataType); // css class string (header background colour)
         }
 
-        ~Card() => CardCount--;                                 // probably doesn't work on page reload
+        ~CardGenerator() => CardCount--;                                 // probably doesn't work on page reload
         public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
 
         private readonly Target target;

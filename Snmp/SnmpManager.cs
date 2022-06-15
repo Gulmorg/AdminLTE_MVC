@@ -2,7 +2,7 @@
 using Lextm.SharpSnmpLib.Messaging;
 using AdminLTE_MVC.Helpers;
 using System.Net;
-using AdminLTE_MVC.Models;
+using AdminLTE_MVC.Models.Dashboard;
 
 namespace AdminLTE_MVC.Snmp
 {

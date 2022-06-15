@@ -1,4 +1,5 @@
 ﻿using AdminLTE_MVC.Models;
+using AdminLTE_MVC.Models.Dashboard;
 using AdminLTE_MVC.Snmp;
 using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Authorization;

@@ -1,6 +1,8 @@
-﻿@using AdminLTE_MVC.Snmp;
+﻿@using AdminLTE_MVC.Helpers.Generators;
+@using AdminLTE_MVC.Snmp;
+
 @{
-    Card.ResetCardCount();  // I don't like this
+    CardGenerator.ResetCardCount();  // I don't like this (~see CardGenerator.CardCount for future fix, the reset method should be in the aforementioned model/data class)
 }
 <!-- Modal Popup -->
 <div class="modal fade" id="dialog" runat="server">
@@ -23,15 +25,7 @@
             <div class="form-group">
               <label for="Name">Element</label>
               <select class="custom-select" id="cardTitle">
-                <option>option 1</option>
-                <option>option 2</option>
-                <option>option 3</option>
-                <option>option 4</option>
-                <option>option 5</option>
-                <option>option 2</option>
-                <option>option 3</option>
-                <option>option 4</option>
-                <option>option 5</option>
+                @(new ListGenerator().Generate())
             </select>
             </div>
           </div>
@@ -66,23 +60,23 @@
     <div class="row row-auto">
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card(Model.Target[0], "Override test").Generate())        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes -->
-        @(new Card(Model.Target[4]).Generate())        <!-- currently the min/max values etc. are being displayed in order of which card is higher up in the hierarchy -->
+        @(new CardGenerator(Model.Target[0], "Override test").Generate())        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes -->
+        @(new CardGenerator(Model.Target[4]).Generate())        <!-- currently the min/max values etc. are being displayed in order of which card is higher up in the hierarchy -->
       </section>
 
       <!-- Column B -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card(Model.Target[1]).Generate())
+        @(new CardGenerator(Model.Target[1]).Generate())
       </section>
 
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card(Model.Target[2]).Generate())
+        @(new CardGenerator(Model.Target[2]).Generate())
       </section>
 
       <!-- Column D -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card(Model.Target[3]).Generate())
+        @(new CardGenerator(Model.Target[3]).Generate())
       </section>
     </div>
   </div>
