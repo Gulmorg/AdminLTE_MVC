@@ -8,7 +8,7 @@ using System.Dynamic;
 
 namespace AdminLTE_MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -48,7 +48,7 @@ namespace AdminLTE_MVC.Controllers
             var viewModel = new DashboardViewModel
             {
                 Target = targetList,
-                CardGauge = new CardGauge(target)
+                DataCollector = new DataCollector(target)
             };
 
             return View(viewModel);

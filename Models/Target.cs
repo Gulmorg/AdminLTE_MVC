@@ -34,7 +34,7 @@ namespace AdminLTE_MVC.Models
         public readonly string DeviceId { get; } = string.Empty;
         public readonly VersionCode VersionCode { get; } = VersionCode.V1;
 
-        public Target ChangeOid(string newId) => new(ip: Ip, port: Port, community: CommunityName, oid: newId, version: VersionCode);
+        public Target ChangeOid(string newId) => new(ip: Ip, port: Port, community: CommunityName, oid: newId, devId: DeviceId, version: VersionCode);
         public Target ChangeDeviceId(string newDeviceId) => new(ip: Ip, port: Port, community: CommunityName, oid: Oid, devId: newDeviceId, version: VersionCode);
     }
 }

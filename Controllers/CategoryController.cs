@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminLTE_MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CategoryController : Controller
     {
         public void Index() { }

@@ -1,6 +1,10 @@
 using AdminLTE_MVC.Data;
+using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+
+OctetString.DefaultEncoding = new UTF8Encoding();
 
 var builder = WebApplication.CreateBuilder(args);
 

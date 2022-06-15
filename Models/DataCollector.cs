@@ -2,9 +2,9 @@
 
 namespace AdminLTE_MVC.Models
 {
-    public class CardGauge
+    public class DataCollector  // bad name
     {
-        public CardGauge(Target target)
+        public DataCollector(Target target)
         {
             // Loop for each element in dictionary
             foreach (var dataPair in targetData)
@@ -21,15 +21,16 @@ namespace AdminLTE_MVC.Models
         }
 
         #region Public Dictionary Access
-        public List<string> GetDeviceId() => targetData["DeviceId"];
-        public List<string> GetName() => targetData["Name"];
-        public List<string> GetValue() => targetData["Value"];
-        public List<string> GetMin() => targetData["Min"];
-        public List<string> GetMax() => targetData["Max"];
-        public List<string> GetLowAlarm() => targetData["LowAlarm"];
-        public List<string> GetLowWarning() => targetData["LowWarning"];
-        public List<string> GetHighWarning() => targetData["HighWarning"];
-        public List<string> GetHighAlarm() => targetData["HighAlarm"];
+        public List<string> GetDeviceIds() => targetData["DeviceId"];
+        public List<string> GetNames() => targetData["Name"];
+        public List<string> GetValues() => targetData["Value"];
+        public List<string> GetMins() => targetData["Min"];
+        public List<string> GetMaxes() => targetData["Max"];
+        public List<string> GetLowAlarms() => targetData["LowAlarm"];
+        public List<string> GetLowWarnings() => targetData["LowWarning"];
+        public List<string> GetHighWarnings() => targetData["HighWarning"];
+        public List<string> GetHighAlarms() => targetData["HighAlarm"];
+
         public int GetCardCount() => Card.CardCount;
         #endregion
 

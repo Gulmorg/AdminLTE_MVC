@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminLTE_MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ContactController : Controller
     {
         public IActionResult Index()

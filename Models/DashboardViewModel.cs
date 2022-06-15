@@ -2,7 +2,7 @@
 {
     public class DashboardViewModel
     {
-        public CardGauge? CardGauge { get; set; }
+        public DataCollector? DataCollector { get; set; }
         public IEnumerable<Target>? Target { get; set; }
     }
 }

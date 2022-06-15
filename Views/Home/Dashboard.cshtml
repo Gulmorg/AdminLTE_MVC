@@ -11,53 +11,34 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-         @* @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-          {
-              <table cellpadding="0" cellspacing="0">
-              <tr>
-              <th colspan="2" align="center">Person Details</th>
-              </tr>
-              <tr>
-              <td>Card Title: </td>
-              <td>
-                  @Html.TextBoxFor(m => m.CardCreationModel.Title)
-              </td>
-              </tr>
-              <tr>
-              <td>Element: </td>
-              <td>
-                  @Html.DropDownListFor(m => m.CardCreationModel.ElementName, new List<SelectListItem>
-                  { 
-                      new SelectListItem{Text="Male", Value="M"},
-                      new SelectListItem{Text="Female", Value="F"}
-                  }, "Please select")
-                  
-              </td>
-              </tr>
-              <tr>
-              <td></td>
-              <td><input type="submit" value="Submit"/></td>
-              </tr>
-              </table>
-          }*@
-       @* <form>
+        <form>
           <div class="card-body">
             <!-- Title Field -->
             <div class="form-group">
               <label for="Title">Card Title</label>
-              <input type="text" class="form-control" id="cardTitle" placeholder="Enter title" />
+              <input type="text" class="form-control" id="cardTitle" placeholder="Auto-select Title" />
             </div>
 
             <!-- Element Field -->
             <div class="form-group">
               <label for="Name">Element</label>
-              <input type="radio" class="form-control" id="cardTitle" placeholder="Enter title" />
+              <select class="custom-select" id="cardTitle">
+                <option>option 1</option>
+                <option>option 2</option>
+                <option>option 3</option>
+                <option>option 4</option>
+                <option>option 5</option>
+                <option>option 2</option>
+                <option>option 3</option>
+                <option>option 4</option>
+                <option>option 5</option>
+            </select>
             </div>
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>*@
+        </form>
       </div>
     </div>
   </div>
@@ -85,24 +66,23 @@
     <div class="row row-auto">
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card("warning", "TestCard").Generate(Model.Target[0]))        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes, currently the min/max values etc. -->
-        @(new Card("primary", "TestCard").Generate(Model.Target[4]))        <!--       are being displayed in order of which card is higher up in the hierarchy -->    
-                                                                        
+        @(new Card(Model.Target[0], "Override test").Generate())        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes -->
+        @(new Card(Model.Target[4]).Generate())        <!-- currently the min/max values etc. are being displayed in order of which card is higher up in the hierarchy -->
       </section>
 
       <!-- Column B -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card("info", "TestCard").Generate(Model.Target[1]))
+        @(new Card(Model.Target[1]).Generate())
       </section>
 
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card("primary", "TestCard").Generate(Model.Target[2]))
+        @(new Card(Model.Target[2]).Generate())
       </section>
 
       <!-- Column D -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new Card("primary", "TestCard").Generate(Model.Target[3]))
+        @(new Card(Model.Target[3]).Generate())
       </section>
     </div>
   </div>
@@ -110,19 +90,19 @@
 
 <script>
                         // Serialize gauge values into json and save the values inside variables
-let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetName()))');
-let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetValue()))');
-let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMin()))');
-let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowAlarm()))');
-let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetLowWarning()))');
-let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighWarning()))');
-let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetHighAlarm()))');
-let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.CardGauge.GetMax()))');
+let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetNames()))');
+let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetValues()))');
+let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetMins()))');
+let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetLowAlarms()))');
+let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetLowWarnings()))');
+let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetHighWarnings()))');
+let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetHighAlarms()))');
+let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetMaxes()))');
 
 let gauge = [];
 
 // Looping through cards
-for (let i = 0; i < @Model.CardGauge.GetCardCount(); i++) {
+for (let i = 0; i < @Model.DataCollector.GetCardCount(); i++) {
     const value             = parseFloat(valueList[i]);
     const minValue          = parseFloat(minList[i]);
     const lowAlarmValue     = parseFloat(lowAlarmList[i]);
@@ -191,24 +171,6 @@ for (let i = 0; i < @Model.CardGauge.GetCardCount(); i++) {
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
     gauge[i].set(value)
-
-    // console log region
-    //{
-    //    console.log(nameList[i]);
-    //    console.log(typeof (minValue));
-    //    console.log(minValue);
-    //    console.log(typeof (lowAlarmValue));
-    //    console.log(lowAlarmValue);
-    //    console.log(typeof (lowWarningValue));
-    //    console.log(lowWarningValue);
-    //    console.log(typeof (highWarningValue));
-    //    console.log(highWarningValue);
-    //    console.log(typeof (highAlarmValue));
-    //    console.log(highAlarmValue);
-    //    console.log(typeof (maxValue));
-    //    console.log(maxValue);
-    //    console.log();
-    //}
 }
 </script>
 <script src="~/js/pages/popup.js"></script>

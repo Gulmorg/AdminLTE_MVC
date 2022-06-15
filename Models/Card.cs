@@ -8,29 +8,36 @@ namespace AdminLTE_MVC.Models
     {
         public static byte CardCount { get; private set; }
 
-        public Card(string type, string title)
+        public Card(Target target, string? title = null)
         {
             id = CardCount++;
 
-            cardType = type;    // css class string (header background colour)
-            cardTitle = SnmpManager.GetValue(new Target("192.168.2.11", "public", "").ChangeOid(SnmpManager.SetOid("Name"))).ToString();    // HARDCODED VALUES
-            SetValueSuffix();
-            SetFasIcon();
+            this.target = target;
+
+            // Set title
+            if (string.IsNullOrEmpty(title)) cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString();
+            else cardTitle = title;
+
+            var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
+            valueSuffix = GetValueSuffix(dataType);
+            faIcon = GetFaIcon(dataType);
+            headerColor = GetHeaderColor(dataType); // css class string (header background colour)
         }
 
         ~Card() => CardCount--;                                 // probably doesn't work on page reload
         public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
 
+        private readonly Target target;
         private readonly byte id;
-        private readonly string cardType;
         private readonly string cardTitle;
-        private string valueSuffix;
-        private string faIcon;
+        private readonly string headerColor;
+        private readonly string valueSuffix;
+        private readonly string faIcon;
 
-        public IHtmlContent Generate(Target target) // TODO: fix value/breakpoints mismatch
+        public IHtmlContent Generate() // TODO: fix value/breakpoints mismatch
         {
-            var output = $"<!-- Card 1 -->" +
-                         $"<div class=\"card card-{cardType}\" runat=\"server\">" +
+            var output = $"<!-- Card {id + 1} -->" +
+                         $"<div class=\"card card-{headerColor}\" runat=\"server\">" +
                          $"  <div class=\"card-header\">" +
                          $"    <h3 class=\"card-title\"><i class=\"fas fa-{faIcon} mr-2\"></i>{cardTitle}</h3>" +
                          $"    <div class=\"card-tools\">" +
@@ -54,15 +61,26 @@ namespace AdminLTE_MVC.Models
             return new HtmlString(output);
         }
 
-        private void SetValueSuffix()   // temp
+        private static string GetValueSuffix(string type) => type switch
         {
-            var output = "°C";
-            valueSuffix = output;
-        }
-        private void SetFasIcon()       // temp
+            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_SUFFIX,
+            "humidity" => Data.FakeDatabase.Data.HUMIDITY_SUFFIX,
+            "voltage" => Data.FakeDatabase.Data.VOLTAGE_SUFFIX,
+            _ => "",
+        };
+        private static string GetFaIcon(string type) => type switch
         {
-            var output = "thermometer";
-            faIcon = output;
-        }
+            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_ICON,
+            "humidity" => Data.FakeDatabase.Data.HUMIDITY_ICON,
+            "voltage" => Data.FakeDatabase.Data.VOLTAGE_ICON,
+            _ => "",
+        };
+        private static string GetHeaderColor(string type) => type switch
+        {
+            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_HEADER,
+            "humidity" => Data.FakeDatabase.Data.HUMIDITY_HEADER,
+            "voltage" => Data.FakeDatabase.Data.VOLTAGE_HEADER,
+            _ => "",
+        };
     }
 }
