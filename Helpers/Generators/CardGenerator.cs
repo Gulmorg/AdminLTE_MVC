@@ -12,41 +12,38 @@ namespace AdminLTE_MVC.Helpers.Generators
         public CardGenerator(Target target, string? title = null)
         {
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
-            id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
-
-            this.target = target;
+            Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
+            _target = target;
 
             // Set title
-            if (string.IsNullOrEmpty(title)) cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString(); // This looks horrible TODO: Extensions?
-            else cardTitle = title;
+            if (string.IsNullOrEmpty(title)) _cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString(); // This looks horrible TODO: Extensions?
+            else _cardTitle = title;
 
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
-            valueSuffix = GetValueSuffix(dataType);
-            faIcon = GetFaIcon(dataType);
-            headerColor = GetHeaderColor(dataType); // css class string (header background colour)
-
-            CardCount++;
+            _valueSuffix = GetValueSuffix(dataType);
+            _faIcon = GetFaIcon(dataType);
+            _headerColor = GetHeaderColor(dataType); // css class string (header background colour)
         }
 
-        ~CardGenerator() => CardCount--;                        // probably doesn't work on page reload
-        public static void ResetCardCount() => CardCount = 0;   // therefore, ResetCardCount() is called on dashboard reloads
-                                                                // this sometimes doesn't get called on page reloads with the modal submit, 
+        ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
+        public static void ResetCardCount() => CardCount = 0;   // this doesn't get called on page reloads with the modal submit, 
                                                                 // likely won't be an issue since the page won't be reloaded 
                                                                 // but rather the card will be added via ajax but just keep in mind
+        
+        public uint Id { get; private set; }
 
-        private readonly Target target;
-        private readonly uint id;
-        private readonly string cardTitle;
-        private readonly string headerColor;
-        private readonly string valueSuffix;
-        private readonly string faIcon;
+        private readonly Target _target;
+        private readonly string _cardTitle;
+        private readonly string _headerColor;
+        private readonly string _valueSuffix;
+        private readonly string _faIcon;
 
         public IHtmlContent Generate() // TODO: fix value/breakpoints mismatch
         {
-            var output = $"<!-- Card {id} -->" +
-                         $"<div class=\"card card-{headerColor}\" runat=\"server\">" +
+            var output = $"<!-- Card {Id} -->" +
+                         $"<div class=\"card card-{_headerColor}\" runat=\"server\">" +
                          $"  <div class=\"card-header\">" +
-                         $"    <h3 class=\"card-title\"><i class=\"fas fa-{faIcon} mr-2\"></i>{cardTitle}</h3>" +
+                         $"    <h3 class=\"card-title\"><i class=\"fas fa-{_faIcon} mr-2\"></i>{_cardTitle}</h3>" +
                          $"    <div class=\"card-tools\">" +
                          $"      <button type = \"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">" +
                          $"        <i class=\"fas fa-minus\"></i>" +
@@ -55,9 +52,9 @@ namespace AdminLTE_MVC.Helpers.Generators
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <div class=\"text-center\">" +
-                         $"        {SnmpManager.GetValue(target)} {valueSuffix}" +
+                         $"        {SnmpManager.GetValue(_target)} {_valueSuffix}" +
                          $"    </div>" +
-                         $"    <canvas id = \"gauge{id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
+                         $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
 
                          $"  <div class=\"card-footer text-center\">" +

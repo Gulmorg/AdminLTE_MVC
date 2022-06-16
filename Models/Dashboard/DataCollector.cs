@@ -21,18 +21,18 @@ namespace AdminLTE_MVC.Models.Dashboard
             }
         }
 
-        #region Public Dictionary Access
-        public List<string> GetDeviceIds() => targetData["DeviceId"];
-        public List<string> GetNames() => targetData["Name"];
-        public List<string> GetValues() => targetData["Value"];
-        public List<string> GetMins() => targetData["Min"];
-        public List<string> GetMaxes() => targetData["Max"];
-        public List<string> GetLowAlarms() => targetData["LowAlarm"];
-        public List<string> GetLowWarnings() => targetData["LowWarning"];
-        public List<string> GetHighWarnings() => targetData["HighWarning"];
-        public List<string> GetHighAlarms() => targetData["HighAlarm"];
+        public int CardCount => CardGenerator.CardCount;
 
-        public int GetCardCount() => CardGenerator.CardCount;
+        #region Public Dictionary Access
+        public List<string> DeviceIds => targetData["DeviceId"];
+        public List<string> Names => targetData["Name"];
+        public List<string> Values => targetData["Value"];
+        public List<string> Mins => targetData["Min"];
+        public List<string> Maxes => targetData["Max"];
+        public List<string> LowAlarms => targetData["LowAlarm"];
+        public List<string> LowWarnings => targetData["LowWarning"];
+        public List<string> HighWarnings => targetData["HighWarning"];
+        public List<string> HighAlarms => targetData["HighAlarm"];
         #endregion
 
         private readonly Dictionary<string, List<string>> targetData = new()

@@ -53,6 +53,15 @@
   </div>
 </div>
 
+@{
+    List<CardGenerator> generators = new();
+    generators.Add(new CardGenerator(Model.Target[0]));
+    generators.Add(new CardGenerator(Model.Target[1]));
+    generators.Add(new CardGenerator(Model.Target[2]));
+    generators.Add(new CardGenerator(Model.Target[3]));
+    generators.Add(new CardGenerator(Model.Target[4]));
+}
+
 <!-- Content -->
 <div class="content">
   <div class="container-fluid">
@@ -60,43 +69,46 @@
     <div class="row row-auto">
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new CardGenerator(Model.Target[0], "Override test").Generate())        <!-- TODO: Should couple Model.Target[a] with rest of the model attributes -->
-        @(new CardGenerator(Model.Target[4]).Generate())        <!-- currently the min/max values etc. are being displayed in order of which card is higher up in the hierarchy -->
+        @generators[0].Generate()
+        @generators[1].Generate()
       </section>
 
       <!-- Column B -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new CardGenerator(Model.Target[1]).Generate())
+        @generators[2].Generate()
       </section>
 
       <!-- Column C -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new CardGenerator(Model.Target[2]).Generate())
+        @generators[3].Generate()
       </section>
 
       <!-- Column D -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @(new CardGenerator(Model.Target[3]).Generate())
+        @generators[4].Generate()
       </section>
     </div>
   </div>
 </div>
 
 <script>
-                        // Serialize gauge values into json and save the values inside variables
-let nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetNames()))');
-let valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetValues()))');
-let minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetMins()))');
-let lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetLowAlarms()))');
-let lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetLowWarnings()))');
-let highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetHighWarnings()))');
-let highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetHighAlarms()))');
-let maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.GetMaxes()))');
+// Serialize gauge values into json and save the values inside variables
+const nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Names))');
+const valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Values))');
+const minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Mins))');
+const lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowAlarms))');
+const lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowWarnings))');
+const highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighWarnings))');
+const highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighAlarms))');
+const maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Maxes))');
+const generatorList       = JSON.parse('@Html.Raw(Json.Serialize(generators))');
+
+console.log(generatorList)
 
 let gauge = [];
 
 // Looping through cards
-for (let i = 0; i < @Model.DataCollector.GetCardCount(); i++) {
+for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const value             = parseFloat(valueList[i]);
     const minValue          = parseFloat(minList[i]);
     const lowAlarmValue     = parseFloat(lowAlarmList[i]);
@@ -104,6 +116,7 @@ for (let i = 0; i < @Model.DataCollector.GetCardCount(); i++) {
     const highWarningValue  = parseFloat(highWarningList[i]);
     const highAlarmValue    = parseFloat(highAlarmList[i]);
     const maxValue          = parseFloat(maxList[i]);
+    const genId             = parseInt(generatorList[i].id);    // Why this is 'id' instead of 'Id' is beyond me...
 
     const options = {
     // color configs
@@ -159,10 +172,10 @@ for (let i = 0; i < @Model.DataCollector.GetCardCount(); i++) {
     // High resolution support
     highDpiSupport: true
 };
-    let cardId              = JSON.parse('@Html.Raw(Json.Serialize(new TModel()))');    // !!!URGENT!!! Pass in the CardGenerator.id (private field for now)
 
-    const currentElementId = "gauge" + i;
+    const currentElementId = "gauge" + genId;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
+
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
     gauge[i].set(value)
