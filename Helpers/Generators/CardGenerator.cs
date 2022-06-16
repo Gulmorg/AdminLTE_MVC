@@ -61,7 +61,7 @@ namespace AdminLTE_MVC.Helpers.Generators
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
                          $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
-                         $"    <div class=\"text-center\">" +
+                         $"    <div class=\"gauge-text text-center\">" +
                          $"        {SnmpManager.GetValue(_target)} {_valueSuffix}" +
                          $"    </div>" +
                          $"  </div>" +
