@@ -16,7 +16,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 
             // Set value and breakpoints
             var value = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Value"))).ToString());
-            //value = 150f; // for testing purposes, values are saved in an integer where they are multiplied by 10 beforehand, hence 150f for testing with value of 15f
+            //value = 150f; // For testing purposes. Values are saved in an integer where they are multiplied by 10 beforehand, hence 150f for testing with a value of 15f
             var lowAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowAlarm"))).ToString());
             var lowWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowWarning"))).ToString());
             var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("HighWarning"))).ToString());

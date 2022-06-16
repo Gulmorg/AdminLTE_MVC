@@ -177,14 +177,13 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const currentElementId = "gauge-" + genId;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
     const currentElementTextId = "gauge-text-" + genId;
-    gauge[i].setTextField(document.getElementById(currentElementTextId));
+    gauge[i].setTextField(document.getElementById(currentElementTextId), 1);    // setTextField(value, fractionDigits)
 
     gauge[i].animationSpeed = 15; // set animation speed (32 is default value)
 
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
-    gauge[i].set(value, 1)
-
+    gauge[i].set(value)
 }
 </script>
 <script src="~/js/pages/popup.js"></script>
