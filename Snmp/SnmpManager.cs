@@ -25,7 +25,7 @@ namespace AdminLTE_MVC.Snmp
             return result;
         }
 
-        // Sets the OID according to the name of the agent passed in    TODO: move to snmp manager
+        // Sets the OID according to the name of the agent passed in
         public static string SetOid(string dataKey) => dataKey switch
         {
             "DeviceId"      => Data.FakeDatabase.Data.DEVID_OID,

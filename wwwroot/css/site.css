@@ -17,7 +17,9 @@
 }
 
 .gauge-text {
-  font-size: 1rem;
+  font-size: 0.9vw;
   width: 85%;
   margin: 0 auto;
+  height: 100%;
+  word-wrap: anywhere;
 }
