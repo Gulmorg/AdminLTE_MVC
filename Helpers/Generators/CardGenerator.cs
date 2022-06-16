@@ -57,10 +57,14 @@ namespace AdminLTE_MVC.Helpers.Generators
                          $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
 
-                         $"  <div class=\"card-footer text-center\">" +
+                         $"  <a href = \"#\" class=\"card-footer card-link text-center\">" +
                          $"    More info<i class=\"fas fa-arrow-circle-right ml-2\"></i>" +
-                         $"  </div>" +
+                         $"  </a>" +
                          $"</div>";
+
+            string str = $"< a href = \"#\" class=\"small-box-footer\">" +
+                         $"More info<i class=\"fas fa-arrow-circle-right\"></i>" +
+                         $"</a>";
 
             return new HtmlString(output);
         }
