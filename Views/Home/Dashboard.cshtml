@@ -110,6 +110,7 @@ let gauge = [];
 // Looping through cards
 for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const value             = parseFloat(valueList[i]);
+    console.log(value);
     const minValue          = parseFloat(minList[i]);
     const lowAlarmValue     = parseFloat(lowAlarmList[i]);
     const lowWarningValue   = parseFloat(lowWarningList[i]);
@@ -128,20 +129,20 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
     // customize pointer
     pointer: {
-      length: 0.8,
-      strokeWidth: 0.035,
+      length: 0.6,
+      strokeWidth: 0.06,
       iconScale: 1.0
     },
     // render ticks
     renderTicks: {
-      divisions: 5,
-      divWidth: 1.1,
-      divLength: 0.7,
-      divColor: "#333333",
-      subDivisions: 3,
-      subLength: 0.5,
-      subWidth: 0.6,
-      subColor: "#666666"
+    divisions: 5,
+    divWidth: 1.5,
+    divLength: 0.6,
+    divColor: '#333333',
+    subDivisions: 5,
+    subLength: 0.4,
+    subWidth: 1,
+    subColor: '#666666'
     },
     // static zones
     staticZones: [
@@ -160,7 +161,7 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     // the span of the gauge arc
     angle: 0,
     // line thickness
-    lineWidth: 0.44,
+    lineWidth: 0.36,
     // radius scale
     radiusScale: 1,
     // font size
@@ -170,15 +171,20 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     // if true, the min value of the gauge will be fixed
     limitMin: true,
     // High resolution support
-    highDpiSupport: true
-};
+    highDpiSupport: true,
 
-    const currentElementId = "gauge" + genId;
+};
+    const currentElementId = "gauge-" + genId;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
+    const currentElementTextId = "gauge-text-" + genId;
+    gauge[i].setTextField(document.getElementById(currentElementTextId));
+
+    gauge[i].animationSpeed = 15; // set animation speed (32 is default value)
 
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
-    gauge[i].set(value)
+    gauge[i].set(value, 1)
+
 }
 </script>
 <script src="~/js/pages/popup.js"></script>

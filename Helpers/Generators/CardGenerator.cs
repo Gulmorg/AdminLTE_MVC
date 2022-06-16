@@ -13,25 +13,28 @@ namespace AdminLTE_MVC.Helpers.Generators
         {
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
-            _target = target;
+
+            // Set value and breakpoints
+            var value = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Value"))).ToString());
+            //value = 150f; // for testing purposes, values are saved in an integer where they are multiplied by 10 beforehand, hence 150f for testing with value of 15f
+            var lowAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowAlarm"))).ToString());
+            var lowWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowWarning"))).ToString());
+            var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("HighWarning"))).ToString());
+            var highAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("HighAlarm"))).ToString());
 
             // Set title
-            if (string.IsNullOrEmpty(title))
-            {
-                string nameOid = SnmpManager.SetOid("Name");
-                _cardTitle = SnmpManager.GetValue(target.ChangeOid(nameOid)).ToString();
-            }
-            else 
-                _cardTitle = title;
+            _defaultTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString();
+            _cardTitle = string.IsNullOrEmpty(title) ? _defaultTitle : title;
 
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
-
             // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);
             // Icon to display in the header
             _faIcon = GetFaIcon(dataType);
-            // CSS class string (header background colour)
+            // CSS class string (header background color)
             _headerColor = GetHeaderColor(dataType);
+            // CSS class string (value background color)
+            _valueBackground = GetValueBackground(value, lowAlarm, lowWarning, highWarning, highAlarm);
         }
 
         ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
@@ -41,11 +44,12 @@ namespace AdminLTE_MVC.Helpers.Generators
         
         public uint Id { get; private set; }
 
-        private readonly Target _target;
+        private readonly string _defaultTitle;
         private readonly string _cardTitle;
         private readonly string _headerColor;
         private readonly string _valueSuffix;
         private readonly string _faIcon;
+        private readonly string _valueBackground;
 
         public IHtmlContent Generate()
         {
@@ -60,9 +64,9 @@ namespace AdminLTE_MVC.Helpers.Generators
                          $"    </div>" +
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
-                         $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
-                         $"    <div class=\"gauge-text text-center\">" +
-                         $"        {SnmpManager.GetValue(_target)} {_valueSuffix}" +
+                         $"    <canvas id = \"gauge-{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
+                         $"    <div class=\"badge bg-{_valueBackground} gauge-text\">" +
+                         $"        <span>{_defaultTitle}: </span><span id=\"gauge-text-{Id}\">Value not found!</span><span> {_valueSuffix}</span>" +
                          $"    </div>" +
                          $"  </div>" +
                          $"  <a href = \"#\" class=\"card-footer card-link text-center\">" +
@@ -94,5 +98,12 @@ namespace AdminLTE_MVC.Helpers.Generators
             "voltage" => Data.FakeDatabase.Data.VOLTAGE_HEADER,
             _ => "",
         };
+        private static string GetValueBackground(float value, float lowAlarm, float lowWarn, float highWarn, float highAlarm)
+        {
+            Console.WriteLine(value);
+            if (value < lowAlarm || value > highAlarm) return Data.FakeDatabase.Data.VALUE_BACKGROUD_ALARM;
+            if (value < lowWarn || value > highWarn) return Data.FakeDatabase.Data.VALUE_BACKGROUND_WARNING;
+            return Data.FakeDatabase.Data.VALUE_BACKGROUND_NORMAL;
+        }
     }
 }

@@ -20,7 +20,7 @@
         public const string HIGH_ALARM_OID      = ".1.3.6.1.4.1.39052.5.2.1.13";
         #endregion
 
-        #region Types
+        #region Dynamic HTML
         public const string TEMPERATURE_SUFFIX = "°C";
         public const string HUMIDITY_SUFFIX = "%";
         public const string VOLTAGE_SUFFIX = "V";
@@ -33,6 +33,9 @@
         public const string HUMIDITY_HEADER = "primary";
         public const string VOLTAGE_HEADER = "secondary";
 
+        public const string VALUE_BACKGROUD_ALARM = "danger";
+        public const string VALUE_BACKGROUND_WARNING = "warning";
+        public const string VALUE_BACKGROUND_NORMAL = "success";
         #endregion
     }
 }
