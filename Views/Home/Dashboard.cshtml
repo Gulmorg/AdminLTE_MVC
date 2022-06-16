@@ -70,7 +70,7 @@
       <!-- Column A -->
       <section class="col-lg-3 connectedSortable ui-sortable">
         @generators[0].Generate()
-        @generators[1].Generate()
+        @generators[4].Generate()
       </section>
 
       <!-- Column B -->
@@ -85,7 +85,7 @@
 
       <!-- Column D -->
       <section class="col-lg-3 connectedSortable ui-sortable">
-        @generators[4].Generate()
+        @generators[1].Generate()
       </section>
     </div>
   </div>
@@ -116,7 +116,7 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const highWarningValue  = parseFloat(highWarningList[i]);
     const highAlarmValue    = parseFloat(highAlarmList[i]);
     const maxValue          = parseFloat(maxList[i]);
-    const genId             = parseInt(generatorList[i].id);    // Why this is 'id' instead of 'Id' is beyond me...
+    const genId             = parseInt(generatorList[i].id);    // Why is this 'id' instead of 'Id'??? does the JSON parser 'javascriptify' the properties?
 
     const options = {
     // color configs
@@ -158,17 +158,17 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
         fractionDigits: 0,
     },
     // the span of the gauge arc
-    angle: 0.1,
+    angle: 0,
     // line thickness
     lineWidth: 0.44,
     // radius scale
-    radiusScale: 1.0,
+    radiusScale: 1,
     // font size
     fontSize: 40,
     // if false, max value increases automatically if value > maxValue
-    limitMax: false,
+    limitMax: true,
     // if true, the min value of the gauge will be fixed
-    limitMin: false,
+    limitMin: true,
     // High resolution support
     highDpiSupport: true
 };

@@ -16,13 +16,22 @@ namespace AdminLTE_MVC.Helpers.Generators
             _target = target;
 
             // Set title
-            if (string.IsNullOrEmpty(title)) _cardTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString(); // This looks horrible TODO: Extensions?
-            else _cardTitle = title;
+            if (string.IsNullOrEmpty(title))
+            {
+                string nameOid = SnmpManager.SetOid("Name");
+                _cardTitle = SnmpManager.GetValue(target.ChangeOid(nameOid)).ToString();
+            }
+            else 
+                _cardTitle = title;
 
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
+
+            // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);
+            // Icon to display in the header
             _faIcon = GetFaIcon(dataType);
-            _headerColor = GetHeaderColor(dataType); // css class string (header background colour)
+            // CSS class string (header background colour)
+            _headerColor = GetHeaderColor(dataType);
         }
 
         ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
@@ -38,7 +47,7 @@ namespace AdminLTE_MVC.Helpers.Generators
         private readonly string _valueSuffix;
         private readonly string _faIcon;
 
-        public IHtmlContent Generate() // TODO: fix value/breakpoints mismatch
+        public IHtmlContent Generate()
         {
             var output = $"<!-- Card {Id} -->" +
                          $"<div class=\"card card-{_headerColor}\" runat=\"server\">" +
@@ -51,20 +60,15 @@ namespace AdminLTE_MVC.Helpers.Generators
                          $"    </div>" +
                          $"  </div>" +
                          $"  <div class=\"card-body gauge-parent\">" +
+                         $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"    <div class=\"text-center\">" +
                          $"        {SnmpManager.GetValue(_target)} {_valueSuffix}" +
                          $"    </div>" +
-                         $"    <canvas id = \"gauge{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                          $"  </div>" +
-
                          $"  <a href = \"#\" class=\"card-footer card-link text-center\">" +
                          $"    More info<i class=\"fas fa-arrow-circle-right ml-2\"></i>" +
                          $"  </a>" +
                          $"</div>";
-
-            string str = $"< a href = \"#\" class=\"small-box-footer\">" +
-                         $"More info<i class=\"fas fa-arrow-circle-right\"></i>" +
-                         $"</a>";
 
             return new HtmlString(output);
         }

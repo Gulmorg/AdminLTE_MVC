@@ -8,7 +8,7 @@ namespace AdminLTE_MVC.Models.Dashboard
         public DataCollector(Target target)
         {
             // Loop for each element in dictionary
-            foreach (var dataPair in targetData)
+            foreach (var dataPair in _targetData)
             {
                 var oid = SnmpManager.SetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
                 var dataList = SnmpManager.WalkRequest(target.ChangeOid(oid));
@@ -16,7 +16,7 @@ namespace AdminLTE_MVC.Models.Dashboard
                 // Loop and add values to the list for each device
                 foreach (var data in dataList)
                 {
-                    targetData[dataPair.Key].Add(data.Data.ToString());
+                    _targetData[dataPair.Key].Add(data.Data.ToString());
                 }
             }
         }
@@ -24,18 +24,18 @@ namespace AdminLTE_MVC.Models.Dashboard
         public int CardCount => CardGenerator.CardCount;
 
         #region Public Dictionary Access
-        public List<string> DeviceIds => targetData["DeviceId"];
-        public List<string> Names => targetData["Name"];
-        public List<string> Values => targetData["Value"];
-        public List<string> Mins => targetData["Min"];
-        public List<string> Maxes => targetData["Max"];
-        public List<string> LowAlarms => targetData["LowAlarm"];
-        public List<string> LowWarnings => targetData["LowWarning"];
-        public List<string> HighWarnings => targetData["HighWarning"];
-        public List<string> HighAlarms => targetData["HighAlarm"];
+        public List<string> DeviceIds => _targetData["DeviceId"];
+        public List<string> Names => _targetData["Name"];
+        public List<string> Values => _targetData["Value"];
+        public List<string> Mins => _targetData["Min"];
+        public List<string> Maxes => _targetData["Max"];
+        public List<string> LowAlarms => _targetData["LowAlarm"];
+        public List<string> LowWarnings => _targetData["LowWarning"];
+        public List<string> HighWarnings => _targetData["HighWarning"];
+        public List<string> HighAlarms => _targetData["HighAlarm"];
         #endregion
 
-        private readonly Dictionary<string, List<string>> targetData = new()
+        private readonly Dictionary<string, List<string>> _targetData = new()
         {
             { "DeviceId", new List<string>() },
             { "Type", new List<string>() },
