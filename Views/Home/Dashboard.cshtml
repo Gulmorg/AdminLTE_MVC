@@ -56,38 +56,38 @@
 
 @{
     List<CardGenerator> generators = new();
-    generators.Add(new CardGenerator(Model.Target[0]));
-    generators.Add(new CardGenerator(Model.Target[1]));
-    generators.Add(new CardGenerator(Model.Target[2]));
-    generators.Add(new CardGenerator(Model.Target[3]));
-    generators.Add(new CardGenerator(Model.Target[4]));
+    foreach (var target in Model.Target)
+    {
+        generators.Add(new CardGenerator(target));
+
+    }
+    //generators.Add(new CardGenerator(Model.Target[0]));
+    //generators.Add(new CardGenerator(Model.Target[1]));
+    //generators.Add(new CardGenerator(Model.Target[2]));
+    //generators.Add(new CardGenerator(Model.Target[3]));
+    //generators.Add(new CardGenerator(Model.Target[4]));
+
+    //@for (int i = 0; i < generators.Count; i++)
+    //    {
+    //                    generators[i].Generate();
+    //    }
 }
 
 <!-- Content -->
 <div class="content">
   <div class="container-fluid">
     <!-- First Row -->
-    <div class="row">
-      <!-- Column A -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
+    <div class="row">   <!-- TODO: Need a better grid system -->
         @generators[0].Generate()
-        @generators[4].Generate()
-      </section>
-
-      <!-- Column B -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
-        @generators[2].Generate()
-      </section>
-
-      <!-- Column C -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
-        @generators[3].Generate()
-      </section>
-
-      <!-- Column D -->
-      <section class="col-lg-3 connectedSortable ui-sortable">
         @generators[1].Generate()
-      </section>
+        @generators[3].Generate()
+        @generators[4].Generate()
+    </div>
+    <div class="row">   <!-- TODO: Need a better grid system --> <!-- Bug (probably), can't have duplicate items, test with a clear head -->
+        @*@generators[0].Generate()
+        @generators[3].Generate()
+        @generators[4].Generate()*@
+        @generators[2].Generate()
     </div>
   </div>
 </div>

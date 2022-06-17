@@ -1,10 +1,17 @@
 ﻿namespace AdminLTE_MVC.Data.FakeDatabase
 {
-    public static class Data
+    public static class FakeData
     {
         #region Credentials
         public static string Username { get; } = "test@gmail.com";
         public static string Password { get; } = "123123";
+        #endregion
+
+        #region Server Settings
+        public const string IP = "192.168.2.11";
+        public const ushort PORT = 161;
+        public const string COMMUNITY_NAME = "public";
+
         #endregion
 
         #region OIDs

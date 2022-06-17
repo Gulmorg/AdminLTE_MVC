@@ -11,12 +11,12 @@ namespace AdminLTE_MVC.Models.Dashboard
             foreach (var dataPair in _targetData)
             {
                 var oid = SnmpManager.SetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
-                var dataList = SnmpManager.WalkRequest(target.ChangeOid(oid));
+                var dataList = SnmpManager.WalkValue(target.ChangeOid(oid));
 
                 // Loop and add values to the list for each device
                 foreach (var data in dataList)
                 {
-                    _targetData[dataPair.Key].Add(data.Data.ToString());
+                    _targetData[dataPair.Key].Add(data);
                 }
             }
         }

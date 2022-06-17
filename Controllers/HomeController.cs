@@ -1,5 +1,6 @@
 ﻿using AdminLTE_MVC.Models;
 using AdminLTE_MVC.Models.Dashboard;
+using AdminLTE_MVC.Data.FakeDatabase;
 using AdminLTE_MVC.Snmp;
 using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Authorization;
@@ -33,18 +34,17 @@ namespace AdminLTE_MVC.Controllers
             return View(targetList);
         }
 
-        public IActionResult Dashboard()    // TODO: Snmp walk instead of creating a list
+        public IActionResult Dashboard()
         {
-            var target = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7");
+            // Get device IDs by walking the device id agent
+            var target = new Target(ip: FakeData.IP, community: FakeData.COMMUNITY_NAME, oid: FakeData.DEVID_OID);
+            var devIdList = SnmpManager.WalkValue(target);
 
-            var targetList = new List<Target>()
+            var targetList = new List<Target>();
+            foreach (var devId in devIdList)
             {
-                target.ChangeDeviceId("201001"),
-                target.ChangeDeviceId("201002"),
-                target.ChangeDeviceId("201003"),
-                target.ChangeDeviceId("202001"),
-                target.ChangeDeviceId("203001"),
-            };
+                targetList.Add(target.ChangeDeviceId(devId));
+            }
 
             var viewModel = new DashboardViewModel
             {

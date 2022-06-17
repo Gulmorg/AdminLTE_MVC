@@ -53,56 +53,58 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public IHtmlContent Generate()
         {
-            var output = $"<!-- Card {Id} -->" +
-                         $"<div class=\"card card-{_headerColor}\" runat=\"server\">" +
-                         $"  <div class=\"card-header\">" +
-                         $"    <h3 class=\"card-title\"><i class=\"fas fa-{_faIcon} mr-2\"></i>{_cardTitle}</h3>" +
-                         $"    <div class=\"card-tools\">" +
-                         $"      <button type = \"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">" +
-                         $"        <i class=\"fas fa-minus\"></i>" +
-                         $"      </button>" +
-                         $"    </div>" +
-                         $"  </div>" +
-                         $"  <div class=\"card-body gauge-parent\">" +
-                         $"    <canvas id = \"gauge-{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
-                         $"    <div class=\"badge bg-{_valueBackground} gauge-text\">" +
-                         $"        <span>{_defaultTitle}: </span><span id=\"gauge-text-{Id}\">Value not found!</span><span> {_valueSuffix}</span>" +
-                         $"    </div>" +
-                         $"  </div>" +
-                         $"  <a href = \"#\" class=\"card-footer card-link text-center\">" +
-                         $"    More info<i class=\"fas fa-arrow-circle-right ml-2\"></i>" +
-                         $"  </a>" +
-                         $"</div>";
+            var output =    $"<!-- Card {Id} -->" +
+                            $"<section class=\"col-lg-3 connectedSortable ui-sortable\"> "+
+                            $"  <div class=\"card card-{_headerColor}\" runat=\"server\">" +
+                            $"    <div class=\"card-header\">" +
+                            $"      <h3 class=\"card-title\"><i class=\"fas fa-{_faIcon} mr-2\"></i>{_cardTitle}</h3>" +
+                            $"      <div class=\"card-tools\">" +
+                            $"        <button type=\"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">" +
+                            $"          <i class=\"fas fa-minus\"></i>" +
+                            $"        </button>" +
+                            $"      </div>" +
+                            $"    </div>" +
+                            $"    <div class=\"card-body gauge-parent\" style=\"display: flex; !important\">" +
+                            $"      <canvas id = \"gauge-{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
+                            $"      <div class=\"badge bg-{_valueBackground} gauge-text\">" +
+                            $"          <span>{_defaultTitle}: </span><span id=\"gauge-text-{Id}\">Value not found!</span><span> {_valueSuffix}</span>" +
+                            $"      </div>" +
+                            $"    </div>" +
+                            $"    <a href = \"#\" class=\"card-footer card-link text-center\">" +
+                            $"      More info<i class=\"fas fa-arrow-circle-right ml-2\"></i>" +
+                            $"    </a>" +
+                            $"  </div>" +
+                            $"</section>";
 
             return new HtmlString(output);
         }
 
         private static string GetValueSuffix(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_SUFFIX,
-            "humidity" => Data.FakeDatabase.Data.HUMIDITY_SUFFIX,
-            "voltage" => Data.FakeDatabase.Data.VOLTAGE_SUFFIX,
+            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_SUFFIX,
+            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_SUFFIX,
+            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_SUFFIX,
             _ => "",
         };
         private static string GetFaIcon(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_ICON,
-            "humidity" => Data.FakeDatabase.Data.HUMIDITY_ICON,
-            "voltage" => Data.FakeDatabase.Data.VOLTAGE_ICON,
+            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_ICON,
+            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_ICON,
+            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_ICON,
             _ => "",
         };
         private static string GetHeaderColor(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.Data.TEMPERATURE_HEADER,
-            "humidity" => Data.FakeDatabase.Data.HUMIDITY_HEADER,
-            "voltage" => Data.FakeDatabase.Data.VOLTAGE_HEADER,
+            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_HEADER,
+            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_HEADER,
+            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_HEADER,
             _ => "",
         };
         private static string GetValueBackground(float value, float lowAlarm, float lowWarn, float highWarn, float highAlarm)
         {
-            if (value < lowAlarm || value > highAlarm) return Data.FakeDatabase.Data.VALUE_BACKGROUD_ALARM;
-            if (value < lowWarn || value > highWarn) return Data.FakeDatabase.Data.VALUE_BACKGROUND_WARNING;
-            return Data.FakeDatabase.Data.VALUE_BACKGROUND_NORMAL;
+            if (value < lowAlarm || value > highAlarm) return Data.FakeDatabase.FakeData.VALUE_BACKGROUD_ALARM;
+            if (value < lowWarn || value > highWarn) return Data.FakeDatabase.FakeData.VALUE_BACKGROUND_WARNING;
+            return Data.FakeDatabase.FakeData.VALUE_BACKGROUND_NORMAL;
         }
     }
 }
