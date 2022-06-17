@@ -65,16 +65,15 @@ namespace AdminLTE_MVC.Controllers
 
             Console.WriteLine($"Title: {title}\nElement: {element}");
 
-            var target = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7");
+            // Get device IDs by walking the device id agent
+            var target = new Target(ip: FakeData.IP, community: FakeData.COMMUNITY_NAME, oid: FakeData.DEVID_OID);
+            var devIdList = SnmpManager.WalkValue(target);
 
-            var targetList = new List<Target>()
+            var targetList = new List<Target>();
+            foreach (var devId in devIdList)
             {
-                target.ChangeDeviceId("201001"),
-                target.ChangeDeviceId("201002"),
-                target.ChangeDeviceId("201003"),
-                target.ChangeDeviceId("202001"),
-                target.ChangeDeviceId("203001"),
-            };
+                targetList.Add(target.ChangeDeviceId(devId));
+            }
 
             var viewModel = new DashboardViewModel
             {
@@ -82,7 +81,6 @@ namespace AdminLTE_MVC.Controllers
                 DataCollector = new DataCollector(target),
                 CardModel = new CardModel(),    // TODO: Get cards from DB
             };
-
             return View(viewModel);
         }
 
