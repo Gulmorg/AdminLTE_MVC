@@ -77,13 +77,13 @@
 <div class="content">
   <div class="container-fluid">
     <!-- First Row -->
-    <div class="row">   <!-- TODO: Need a better grid system -->
+    <div class="row">   <!-- TODO: Need a better grid system, or the old system in a procedurally generatable way -->
         @generators[0].Generate()
         @generators[1].Generate()
         @generators[3].Generate()
         @generators[4].Generate()
     </div>
-    <div class="row">   <!-- TODO: Need a better grid system --> <!-- Bug (probably), can't have duplicate items, test with a clear head -->
+    <div class="row">  <!-- Bug (probably), can't have duplicate items, test with a clear head -->
         @*@generators[0].Generate()
         @generators[3].Generate()
         @generators[4].Generate()*@
