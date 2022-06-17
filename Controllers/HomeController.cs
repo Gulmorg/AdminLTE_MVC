@@ -50,7 +50,7 @@ namespace AdminLTE_MVC.Controllers
             {
                 Target = targetList,
                 DataCollector = new DataCollector(target),
-                CardModel = new CardModel(),    // Get cards from DB
+                CardModel = new CardModel(),    // TODO: Get cards from DB
             };
 
             return View(viewModel);
@@ -61,7 +61,29 @@ namespace AdminLTE_MVC.Controllers
         {
             var title = cardModel.Title;
             var element = cardModel.Element;
-            return View(cardModel);
+            // Add new card
+
+            Console.WriteLine($"Title: {title}\nElement: {element}");
+
+            var target = new Target(ip: "192.168.2.11", community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7");
+
+            var targetList = new List<Target>()
+            {
+                target.ChangeDeviceId("201001"),
+                target.ChangeDeviceId("201002"),
+                target.ChangeDeviceId("201003"),
+                target.ChangeDeviceId("202001"),
+                target.ChangeDeviceId("203001"),
+            };
+
+            var viewModel = new DashboardViewModel
+            {
+                Target = targetList,
+                DataCollector = new DataCollector(target),
+                CardModel = new CardModel(),    // TODO: Get cards from DB
+            };
+
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -100,7 +100,6 @@ namespace AdminLTE_MVC.Helpers.Generators
         };
         private static string GetValueBackground(float value, float lowAlarm, float lowWarn, float highWarn, float highAlarm)
         {
-            Console.WriteLine(value);
             if (value < lowAlarm || value > highAlarm) return Data.FakeDatabase.Data.VALUE_BACKGROUD_ALARM;
             if (value < lowWarn || value > highWarn) return Data.FakeDatabase.Data.VALUE_BACKGROUND_WARNING;
             return Data.FakeDatabase.Data.VALUE_BACKGROUND_NORMAL;
