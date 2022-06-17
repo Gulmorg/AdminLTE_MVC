@@ -49,10 +49,19 @@ namespace AdminLTE_MVC.Controllers
             var viewModel = new DashboardViewModel
             {
                 Target = targetList,
-                DataCollector = new DataCollector(target)
+                DataCollector = new DataCollector(target),
+                CardModel = new CardModel(),    // Get cards from DB
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Dashboard(CardModel cardModel)
+        {
+            var title = cardModel.Title;
+            var element = cardModel.Element;
+            return View(cardModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

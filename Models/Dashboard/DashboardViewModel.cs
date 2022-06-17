@@ -4,5 +4,6 @@
     {
         public DataCollector? DataCollector { get; set; }
         public IEnumerable<Target>? Target { get; set; }
+        public CardModel? CardModel { get; set; }
     }
 }
