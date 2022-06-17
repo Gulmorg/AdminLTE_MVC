@@ -1,4 +1,4 @@
-.gauge-parent {
+.gauge-parent { /* this is a mess */
   position: relative;
   display: -ms-flexbox;
   -ms-flex-direction: column;
