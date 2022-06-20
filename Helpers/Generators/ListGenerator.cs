@@ -10,7 +10,7 @@ namespace AdminLTE_MVC.Helpers.Generators
         {
             foreach (var target in targets)
             {
-                titles.Add(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString());
+                titles.Add(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString());
             }
         }
 

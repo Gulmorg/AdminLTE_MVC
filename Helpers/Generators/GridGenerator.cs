@@ -8,7 +8,6 @@ namespace AdminLTE_MVC.Helpers.Generators
     {
         public GridGenerator(List<Target> targets)
         {
-            _cardGenerators = new List<CardGenerator>();
             foreach (var target in targets)
             {
                 var generator = new CardGenerator(target);
@@ -17,32 +16,62 @@ namespace AdminLTE_MVC.Helpers.Generators
             }
         }
 
-        public List<uint> CardIds { get; private set; } = new List<uint>();
+        public List<uint> CardIds { get; private set; } = new();
 
         private readonly List<CardGenerator> _cardGenerators = new();
+        private readonly string _columnWidth = (12 / FakeData.CARDS_PER_ROW).ToString();
 
         public IHtmlContent Generate()
         {
-            var output = string.Empty;
-            var cardCount = _cardGenerators.Count;
-            var mod = cardCount % FakeData.CARDS_PER_ROW != 0;
-            byte rowCount = (byte)(cardCount / FakeData.CARDS_PER_ROW + Convert.ToByte(mod));
+            var output = GenerateRow();
+            return new HtmlString(output);
+        }
+
+        private string GenerateRow()
+        {
+            Console.WriteLine("Generated row number: 1");
+            var output = "<div class=\"row\">";
+
+            int loopLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?    // If card amount is smaller than cards per row setting
+                    _cardGenerators.Count :                                     // set loop limit to card count
+                    FakeData.CARDS_PER_ROW;                                     // otherwise set it to cards per row
+
+            for (int col = 0; col < loopLimit; col++)
+            {
+                Console.WriteLine("generated column number: " + (col + 1));
+                output += GenerateColumns(col);
+            }
+            output += "</div>";
+
+            return output;
+        }
+
+        private string GenerateColumns(int col)
+        {
+            // if card count is more than cards per row: generate another card(i+cards_per_row) in a specific column
+
+            var output =    $"<section class=\"col-lg-{_columnWidth} connectedSortable ui-sortable\"> ";
+
+            var mod = _cardGenerators.Count % FakeData.CARDS_PER_ROW != 0;
+            int rowCount = (_cardGenerators.Count / FakeData.CARDS_PER_ROW + Convert.ToInt32(mod));
 
             for (int row = 0; row < rowCount; row++)
             {
-                byte loopLimit = FakeData.CARDS_PER_ROW + (row * FakeData.CARDS_PER_ROW) > cardCount ?  // If current row total width is bigger than the card amount
-                    (byte)cardCount :                                                                   // set loop limit to card count
-                    (byte)((row + 1) * FakeData.CARDS_PER_ROW);                                         // otherwise set it to cards per row
-
-                output += "<div class=\"row\">";
-                for (int i = row * FakeData.CARDS_PER_ROW; i < loopLimit; i++)
-                {
-                    output += _cardGenerators[i].Generate();
-                }
-                output += "</div>";
+                Console.WriteLine($"Generated Column: {col}, Row: {row}");
+                output += _cardGenerators[col].GenerateCard();
+                col += FakeData.CARDS_PER_ROW;
             }
 
-            return new HtmlString(output);
+            int secondRowIndex = col + FakeData.CARDS_PER_ROW;
+
+            //if (_cardGenerators.Count > FakeData.CARDS_PER_ROW &&
+            //    _cardGenerators.Count > secondRowIndex)
+            //{
+            //    output += _cardGenerators[secondRowIndex].GenerateCard();
+            //}
+
+            output += $"</section>";
+            return output;
         }
     }
 }

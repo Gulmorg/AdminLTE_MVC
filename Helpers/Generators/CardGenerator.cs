@@ -12,22 +12,22 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public CardGenerator(Target target, string? title = null)
         {
-            var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
+            var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
 
             // Set value and breakpoints
-            var value = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Value"))).ToString());
+            var value = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Value"))).ToString());
             //value = 150f; // For testing purposes. Values are saved in an integer where they are multiplied by 10 beforehand, hence 150f for testing with a value of 15f
-            var lowAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowAlarm"))).ToString());
-            var lowWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("LowWarning"))).ToString());
-            var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("HighWarning"))).ToString());
-            var highAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("HighAlarm"))).ToString());
+            var lowAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("LowAlarm"))).ToString());
+            var lowWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("LowWarning"))).ToString());
+            var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighWarning"))).ToString());
+            var highAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighAlarm"))).ToString());
 
             // Set title
-            _defaultTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Name"))).ToString();
+            _defaultTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString();
             _cardTitle = string.IsNullOrEmpty(title) ? _defaultTitle : title;
 
-            var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("Type"))).ToString();
+            var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Type"))).ToString();
             // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);
             // Icon to display in the header
@@ -36,8 +36,6 @@ namespace AdminLTE_MVC.Helpers.Generators
             _headerColor = GetHeaderColor(dataType);
             // CSS class string (value background color)
             _valueBackground = GetValueBackground(value, lowAlarm, lowWarning, highWarning, highAlarm);
-            // CSS class string (column width)
-            _columnWidth = (12 / FakeData.CARDS_PER_ROW).ToString();
         }
 
         ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
@@ -53,12 +51,10 @@ namespace AdminLTE_MVC.Helpers.Generators
         private readonly string _valueSuffix;
         private readonly string _faIcon;
         private readonly string _valueBackground;
-        private readonly string _columnWidth;
 
-        public IHtmlContent Generate()
+        public string GenerateCard()
         {
-            var output =    $"<!-- Card {Id} -->" +
-                            $"<section class=\"col-lg-{_columnWidth} connectedSortable ui-sortable\"> "+
+            var output =    $"  <!-- Card {Id} -->" +
                             $"  <div class=\"card card-{_headerColor}\" runat=\"server\">" +
                             $"    <div class=\"card-header\">" +
                             $"      <h3 class=\"card-title\"><i class=\"fas fa-{_faIcon} mr-2\"></i>{_cardTitle}</h3>" +
@@ -77,10 +73,9 @@ namespace AdminLTE_MVC.Helpers.Generators
                             $"    <a href = \"#\" class=\"card-footer card-link text-center\">" +
                             $"      More info<i class=\"fas fa-arrow-circle-right ml-2\"></i>" +
                             $"    </a>" +
-                            $"  </div>" +
-                            $"</section>";
-
-            return new HtmlString(output);
+                            $"  </div>";
+            
+            return output;
         }
 
         private static string GetValueSuffix(string type) => type switch

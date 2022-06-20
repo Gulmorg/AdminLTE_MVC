@@ -5,22 +5,24 @@ namespace AdminLTE_MVC.Models.Dashboard
 {
     public class DataCollector
     {
-        public DataCollector(Target target)
+        public DataCollector(List<Target> targets)
         {
-            // Loop for each element in dictionary
-            foreach (var dataPair in _targetData)
+            foreach (var target in targets)
             {
-                var oid = SnmpManager.SetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
-                var dataList = SnmpManager.WalkValue(target.ChangeOid(oid));
-
-                // Loop and add values to the list for each device
-                foreach (var data in dataList)
+                // Loop for each element in dictionary
+                foreach (var dataPair in _targetData)
                 {
+                    var oid = SnmpManager.GetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(target.DeviceId);
+                    var data = SnmpManager.GetValue(target.ChangeOid(oid));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("datalist value = " + data);
+                    Console.ResetColor();
                     _targetData[dataPair.Key].Add(data);
                 }
             }
         }
-
         public int CardCount => CardGenerator.CardCount;
 
         #region Public Dictionary Access

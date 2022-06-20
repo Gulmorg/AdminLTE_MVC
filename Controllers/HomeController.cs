@@ -46,10 +46,24 @@ namespace AdminLTE_MVC.Controllers
                 targetList.Add(target.ChangeDeviceId(devId));
             }
 
+            // temp
+            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7", devId: "201003"); // 5.2.1 == Analogs
+            targetList = new List<Target>()
+            {
+                targetTemplate.ChangeDeviceId("201001"),
+                targetTemplate.ChangeDeviceId("201002"),
+                targetTemplate.ChangeDeviceId("201003"),
+                targetTemplate.ChangeDeviceId("202001"),
+                targetTemplate.ChangeDeviceId("201001"),
+                targetTemplate.ChangeDeviceId("201002"),
+                targetTemplate.ChangeDeviceId("201003"),
+                targetTemplate.ChangeDeviceId("202001")
+            };
+
             var viewModel = new DashboardViewModel
             {
                 Targets = targetList,
-                DataCollector = new DataCollector(target),
+                DataCollector = new DataCollector(targetList),  // Snmp population
                 CardModel = new CardModel(),    // TODO: Get cards from DB
             };
 
@@ -78,7 +92,7 @@ namespace AdminLTE_MVC.Controllers
             var viewModel = new DashboardViewModel
             {
                 Targets = targetList,
-                DataCollector = new DataCollector(target),
+                DataCollector = new DataCollector(targetList),
                 CardModel = new CardModel(),    // TODO: Get cards from DB
             };
             return View(viewModel);

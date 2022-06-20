@@ -8,7 +8,7 @@ namespace AdminLTE_MVC.Snmp
 {
     internal static class SnmpManager
     {
-        public static ISnmpData GetValue(Target target) => GetRequest(target).Data;
+        public static string GetValue(Target target) => GetRequest(target).Data.ToString();
 
         private static Variable GetRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
 
@@ -46,7 +46,7 @@ namespace AdminLTE_MVC.Snmp
         }
 
         // Sets the OID according to the name of the agent passed in
-        public static string SetOid(string dataKey) => dataKey switch
+        public static string GetOid(string dataKey) => dataKey switch
         {
             "DeviceId"      => Data.FakeDatabase.FakeData.DEVID_OID,
             "Type"          => Data.FakeDatabase.FakeData.TYPE_OID,
