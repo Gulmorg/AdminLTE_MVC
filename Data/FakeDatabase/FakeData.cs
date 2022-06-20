@@ -44,5 +44,10 @@
         public const string VALUE_BACKGROUND_WARNING = "warning";
         public const string VALUE_BACKGROUND_NORMAL = "success";
         #endregion
+
+        #region UI Settings
+        public const byte CARDS_PER_ROW = 4;
+
+        #endregion
     }
 }

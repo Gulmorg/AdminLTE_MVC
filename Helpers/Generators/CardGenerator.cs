@@ -1,4 +1,5 @@
-﻿using AdminLTE_MVC.Helpers;
+﻿using AdminLTE_MVC.Data.FakeDatabase;
+using AdminLTE_MVC.Helpers;
 using AdminLTE_MVC.Models.Dashboard;
 using AdminLTE_MVC.Snmp;
 using Microsoft.AspNetCore.Html;
@@ -11,7 +12,6 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public CardGenerator(Target target, string? title = null)
         {
-            Console.WriteLine("test");
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
 
@@ -36,6 +36,8 @@ namespace AdminLTE_MVC.Helpers.Generators
             _headerColor = GetHeaderColor(dataType);
             // CSS class string (value background color)
             _valueBackground = GetValueBackground(value, lowAlarm, lowWarning, highWarning, highAlarm);
+            // CSS class string (column width)
+            _columnWidth = (12 / FakeData.CARDS_PER_ROW).ToString();
         }
 
         ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
@@ -51,11 +53,12 @@ namespace AdminLTE_MVC.Helpers.Generators
         private readonly string _valueSuffix;
         private readonly string _faIcon;
         private readonly string _valueBackground;
+        private readonly string _columnWidth;
 
         public IHtmlContent Generate()
         {
             var output =    $"<!-- Card {Id} -->" +
-                            $"<section class=\"col-lg-3 connectedSortable ui-sortable\"> "+
+                            $"<section class=\"col-lg-{_columnWidth} connectedSortable ui-sortable\"> "+
                             $"  <div class=\"card card-{_headerColor}\" runat=\"server\">" +
                             $"    <div class=\"card-header\">" +
                             $"      <h3 class=\"card-title\"><i class=\"fas fa-{_faIcon} mr-2\"></i>{_cardTitle}</h3>" +
@@ -82,30 +85,30 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         private static string GetValueSuffix(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_SUFFIX,
-            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_SUFFIX,
-            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_SUFFIX,
+            "temperature" => FakeData.TEMPERATURE_SUFFIX,
+            "humidity" => FakeData.HUMIDITY_SUFFIX,
+            "voltage" => FakeData.VOLTAGE_SUFFIX,
             _ => "",
         };
         private static string GetFaIcon(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_ICON,
-            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_ICON,
-            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_ICON,
+            "temperature" => FakeData.TEMPERATURE_ICON,
+            "humidity" => FakeData.HUMIDITY_ICON,
+            "voltage" => FakeData.VOLTAGE_ICON,
             _ => "",
         };
         private static string GetHeaderColor(string type) => type switch
         {
-            "temperature" => Data.FakeDatabase.FakeData.TEMPERATURE_HEADER,
-            "humidity" => Data.FakeDatabase.FakeData.HUMIDITY_HEADER,
-            "voltage" => Data.FakeDatabase.FakeData.VOLTAGE_HEADER,
+            "temperature" => FakeData.TEMPERATURE_HEADER,
+            "humidity" => FakeData.HUMIDITY_HEADER,
+            "voltage" => FakeData.VOLTAGE_HEADER,
             _ => "",
         };
         private static string GetValueBackground(float value, float lowAlarm, float lowWarn, float highWarn, float highAlarm)
         {
-            if (value < lowAlarm || value > highAlarm) return Data.FakeDatabase.FakeData.VALUE_BACKGROUD_ALARM;
-            if (value < lowWarn || value > highWarn) return Data.FakeDatabase.FakeData.VALUE_BACKGROUND_WARNING;
-            return Data.FakeDatabase.FakeData.VALUE_BACKGROUND_NORMAL;
+            if (value < lowAlarm || value > highAlarm) return FakeData.VALUE_BACKGROUD_ALARM;
+            if (value < lowWarn || value > highWarn) return FakeData.VALUE_BACKGROUND_WARNING;
+            return FakeData.VALUE_BACKGROUND_NORMAL;
         }
     }
 }

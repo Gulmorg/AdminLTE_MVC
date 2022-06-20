@@ -55,20 +55,15 @@
 </div>
 
 @{
-    CardColumnGenerator generator = new CardColumnGenerator(Model.Targets);
+    GridGenerator generator = new GridGenerator(Model.Targets);
     var generatorIds = generator.CardIds;
 }
 
 <!-- Content -->
 <div class="content">
   <div class="container-fluid">
-    <!-- First Row -->
-    <div class="row">   <!-- TODO: Need a better grid system, or the old system in a procedurally generatable way -->
-        @generator.GenerateColumn()
-    </div>
-@*    <div class="row">
-        @generator.GenerateColumn()
-    </div>*@
+    <!-- Generated Grid -->
+    @generator.Generate()
   </div>
 </div>
 
