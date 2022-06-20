@@ -26,7 +26,7 @@
             <div class="form-group">
               <label for="Name">Element</label>
               <select asp-for="CardModel.Element" class="custom-select" id="cardTitle">
-                @(new ListGenerator(Model.Target).Generate())
+                @(new ListGenerator(Model.Targets).Generate())
               </select>
             </div>
           </div>
@@ -55,22 +55,9 @@
 </div>
 
 @{
-    List<CardGenerator> generators = new();
-    foreach (var target in Model.Target)
-    {
-        generators.Add(new CardGenerator(target));
 
-    }
-    //generators.Add(new CardGenerator(Model.Target[0]));
-    //generators.Add(new CardGenerator(Model.Target[1]));
-    //generators.Add(new CardGenerator(Model.Target[2]));
-    //generators.Add(new CardGenerator(Model.Target[3]));
-    //generators.Add(new CardGenerator(Model.Target[4]));
-
-    //@for (int i = 0; i < generators.Count; i++)
-    //    {
-    //                    generators[i].Generate();
-    //    }
+    CardColumnGenerator generator = new CardColumnGenerator(Model.Targets);
+    var generatorIds = generator.CardIds;
 }
 
 <!-- Content -->
@@ -78,14 +65,11 @@
   <div class="container-fluid">
     <!-- First Row -->
     <div class="row">   <!-- TODO: Need a better grid system, or the old system in a procedurally generatable way -->
-        @generators[0].Generate()   <!-- Left here, find a way to generate() in a loop -->
-        @generators[1].Generate()
-        @generators[3].Generate()
-        @generators[4].Generate()
+        @generator.GenerateColumn()
     </div>
-    <div class="row">
-        @generators[2].Generate()
-    </div>
+@*    <div class="row">
+        @generator.GenerateColumn()
+    </div>*@
   </div>
 </div>
 
@@ -99,7 +83,7 @@ const lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.DataColle
 const highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighWarnings))');
 const highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighAlarms))');
 const maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Maxes))');
-const generatorList       = JSON.parse('@Html.Raw(Json.Serialize(generators))');
+const generatorIdList     = JSON.parse('@Html.Raw(Json.Serialize(generatorIds))');
 
 let gauge = [];
 
@@ -112,7 +96,7 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const highWarningValue  = parseFloat(highWarningList[i]);
     const highAlarmValue    = parseFloat(highAlarmList[i]);
     const maxValue          = parseFloat(maxList[i]);
-    const genId             = parseInt(generatorList[i].id);    // Why is this 'id' instead of 'Id'??? does the JSON parser 'javascriptify' the properties?
+    const genId             = parseInt(generatorIdList[i]);    // Why is this 'id' instead of 'Id'??? does the JSON parser 'javascriptify' the properties?
 
     const options = {
     // color configs

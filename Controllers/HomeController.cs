@@ -48,7 +48,7 @@ namespace AdminLTE_MVC.Controllers
 
             var viewModel = new DashboardViewModel
             {
-                Target = targetList,
+                Targets = targetList,
                 DataCollector = new DataCollector(target),
                 CardModel = new CardModel(),    // TODO: Get cards from DB
             };
@@ -77,7 +77,7 @@ namespace AdminLTE_MVC.Controllers
 
             var viewModel = new DashboardViewModel
             {
-                Target = targetList,
+                Targets = targetList,
                 DataCollector = new DataCollector(target),
                 CardModel = new CardModel(),    // TODO: Get cards from DB
             };
