@@ -27,6 +27,12 @@ namespace AdminLTE_MVC.Helpers.Generators
         {
             var output = string.Empty;
 
+            // Comment this out if fixed height grid
+            for (int i = _row * COLUMND_WIDTH; i < _cardGenerators.Count; i++)
+            {
+                output += _cardGenerators[i].Generate();
+            }
+
             // UNUSED: Generating every card on the same row works better for now, 
             // keep this just in case we convert to a fixed height grid
             //byte loopLimit = COLUMND_WIDTH + (_row * COLUMND_WIDTH) > _cardGenerators.Count ?     // If current row total width is bigger than the card amount
@@ -38,12 +44,6 @@ namespace AdminLTE_MVC.Helpers.Generators
             //    output += _cardGenerators[i].Generate();
             //}
             //_row++;
-
-            // Comment this out if fixed height grid
-            for (int i = _row * COLUMND_WIDTH; i < _cardGenerators.Count; i++)
-            {
-                output += _cardGenerators[i].Generate();
-            }
 
             return new HtmlString(output);
         }
