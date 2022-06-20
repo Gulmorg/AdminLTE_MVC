@@ -11,6 +11,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         public CardGenerator(Target target, string? title = null)
         {
+            Console.WriteLine("test");
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.SetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
 

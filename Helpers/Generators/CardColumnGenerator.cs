@@ -21,31 +21,37 @@ namespace AdminLTE_MVC.Helpers.Generators
         public List<uint> CardIds { get; private set; } = new List<uint>();
 
         private readonly List<CardGenerator> _cardGenerators = new();
-        private byte _row;
 
         public IHtmlContent GenerateColumn()
         {
             var output = string.Empty;
 
-            // Comment this out if fixed height grid
-            for (int i = _row * COLUMND_WIDTH; i < _cardGenerators.Count; i++)
-            {
-                output += _cardGenerators[i].Generate();
-            }
-
-            // UNUSED: Generating every card on the same row works better for now, 
-            // keep this just in case we convert to a fixed height grid
-            //byte loopLimit = COLUMND_WIDTH + (_row * COLUMND_WIDTH) > _cardGenerators.Count ?     // If current row total width is bigger than the card amount
-            //     (byte)_cardGenerators.Count :                                                    // set loop limit to card amount
-            //     (byte)(COLUMND_WIDTH + (_row * COLUMND_WIDTH));                                  // otherwise set it to total width
-
-            //for (int i = _row * COLUMND_WIDTH; i < loopLimit; i++)
+            // Non fixed height
+            //for (int i = _row * COLUMND_WIDTH; i < _cardGenerators.Count; i++)
             //{
             //    output += _cardGenerators[i].Generate();
             //}
-            //_row++;
+
+            // Fixed height
+            var mod = _cardGenerators.Count % COLUMND_WIDTH != 0;
+            byte rowCount = (byte)(_cardGenerators.Count / COLUMND_WIDTH + Convert.ToByte(mod));
+            Console.WriteLine($"generator count: {_cardGenerators.Count} / col width: {COLUMND_WIDTH} + mod: {mod}");
+            Console.WriteLine("= row count:" + rowCount);
+            for (int row = 0; row < rowCount; row++)
+            {
+                byte loopLimit = COLUMND_WIDTH + (row * COLUMND_WIDTH) > _cardGenerators.Count ?   // If current row total width is bigger than the card amount
+                    (byte)_cardGenerators.Count :                                                   // set loop limit to card amount
+                    (byte)(COLUMND_WIDTH + (row * COLUMND_WIDTH));                                 // otherwise set it to total width 
+
+                for (int i = row * COLUMND_WIDTH; i < loopLimit; i++)
+                {
+                    output += _cardGenerators[i].Generate();
+                }
+            }
 
             return new HtmlString(output);
         }
     }
 }
+
+
