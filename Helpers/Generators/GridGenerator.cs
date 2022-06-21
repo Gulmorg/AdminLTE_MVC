@@ -19,7 +19,7 @@ namespace AdminLTE_MVC.Helpers.Generators
         public List<uint> CardIds { get; private set; } = new();
 
         private readonly List<CardGenerator> _cardGenerators = new();
-        private readonly string _columnWidth = (12 / FakeData.CARDS_PER_ROW).ToString();
+        private readonly string _columnWidth = (12 / FakeData.CARDS_PER_ROW).ToString();    // 12 is how many divisions bootstrap makes
 
         public IHtmlContent Generate()
         {
