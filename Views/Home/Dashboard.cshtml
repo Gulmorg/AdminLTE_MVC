@@ -55,15 +55,15 @@
 </div>
 
 @{
-    GridGenerator generator = new GridGenerator(Model.Targets);
-    var generatorIds = generator.CardIds;
+    GridGenerator gridGenerator = new GridGenerator(Model.Targets);
+    var generatorIds = gridGenerator.CardIds;
 }
 
 <!-- Content -->
 <div class="content">
   <div class="container-fluid">
     <!-- Generated Grid -->
-    @generator.Generate()
+    @gridGenerator.Generate()
   </div>
 </div>
 

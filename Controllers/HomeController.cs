@@ -36,27 +36,17 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Dashboard()
         {
-            // Get device IDs by walking the device id agent
-            var target = new Target(ip: FakeData.IP, community: FakeData.COMMUNITY_NAME, oid: FakeData.DEVID_OID);
-            var devIdList = SnmpManager.WalkValue(target);
-
-            var targetList = new List<Target>();
-            foreach (var devId in devIdList)
-            {
-                targetList.Add(target.ChangeDeviceId(devId));
-            }
-
             // temp
-            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7", devId: "201003"); // 5.2.1 == Analogs
-            targetList = new List<Target>()
+            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7", devId: "201003");
+            var targetList = new List<Target>()
             {
                 targetTemplate.ChangeDeviceId("201001"),
                 targetTemplate.ChangeDeviceId("201002"),
                 targetTemplate.ChangeDeviceId("201003"),
                 targetTemplate.ChangeDeviceId("202001"),
-                targetTemplate.ChangeDeviceId("202001"),
+                //targetTemplate.ChangeDeviceId("202001"),
                 targetTemplate.ChangeDeviceId("201001"),
-                targetTemplate.ChangeDeviceId("201002"),
+                //targetTemplate.ChangeDeviceId("201002"),
                 //targetTemplate.ChangeDeviceId("201003"),
 
             };
@@ -76,19 +66,29 @@ namespace AdminLTE_MVC.Controllers
         {
             var title = cardModel.Title;
             var element = cardModel.Element;
-            // Add new card
-
             Console.WriteLine($"Title: {title}\nElement: {element}");
+
+            // temp
+            var targetTemplate = new Target(ip: FakeData.IP, port: FakeData.PORT, community: FakeData.COMMUNITY_NAME, oid: FakeData.VALUE_OID, devId: "201003");
 
             // Get device IDs by walking the device id agent
             var target = new Target(ip: FakeData.IP, community: FakeData.COMMUNITY_NAME, oid: FakeData.DEVID_OID);
-            var devIdList = SnmpManager.WalkValue(target);
 
             var targetList = new List<Target>();
-            foreach (var devId in devIdList)
+            var newTarget = target.ChangeDeviceId("203001");
+            targetList.Add(newTarget);
+
+
+
+            targetList = new List<Target>() // TODO: Get from db
             {
-                targetList.Add(target.ChangeDeviceId(devId));
-            }
+                targetTemplate.ChangeDeviceId("201001"),
+                targetTemplate.ChangeDeviceId("201002"),
+                targetTemplate.ChangeDeviceId("201003"),
+                targetTemplate.ChangeDeviceId("202001"),
+                targetTemplate.ChangeDeviceId("201001"),
+
+            };
 
             var viewModel = new DashboardViewModel
             {

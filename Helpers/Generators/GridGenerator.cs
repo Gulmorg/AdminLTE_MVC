@@ -29,18 +29,14 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         private string GenerateRow()
         {
-
             int columnLoopLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?  // If card amount is smaller than cards per row setting
                     _cardGenerators.Count :                                         // set loop limit to card count
                     FakeData.CARDS_PER_ROW;                                         // otherwise set it to cards per row
-            Console.WriteLine(columnLoopLimit);
+
             // Generate columns
             var output = "<div class=\"row\">";
             for (int cardIndex = 0; cardIndex < FakeData.CARDS_PER_ROW; cardIndex++)    // BUG: figure out a way to count how many counts per column
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("generated column index: " + cardIndex);
-
                 output += $"<section class=\"col-lg-{_columnWidth} connectedSortable ui-sortable\"> ";
                 if (cardIndex < columnLoopLimit) output += GenerateColumns(cardIndex);  // Index overflow protection for when there are less cards then FakeData.CARDS_PER_ROW
                 output += $"</section>";
@@ -50,38 +46,22 @@ namespace AdminLTE_MVC.Helpers.Generators
             return output;
         }
 
-        int _rowConsoleWriteLine = 0;
-        int _colConsoleWriteLine = 0;
         private string GenerateColumns(int cardIndex)
         {
-
-            var output = string.Empty;
-
             var mod = _cardGenerators.Count % FakeData.CARDS_PER_ROW != 0;
             var rowLimit = (_cardGenerators.Count / FakeData.CARDS_PER_ROW) + Convert.ToInt32(mod);
 
-            _rowConsoleWriteLine = 0;
+            var output = string.Empty;
 
             // Generate Psuedo-Rows
             for (int row = 0; row < rowLimit; row++)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Col: {_colConsoleWriteLine}, Row: {_rowConsoleWriteLine}");
+                var maxCardCount = _cardGenerators.Count;
 
-                var maxCardCount = _cardGenerators.Count;           // CURRENT: calculate current iteration: if total card count is more than (cards per row * (current iteration row +1)): generate another card
+                if (cardIndex < maxCardCount) output += _cardGenerators[cardIndex].GenerateCard();
 
-                if (cardIndex < maxCardCount)
-                    output += _cardGenerators[cardIndex].GenerateCard();
                 cardIndex += FakeData.CARDS_PER_ROW;
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Generated card ID: " + _cardGenerators[cardIndex].Id);
-
-                _rowConsoleWriteLine++;
             }
-
-            _colConsoleWriteLine++;
-
             return output;
         }
     }
