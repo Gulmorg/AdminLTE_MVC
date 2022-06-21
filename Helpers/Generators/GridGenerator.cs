@@ -49,33 +49,39 @@ namespace AdminLTE_MVC.Helpers.Generators
 
             return output;
         }
-        int colConsoleWriteLine = 0;
-        private string GenerateColumns(int cardIndex)   // URGENT TODO: implement card count thing
+
+        int _rowConsoleWriteLine = 0;
+        int _colConsoleWriteLine = 0;
+        private string GenerateColumns(int cardIndex)
         {
-            // if total card count is more than (cards per row * (current iteration row +1)): generate another card
 
             var output = string.Empty;
 
-            int rowLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?     // If card amount is smaller than cards per row setting
-                    _cardGenerators.Count :                                     // set loop limit to card count
-                    FakeData.CARDS_PER_ROW;                                     // otherwise set it to cards per row
-            Console.WriteLine(rowLimit);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Generated card ID: " + _cardGenerators[cardIndex].Id);
+            int rowLimit = 0;   // CURRENT: Add that thing with the modulo from history
 
-            int rowConsoleWriteLine = 0;
+            _rowConsoleWriteLine = 0;
 
             // Generate Psuedo-Rows
-            for (int row = 0; row < 2; row++)
+            for (int row = 0; row < rowLimit; row++)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Col: {colConsoleWriteLine}, Row: {rowConsoleWriteLine}");
-                output += _cardGenerators[cardIndex].GenerateCard();
-                cardIndex += FakeData.CARDS_PER_ROW;
-                rowConsoleWriteLine++;
+                Console.WriteLine($"Col: {_colConsoleWriteLine}, Row: {_rowConsoleWriteLine}");
 
+                var currentIteration = 7;           // CURRENT: calculate current iteration: if total card count is more than (cards per row * (current iteration row +1)): generate another card
+
+
+                if (cardIndex < currentIteration)
+                    output += _cardGenerators[cardIndex].GenerateCard();
+                cardIndex += FakeData.CARDS_PER_ROW;
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Generated card ID: " + _cardGenerators[cardIndex].Id);
+
+                _rowConsoleWriteLine++;
             }
-            colConsoleWriteLine++;
+
+            _colConsoleWriteLine++;
+
             return output;
         }
     }
