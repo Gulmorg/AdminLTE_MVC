@@ -55,7 +55,7 @@ namespace AdminLTE_MVC.Controllers
             {
                 Targets = targetList,
                 DataCollector = new DataCollector(targetList),  // Snmp population
-                CardModel = new() ,    // TODO: Get cards from DB
+                CardModel = new(),    // TODO: Get cards from DB
             };
 
             return View(viewModel);
@@ -64,7 +64,7 @@ namespace AdminLTE_MVC.Controllers
         [HttpPost]
         public IActionResult Dashboard(CardModel cardModel)
         {
-            var title = cardModel.Title;
+            var title = cardModel.Title;    // TODO: send title to CardGenerator.cs somehow
             var element = cardModel.Element;
             Console.WriteLine($"Title: {title}\nElement: {element}");
 
@@ -80,7 +80,7 @@ namespace AdminLTE_MVC.Controllers
 
             };
 
-            var newTarget = targetTemplate.ChangeDeviceId("203001");
+            var newTarget = targetTemplate.ChangeDeviceId("203001");    // TODO: Get new target from cardModel.Element
             targetList.Add(newTarget);
 
             var viewModel = new DashboardViewModel
