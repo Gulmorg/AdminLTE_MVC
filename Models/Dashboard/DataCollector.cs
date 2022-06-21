@@ -13,12 +13,7 @@ namespace AdminLTE_MVC.Models.Dashboard
                 foreach (var dataPair in _targetData)
                 {
                     var oid = SnmpManager.GetOid(dataPair.Key); // Set the current OID via passing in the name of the agent
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(target.DeviceId);
                     var data = SnmpManager.GetValue(target.ChangeOid(oid));
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("datalist value = " + data);
-                    Console.ResetColor();
                     _targetData[dataPair.Key].Add(data);
                 }
             }

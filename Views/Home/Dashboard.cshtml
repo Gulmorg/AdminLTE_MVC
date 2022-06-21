@@ -26,7 +26,15 @@
             <div class="form-group">
               <label for="Name">Element</label>
               <select asp-for="CardModel.Element" class="custom-select" id="cardTitle">
-                @(new ListGenerator(Model.Targets).Generate())
+                @{
+                    var targetTemplate = new AdminLTE_MVC.Models.Dashboard.Target(
+                        ip: AdminLTE_MVC.Data.FakeDatabase.FakeData.IP,
+                        port: AdminLTE_MVC.Data.FakeDatabase.FakeData.PORT,
+                        community: AdminLTE_MVC.Data.FakeDatabase.FakeData.COMMUNITY_NAME,
+                        oid: AdminLTE_MVC.Data.FakeDatabase.FakeData.NAME_OID
+                    );
+                }
+                @(new ListGenerator(targetTemplate).Generate())
               </select>
             </div>
           </div>

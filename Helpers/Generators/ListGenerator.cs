@@ -6,23 +6,18 @@ namespace AdminLTE_MVC.Helpers.Generators
 {
     public class ListGenerator
     {
-        public ListGenerator(List<Target> targets)
-        {
-            foreach (var target in targets)
-            {
-                titles.Add(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString());
-            }
-        }
+        public ListGenerator(Target targetTemplate) => _elementNames = new List<string>(SnmpManager.WalkValue(targetTemplate.ChangeOid(SnmpManager.GetOid("Name"))));
 
-        private readonly List<string> titles = new();
+        private readonly List<string> _elementNames;
 
         public IHtmlContent Generate()
         {
             var output = string.Empty;
-            foreach (var title in titles)
+            foreach (var elementName in _elementNames)
             {
-                output += $"<option>{title}</option>";
+                output += $"<option>{elementName}</option>";
             }
+            if (string.IsNullOrEmpty(output)) output = $"<option>!!!TEMP!!! SNMP UNREACHABLE ERROR MESSAGE</option>";
             return new HtmlString(output);
         }
     }

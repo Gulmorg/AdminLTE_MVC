@@ -55,7 +55,7 @@ namespace AdminLTE_MVC.Controllers
             {
                 Targets = targetList,
                 DataCollector = new DataCollector(targetList),  // Snmp population
-                CardModel = new CardModel(),    // TODO: Get cards from DB
+                CardModel = new() ,    // TODO: Get cards from DB
             };
 
             return View(viewModel);
@@ -70,17 +70,7 @@ namespace AdminLTE_MVC.Controllers
 
             // temp
             var targetTemplate = new Target(ip: FakeData.IP, port: FakeData.PORT, community: FakeData.COMMUNITY_NAME, oid: FakeData.VALUE_OID, devId: "201003");
-
-            // Get device IDs by walking the device id agent
-            var target = new Target(ip: FakeData.IP, community: FakeData.COMMUNITY_NAME, oid: FakeData.DEVID_OID);
-
-            var targetList = new List<Target>();
-            var newTarget = target.ChangeDeviceId("203001");
-            targetList.Add(newTarget);
-
-
-
-            targetList = new List<Target>() // TODO: Get from db
+            var targetList = new List<Target>() // TODO: Get from db
             {
                 targetTemplate.ChangeDeviceId("201001"),
                 targetTemplate.ChangeDeviceId("201002"),
@@ -90,11 +80,14 @@ namespace AdminLTE_MVC.Controllers
 
             };
 
+            var newTarget = targetTemplate.ChangeDeviceId("203001");
+            targetList.Add(newTarget);
+
             var viewModel = new DashboardViewModel
             {
                 Targets = targetList,
                 DataCollector = new DataCollector(targetList),
-                CardModel = new CardModel(),    // TODO: Get cards from DB
+                CardModel = cardModel,    // TODO: Get cards from DB
             };
             return View(viewModel);
         }
