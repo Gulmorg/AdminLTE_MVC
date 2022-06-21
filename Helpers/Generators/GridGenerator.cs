@@ -29,20 +29,20 @@ namespace AdminLTE_MVC.Helpers.Generators
 
         private string GenerateRow()
         {
-            var output = "<div class=\"row\">";
 
-            int loopLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?    // If card amount is smaller than cards per row setting
-                    _cardGenerators.Count :                                     // set loop limit to card count
-                    FakeData.CARDS_PER_ROW;                                     // otherwise set it to cards per row
-
+            int columnLoopLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?  // If card amount is smaller than cards per row setting
+                    _cardGenerators.Count :                                         // set loop limit to card count
+                    FakeData.CARDS_PER_ROW;                                         // otherwise set it to cards per row
+            Console.WriteLine(columnLoopLimit);
             // Generate columns
+            var output = "<div class=\"row\">";
             for (int cardIndex = 0; cardIndex < FakeData.CARDS_PER_ROW; cardIndex++)    // BUG: figure out a way to count how many counts per column
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("generated column index: " + cardIndex);
 
                 output += $"<section class=\"col-lg-{_columnWidth} connectedSortable ui-sortable\"> ";
-                if (loopLimit > 0) output += GenerateColumns(cardIndex);
+                if (cardIndex < columnLoopLimit) output += GenerateColumns(cardIndex);  // Index overflow protection for when there are less cards then FakeData.CARDS_PER_ROW
                 output += $"</section>";
             }
             output += "</div>";
@@ -52,11 +52,11 @@ namespace AdminLTE_MVC.Helpers.Generators
         int colConsoleWriteLine = 0;
         private string GenerateColumns(int cardIndex)   // URGENT TODO: implement card count thing
         {
-            // if card count is more than cards per row: generate another card(i+cards_per_row) in a specific column
+            // if total card count is more than (cards per row * (current iteration row +1)): generate another card
 
             var output = string.Empty;
 
-            int rowLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?    // If card amount is smaller than cards per row setting
+            int rowLimit = _cardGenerators.Count < FakeData.CARDS_PER_ROW ?     // If card amount is smaller than cards per row setting
                     _cardGenerators.Count :                                     // set loop limit to card count
                     FakeData.CARDS_PER_ROW;                                     // otherwise set it to cards per row
             Console.WriteLine(rowLimit);
