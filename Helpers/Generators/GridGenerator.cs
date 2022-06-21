@@ -57,7 +57,8 @@ namespace AdminLTE_MVC.Helpers.Generators
 
             var output = string.Empty;
 
-            int rowLimit = 0;   // CURRENT: Add that thing with the modulo from history
+            var mod = _cardGenerators.Count % FakeData.CARDS_PER_ROW != 0;
+            var rowLimit = (_cardGenerators.Count / FakeData.CARDS_PER_ROW) + Convert.ToInt32(mod);
 
             _rowConsoleWriteLine = 0;
 
@@ -67,10 +68,9 @@ namespace AdminLTE_MVC.Helpers.Generators
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Col: {_colConsoleWriteLine}, Row: {_rowConsoleWriteLine}");
 
-                var currentIteration = 7;           // CURRENT: calculate current iteration: if total card count is more than (cards per row * (current iteration row +1)): generate another card
+                var maxCardCount = _cardGenerators.Count;           // CURRENT: calculate current iteration: if total card count is more than (cards per row * (current iteration row +1)): generate another card
 
-
-                if (cardIndex < currentIteration)
+                if (cardIndex < maxCardCount)
                     output += _cardGenerators[cardIndex].GenerateCard();
                 cardIndex += FakeData.CARDS_PER_ROW;
 
