@@ -10,7 +10,7 @@ namespace AdminLTE_MVC.Helpers.Generators
     {
         public static byte CardCount { get; private set; }  // This should be in a dashboard model or database and manipulated by the CardGenerator.cs constructor
 
-        public CardGenerator(Target target, string? title = null)
+        public CardGenerator(Target target, string? title = null)   // Move information to card.cs, leave generation logic here
         {
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards

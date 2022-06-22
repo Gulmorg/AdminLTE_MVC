@@ -4,7 +4,5 @@
     {
         public string? Title { get; set; }
         public string Element { get; set; } = string.Empty;
-        public ushort CardCount { get; set; }
-
     }
 }
