@@ -26,6 +26,9 @@ namespace AdminLTE_MVC.Snmp
             List<string> stringList = new();
             foreach (var variable in variableList)
             {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine(variable.Data);
+                Console.ResetColor();   
                 stringList.Add(variable.Data.ToString());
             }
 
@@ -34,6 +37,8 @@ namespace AdminLTE_MVC.Snmp
 
         private static IList<Variable> WalkRequest(Target target)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Walking target: " + target.Oid);
             var variableList = new List<Variable>();
             Messenger.Walk(version: target.VersionCode,
                            endpoint: new IPEndPoint(IPAddress.Parse(target.Ip), target.Port),
@@ -42,6 +47,9 @@ namespace AdminLTE_MVC.Snmp
                            list: variableList,
                            timeout: 60000,
                            mode: WalkMode.WithinSubtree);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Complete");
+            Console.ResetColor();
             return variableList;
         }
 

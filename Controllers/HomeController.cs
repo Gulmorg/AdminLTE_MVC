@@ -81,6 +81,7 @@ namespace AdminLTE_MVC.Controllers
             };
 
             var newTarget = targetTemplate.ChangeDeviceId("203001");    // TODO: Get new target from cardModel.Element
+            //newTarget = targetTemplate.ChangeDeviceId(element);
             targetList.Add(newTarget);
 
             var viewModel = new DashboardViewModel

@@ -6,11 +6,11 @@ namespace AdminLTE_MVC.Helpers.Generators
 {
     public class GridGenerator
     {
-        public GridGenerator(List<Target> targets)
+        public GridGenerator(List<Target> targets, CardModel cardModel)
         {
             foreach (var target in targets)
             {
-                var generator = new CardGenerator(target);
+                var generator = new CardGenerator(target, cardModel);   // TODO: only pass in the model to the new card
                 CardIds.Add(generator.Id);
                 _cardGenerators.Add(generator);
             }

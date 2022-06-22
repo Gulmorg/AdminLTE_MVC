@@ -8,9 +8,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 {
     public class CardGenerator
     {
-        public static byte CardCount { get; private set; }  // This should be in a dashboard model or database and manipulated by the CardGenerator.cs constructor
-
-        public CardGenerator(Target target, string? title = null)   // Move information to card.cs, leave generation logic here
+        public CardGenerator(Target target, CardModel? model = null)
         {
             var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("DeviceId"))).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
@@ -23,10 +21,29 @@ namespace AdminLTE_MVC.Helpers.Generators
             var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighWarning"))).ToString());
             var highAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighAlarm"))).ToString());
 
-            // Set title
-            _defaultTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString();
-            _cardTitle = string.IsNullOrEmpty(title) ? _defaultTitle : title;
+            var nullCheck = model == null;
 
+            Console.ForegroundColor = nullCheck ? ConsoleColor.Red : ConsoleColor.DarkGreen;
+            Console.WriteLine("Is model null? " + nullCheck);
+            Console.ResetColor();
+
+            // Set title and element
+            if (!nullCheck)
+            {
+                _cardTitle = string.IsNullOrEmpty(model.Title) ?
+                    SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
+                    model.Title;
+
+                _valuePrefixTitle = string.IsNullOrEmpty(model.Element) ?
+                                    _valuePrefixTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
+                                    model.Element;
+                
+                Console.WriteLine("Element: " + _valuePrefixTitle);
+            }
+            else
+            {
+                throw new NullReferenceException("'CardModel model' at 'CardGenerator.cs' is null!");
+            }
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Type"))).ToString();
             // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);
@@ -39,13 +56,16 @@ namespace AdminLTE_MVC.Helpers.Generators
         }
 
         ~CardGenerator() => CardCount--;                        // probably doesn't work on page reloadtherefore, ResetCardCount() is called on dashboard reloads.
+
+        public static byte CardCount { get; private set; }
+
         public static void ResetCardCount() => CardCount = 0;   // this doesn't get called on page reloads with the modal submit, 
                                                                 // likely won't be an issue since the page won't be reloaded 
                                                                 // but rather the card will be added via ajax but just keep in mind
         
         public uint Id { get; private set; }
 
-        private readonly string _defaultTitle;
+        private readonly string _valuePrefixTitle;
         private readonly string _cardTitle;
         private readonly string _headerColor;
         private readonly string _valueSuffix;
@@ -67,7 +87,7 @@ namespace AdminLTE_MVC.Helpers.Generators
                             $"    <div class=\"card-body gauge-parent\" style=\"display: flex; !important\">" +
                             $"      <canvas id = \"gauge-{Id}\" style=\"min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;\"></canvas>" +
                             $"      <div class=\"badge bg-{_valueBackground} gauge-text\">" +
-                            $"          <span>{_defaultTitle}: </span><span id=\"gauge-text-{Id}\">Value not found!</span><span> {_valueSuffix}</span>" +
+                            $"          <span>{_valuePrefixTitle}: </span><span id=\"gauge-text-{Id}\">Value not found!</span><span> {_valueSuffix}</span>" +
                             $"      </div>" +
                             $"    </div>" +
                             $"    <a href = \"#\" class=\"card-footer card-link text-center\">" +
