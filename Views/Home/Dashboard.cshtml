@@ -77,20 +77,23 @@
 
 <script>
 // Serialize gauge values into json and save the values inside variables
-const nameList            = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Names))');
-const valueList           = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Values))');
-const minList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Mins))');
-const lowAlarmList        = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowAlarms))');
-const lowWarningList      = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowWarnings))');
-const highWarningList     = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighWarnings))');
-const highAlarmList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighAlarms))');
-const maxList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Maxes))');
-const generatorIdList     = JSON.parse('@Html.Raw(Json.Serialize(generatorIds))');
+const typeList              = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Types))');
+const nameList              = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Names))');
+const valueList             = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Values))');
+const minList               = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Mins))');
+const lowAlarmList          = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowAlarms))');
+const lowWarningList        = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.LowWarnings))');
+const highWarningList       = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighWarnings))');
+const highAlarmList         = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.HighAlarms))');
+const maxList               = JSON.parse('@Html.Raw(Json.Serialize(Model.DataCollector.Maxes))');
+const generatorIdList       = JSON.parse('@Html.Raw(Json.Serialize(generatorIds))');
 
 let gauge = [];
 
 // Looping through cards
 for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
+    const name              = nameList[i];
+    const type              = typeList[i];
     const value             = parseFloat(valueList[i]);
     const minValue          = parseFloat(minList[i]);
     const lowAlarmValue     = parseFloat(lowAlarmList[i]);
@@ -99,6 +102,24 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const highAlarmValue    = parseFloat(highAlarmList[i]);
     const maxValue          = parseFloat(maxList[i]);
     const genId             = parseInt(generatorIdList[i]);
+
+    // Divisions for options.renderTicks
+    let divisionCount = 0;
+    let subdivisionCount = 0;
+    switch (type) {
+        case "temperature":
+            divisionCount = (maxValue - minValue) / 20;
+            subdivisionCount = 5;
+            break;
+        case "humidity":
+            divisionCount = (maxValue - minValue) / 10;
+            subdivisionCount = 3;
+            break;
+        case "voltage":
+            divisionCount = (maxValue - minValue) / 6;
+            subdivisionCount = 6;
+            break;
+    }
 
     const options = {
     // color configs
@@ -128,6 +149,17 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
         labels: [minValue, lowAlarmValue, lowWarningValue, highWarningValue, highAlarmValue, maxValue],
         fractionDigits: 0,
     },
+     // render ticks
+    renderTicks: {
+        divisions: divisionCount,
+        divWidth: 1.5,
+        divLength: 0.6,
+        divColor: '#333333',
+        subDivisions: subdivisionCount,
+        subLength: 0.4,
+        subWidth: 1,
+        subColor: '#666666',
+    },
     // the span of the gauge arc
     angle: 0,
     // line thickness
@@ -143,39 +175,17 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     // High resolution support
     highDpiSupport: true,
 
-    // render ticks
-    renderTicks: {
-    divisions: 5,
-    divWidth: 1.5,
-    divLength: 0.6,
-    divColor: '#333333',
-    subDivisions: 5,
-    subLength: 0.4,
-    subWidth: 1,
-    subColor: '#666666'
-    },
 };
     const currentElementId = "gauge-" + genId;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
     const currentElementTextId = "gauge-text-" + genId;
     gauge[i].setTextField(document.getElementById(currentElementTextId), 1);    // setTextField(value, fractionDigits)
 
-    gauge[i].animationSpeed = 15; // set animation speed (32 is default value)
+    gauge[i].animationSpeed = 15; // set animation time (32 is default value)
 
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
-
-    gauge[i].renderTicks = {    // URGENT: TESTING AFTER TIMEOUT BUG FIX
-        divisions: 5,
-    divWidth: 1.5,
-    divLength: 0.6,
-    divColor: '#222222',
-    subDivisions: 5,
-    subLength: 0.4,
-    subWidth: 1,
-    subColor: '#888888'
-    }
-    gauge[i].set(value)
+    gauge[i].set(value);
 }
 </script>
 <script src="~/js/pages/popup.js"></script>

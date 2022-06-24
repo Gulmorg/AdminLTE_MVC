@@ -41,11 +41,12 @@ namespace AdminLTE_MVC.Controllers
             var targetList = new List<Target>()
             {
                 targetTemplate.ChangeDeviceId("201001"),
-                targetTemplate.ChangeDeviceId("201002"),
-                targetTemplate.ChangeDeviceId("201003"),
+                //targetTemplate.ChangeDeviceId("201002"),
+                //targetTemplate.ChangeDeviceId("201003"),
                 targetTemplate.ChangeDeviceId("202001"),
+                targetTemplate.ChangeDeviceId("203001"),
                 //targetTemplate.ChangeDeviceId("202001"),
-                targetTemplate.ChangeDeviceId("201001"),
+                //targetTemplate.ChangeDeviceId("201001"),
                 //targetTemplate.ChangeDeviceId("201002"),
                 //targetTemplate.ChangeDeviceId("201003"),
 
