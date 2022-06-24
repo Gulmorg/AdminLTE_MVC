@@ -64,6 +64,8 @@ namespace AdminLTE_MVC.Controllers
         [HttpPost]
         public IActionResult Dashboard(CardModel cardModel)
         {
+            FakeDatabaseManager.SaveConfig("");
+
             var title = cardModel.Title;    // TODO: send title to CardGenerator.cs
             var element = cardModel.Element;
             Console.WriteLine($"Title: {title}\nElement: {element}");

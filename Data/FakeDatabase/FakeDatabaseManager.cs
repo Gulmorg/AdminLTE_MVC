@@ -1,20 +1,24 @@
-﻿namespace AdminLTE_MVC.Data.FakeDatabase
+﻿using System.Text.Json;
+
+namespace AdminLTE_MVC.Data.FakeDatabase
 {
     public static class FakeDatabaseManager
     {
-        const string path = @"~/Data/FakeDatabase/Json/FakeDatabase.json";
+        const string PATH = @"~/Data/FakeDatabase/Json/FakeDatabase.json";
 
-        public static void Write(string data)
+        public static void SaveConfig(string data)
         {
 
+            var jsonFile = JsonSerializer.Serialize(new FakeData());
 
-            File.WriteAllText(path, data);
+            Console.WriteLine(jsonFile);
+            //File.WriteAllText(PATH, jsonFile);
         }
 
-        public static string Read()
+        public static string GetConfig()
         {
-            var text = File.ReadAllText(path);
-            return string.Empty;
+            var text = File.ReadAllText(PATH);
+            return text;
         }
     }
 }

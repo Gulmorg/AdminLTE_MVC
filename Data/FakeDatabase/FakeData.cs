@@ -1,6 +1,6 @@
 ﻿namespace AdminLTE_MVC.Data.FakeDatabase
 {
-    public static class FakeData
+    public class FakeData
     {
         #region Credentials
         public static string Username { get; } = "test@gmail.com";
