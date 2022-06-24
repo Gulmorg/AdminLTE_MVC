@@ -98,7 +98,7 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     const highWarningValue  = parseFloat(highWarningList[i]);
     const highAlarmValue    = parseFloat(highAlarmList[i]);
     const maxValue          = parseFloat(maxList[i]);
-    const genId             = parseInt(generatorIdList[i]);    // Why is this 'id' instead of 'Id'??? does the JSON parser 'javascriptify' the properties?
+    const genId             = parseInt(generatorIdList[i]);
 
     const options = {
     // color configs
@@ -113,17 +113,6 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
       length: 0.6,
       strokeWidth: 0.06,
       iconScale: 1.0
-    },
-    // render ticks
-    renderTicks: {
-    divisions: 5,
-    divWidth: 1.5,
-    divLength: 0.6,
-    divColor: '#333333',
-    subDivisions: 5,
-    subLength: 0.4,
-    subWidth: 1,
-    subColor: '#666666'
     },
     // static zones
     staticZones: [
@@ -154,6 +143,17 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
     // High resolution support
     highDpiSupport: true,
 
+    // render ticks
+    renderTicks: {
+    divisions: 5,
+    divWidth: 1.5,
+    divLength: 0.6,
+    divColor: '#333333',
+    subDivisions: 5,
+    subLength: 0.4,
+    subWidth: 1,
+    subColor: '#666666'
+    },
 };
     const currentElementId = "gauge-" + genId;
     gauge[i] = new Gauge(document.getElementById(currentElementId)).setOptions(options);
@@ -164,6 +164,17 @@ for (let i = 0; i < @Model.DataCollector.CardCount; i++) {
 
     gauge[i].minValue = minValue;
     gauge[i].maxValue = maxValue;
+
+    gauge[i].renderTicks = {    // URGENT: TESTING AFTER TIMEOUT BUG FIX
+        divisions: 5,
+    divWidth: 1.5,
+    divLength: 0.6,
+    divColor: '#222222',
+    subDivisions: 5,
+    subLength: 0.4,
+    subWidth: 1,
+    subColor: '#888888'
+    }
     gauge[i].set(value)
 }
 </script>

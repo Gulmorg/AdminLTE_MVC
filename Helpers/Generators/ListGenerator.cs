@@ -6,7 +6,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 {
     public class ListGenerator
     {
-        public ListGenerator(Target targetTemplate) => _elementNames = new List<string>(SnmpManager.WalkValue(targetTemplate.ChangeOid(SnmpManager.GetOid("Name"))));
+        public ListGenerator(Target targetTemplate) => _elementNames = new List<string>(SnmpManager.WalkValueOneLine(targetTemplate.ChangeOid(SnmpManager.GetOid("Name"))));
 
         private readonly List<string> _elementNames;
 

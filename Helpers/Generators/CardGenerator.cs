@@ -23,27 +23,25 @@ namespace AdminLTE_MVC.Helpers.Generators
 
             var nullCheck = model == null;
 
-            Console.ForegroundColor = nullCheck ? ConsoleColor.Red : ConsoleColor.DarkGreen;
-            Console.WriteLine("Is model null? " + nullCheck);
-            Console.ResetColor();
-
-            // Set title and element
+            
             if (!nullCheck)
             {
+                // Set title 
                 _cardTitle = string.IsNullOrEmpty(model.Title) ?
                     SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
                     model.Title;
 
+                // Set element
                 _valuePrefixTitle = string.IsNullOrEmpty(model.Element) ?
                                     _valuePrefixTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
                                     model.Element;
-                
-                Console.WriteLine("Element: " + _valuePrefixTitle);
             }
             else
             {
                 throw new NullReferenceException("'CardModel model' at 'CardGenerator.cs' is null!");
             }
+
+            // Set Dynamic HTML values
             var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Type"))).ToString();
             // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);

@@ -20,7 +20,7 @@ namespace AdminLTE_MVC.Models.Dashboard
         }
         public int CardCount => CardGenerator.CardCount;
 
-        #region Public Dictionary Access
+        #region Dictionary Access from JavaScript
         public List<string> DeviceIds => _targetData["DeviceId"];
         public List<string> Names => _targetData["Name"];
         public List<string> Values => _targetData["Value"];
