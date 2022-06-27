@@ -38,10 +38,10 @@
                   <td>1.</td>
                   <td>Test Sensörü</td>
                   <td>
-                    @Model[0].Oid.@Model[0].DeviceId <!-- !!!THIS DOESN'T WORD-WRAP!!! -->
+                    @Model[0].Oid.@Model[0].DeviceId <!-- TODO: Add some sort of word wrap/dynamic scaling -->
                   </td>
                   <td>
-                    <span class="badge bg-success">@SnmpManager.GetValue(Model[0])</span>
+                    <span class="badge bg-success">@SnmpManager.GetFirstValue(Model[0])</span>
                   </td>
                 </tr>
                 <tr>

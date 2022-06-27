@@ -1,4 +1,5 @@
-﻿using AdminLTE_MVC.Models.Dashboard;
+﻿using AdminLTE_MVC.Data.FakeDatabase;
+using AdminLTE_MVC.Models.Dashboard;
 using AdminLTE_MVC.Snmp;
 using Microsoft.AspNetCore.Html;
 
@@ -6,7 +7,7 @@ namespace AdminLTE_MVC.Helpers.Generators
 {
     public class ListGenerator
     {
-        public ListGenerator(Target targetTemplate) => _elementNames = new List<string>(SnmpManager.WalkValueOneLine(targetTemplate.ChangeOid(SnmpManager.GetOid("Name"))));
+        public ListGenerator(Target targetTemplate) => _elementNames = new List<string>(SnmpManager.WalkValue(targetTemplate.ChangeOid(FakeData.NAME_OID)));
 
         private readonly List<string> _elementNames;
 

@@ -22,15 +22,16 @@ namespace AdminLTE_MVC.Controllers
 
         public IActionResult Index()    // TODO: Snmp walk instead of creating a list
         {
-            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7", devId: "201003"); // 5.2.1 == Analogs
+            var targetTemplate = new Target(ip: "192.168.2.11", port: 161, community: "public", oid: "1.3.6.1.4.1.39052.5.2.1.7", devId: "201003");
 
-            var targetList = new List<Target>()
+            var devIds = SnmpManager.WalkValue(targetTemplate.ChangeOid(FakeData.DEVID_OID));
+            var targetList = new List<Target>();
+
+            foreach (var devId in devIds)
             {
-                targetTemplate.ChangeDeviceId("201001"),
-                targetTemplate.ChangeDeviceId("201002"),
-                targetTemplate.ChangeDeviceId("201003"),
-                targetTemplate.ChangeDeviceId("202001")
-            };
+                targetList.Add(targetTemplate.ChangeDeviceId(devId));
+            }
+
             return View(targetList);
         }
 

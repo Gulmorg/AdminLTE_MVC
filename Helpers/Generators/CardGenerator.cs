@@ -10,16 +10,16 @@ namespace AdminLTE_MVC.Helpers.Generators
     {
         public CardGenerator(Target target, CardModel? model = null)
         {
-            var devId = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("DeviceId"))).ToString();
+            var devId = SnmpManager.GetFirstValue(target.ChangeOid(FakeData.DEVID_OID)).ToString();
             Id = uint.Parse(devId + CardCount++);   // Appending CardCount at the end to generate unique IDs even if the user creates duplicate cards
 
             // Set value and breakpoints
-            var value = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Value"))).ToString());
+            var value = float.Parse(SnmpManager.GetFirstValue(target.ChangeOid(FakeData.VALUE_OID)).ToString());
             //value = 150f; // For testing purposes. Values are saved in an integer where they are multiplied by 10 beforehand, hence 150f for testing with a value of 15f
-            var lowAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("LowAlarm"))).ToString());
-            var lowWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("LowWarning"))).ToString());
-            var highWarning = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighWarning"))).ToString());
-            var highAlarm = float.Parse(SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("HighAlarm"))).ToString());
+            var lowAlarm = float.Parse(SnmpManager.GetFirstValue(target.ChangeOid(FakeData.LOW_ALARM_OID)).ToString());
+            var lowWarning = float.Parse(SnmpManager.GetFirstValue(target.ChangeOid(FakeData.LOW_WARNING_OID)).ToString());
+            var highWarning = float.Parse(SnmpManager.GetFirstValue(target.ChangeOid(FakeData.HIGH_WARNING_OID)).ToString());
+            var highAlarm = float.Parse(SnmpManager.GetFirstValue(target.ChangeOid(FakeData.HIGH_ALARM_OID)).ToString());
 
             var nullCheck = model == null;
 
@@ -28,12 +28,12 @@ namespace AdminLTE_MVC.Helpers.Generators
             {
                 // Set title 
                 _cardTitle = string.IsNullOrEmpty(model.Title) ?
-                    SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
+                    SnmpManager.GetFirstValue(target.ChangeOid(FakeData.NAME_OID)).ToString() :
                     model.Title;
 
                 // Set element
                 _valuePrefixTitle = string.IsNullOrEmpty(model.Element) ?
-                                    _valuePrefixTitle = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Name"))).ToString() :
+                                    _valuePrefixTitle = SnmpManager.GetFirstValue(target.ChangeOid(FakeData.NAME_OID)).ToString() :
                                     model.Element;
             }
             else
@@ -42,7 +42,7 @@ namespace AdminLTE_MVC.Helpers.Generators
             }
 
             // Set Dynamic HTML values
-            var dataType = SnmpManager.GetValue(target.ChangeOid(SnmpManager.GetOid("Type"))).ToString();
+            var dataType = SnmpManager.GetFirstValue(target.ChangeOid(FakeData.TYPE_OID)).ToString();
             // what to append after the value ("°C", "%" etc.)
             _valueSuffix = GetValueSuffix(dataType);
             // Icon to display in the header

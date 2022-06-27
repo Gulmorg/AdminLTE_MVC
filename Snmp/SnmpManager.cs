@@ -8,25 +8,11 @@ namespace AdminLTE_MVC.Snmp
 {
     internal static class SnmpManager
     {
-        public static string GetValue(Target target) => GetRequest(target).Data.ToString();
+        public static string GetFirstValue(Target target) => GetFirstRequest(target).Data.ToString();
 
-        private static Variable GetRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
+        private static Variable GetFirstRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
 
-        public static IList<string> WalkValue(Target target)
-        {
-            List<Variable>? variableList = WalkRequest(target) as List<Variable>;
-
-            List<string> stringList = new();
-            foreach (var variable in variableList)
-            {
-                stringList.Add(variable.Data.ToString());
-            }
-
-            return stringList;
-        }
-
-        // TEST: fix name after
-        public static IList<string> WalkValueOneLine(Target target) => new List<string>(from variable in WalkRequest(target) select variable.Data.ToString());
+        public static IList<string> WalkValue(Target target) => new List<string>(from variable in WalkRequest(target) select variable.Data.ToString());
 
         private static IList<Variable> WalkRequest(Target target)
         {
@@ -49,21 +35,5 @@ namespace AdminLTE_MVC.Snmp
 
             return variableList;
         }
-
-        // Sets the OID according to the name of the agent passed in
-        public static string GetOid(string dataKey) => dataKey switch
-        {
-            "DeviceId"      => Data.FakeDatabase.FakeData.DEVID_OID,
-            "Type"          => Data.FakeDatabase.FakeData.TYPE_OID,
-            "Name"          => Data.FakeDatabase.FakeData.NAME_OID,
-            "Min"           => Data.FakeDatabase.FakeData.MIN_OID,
-            "Max"           => Data.FakeDatabase.FakeData.MAX_OID,
-            "LowAlarm"      => Data.FakeDatabase.FakeData.LOW_ALARM_OID,
-            "LowWarning"    => Data.FakeDatabase.FakeData.LOW_WARNING_OID,
-            "HighWarning"   => Data.FakeDatabase.FakeData.HIGH_WARNING_OID,
-            "HighAlarm"     => Data.FakeDatabase.FakeData.HIGH_ALARM_OID,
-            "Value"         => Data.FakeDatabase.FakeData.VALUE_OID,
-            _ => "",
-        };
     }
 }
