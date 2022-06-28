@@ -1,4 +1,4 @@
-﻿namespace AdminLTE_MVC.Models.ConfigModels
+﻿namespace AdminLTE_MVC.Models.ConfigurationModels
 {
     public class ServerSettings
     {
