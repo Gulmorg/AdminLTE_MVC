@@ -1,5 +1,5 @@
 ﻿using AdminLTE_MVC.Helpers.Generators;
-using AdminLTE_MVC.Snmp;
+using AdminLTE_MVC.Managers;
 
 namespace AdminLTE_MVC.Models.Dashboard
 {

@@ -4,13 +4,13 @@ using AdminLTE_MVC.Helpers;
 using System.Net;
 using AdminLTE_MVC.Models.Dashboard;
 
-namespace AdminLTE_MVC.Snmp
+namespace AdminLTE_MVC.Managers
 {
     internal static class SnmpManager
     {
         public static string GetFirstValue(Target target) => GetFirstRequest(target).Data.ToString();
 
-        private static Variable GetFirstRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);
+        private static Variable GetFirstRequest(Target target) => WalkRequest(target).GetDeviceById(target.DeviceId);   // TODO: Try Messenger.Get()
 
         public static IList<string> WalkValue(Target target) => new List<string>(from variable in WalkRequest(target) select variable.Data.ToString());
 

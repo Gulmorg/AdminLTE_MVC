@@ -1,6 +1,6 @@
 ﻿using AdminLTE_MVC.Data.FakeDatabase;
+using AdminLTE_MVC.Managers;
 using AdminLTE_MVC.Models.Dashboard;
-using AdminLTE_MVC.Snmp;
 using Microsoft.AspNetCore.Html;
 
 namespace AdminLTE_MVC.Helpers.Generators

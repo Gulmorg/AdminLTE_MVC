@@ -1,12 +1,12 @@
 ﻿using AdminLTE_MVC.Models;
 using AdminLTE_MVC.Models.Dashboard;
 using AdminLTE_MVC.Data.FakeDatabase;
-using AdminLTE_MVC.Snmp;
 using Lextm.SharpSnmpLib;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Dynamic;
+using AdminLTE_MVC.Managers;
 
 namespace AdminLTE_MVC.Controllers
 {
