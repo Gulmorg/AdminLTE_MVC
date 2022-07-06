@@ -4,6 +4,6 @@
     {
         public string? Ip { get; set; }
         public ushort Port { get; set; }
-        public string? ComunityName{ get; set; }
+        public string? CommunityName{ get; set; }
     }
 }
